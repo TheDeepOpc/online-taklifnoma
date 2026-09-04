@@ -1,0 +1,363 @@
+.root {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--theme-body-font), serif;
+  font-size: 1.05rem;
+}
+
+.script {
+  font-family: var(--theme-script-font), cursive;
+}
+
+.label {
+  font-family: var(--theme-label-font), serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--gold-deep);
+}
+
+/* ===== Entrance: envelope ===== */
+.entrance {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  transition:
+    opacity 0.6s ease 0.1s,
+    visibility 0.6s ease 0.1s;
+}
+
+.entranceGone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.envelope {
+  position: relative;
+  width: min(320px, 78vw);
+  height: min(220px, 54vw);
+}
+
+.flap {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.flapTop {
+  background: linear-gradient(160deg, var(--envelope-mid), var(--envelope-start));
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  transform-origin: top center;
+}
+
+.flapLeft {
+  background: linear-gradient(200deg, var(--envelope-start), var(--envelope-end));
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+}
+
+.flapRight {
+  background: linear-gradient(340deg, var(--envelope-start), var(--envelope-end));
+  clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+}
+
+.flapBottom {
+  background: linear-gradient(20deg, var(--envelope-mid), var(--envelope-end));
+  clip-path: polygon(0 100%, 100% 100%, 50% 50%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 14px;
+}
+
+.flapSignature {
+  color: var(--envelope-text);
+  font-size: 0.85rem;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.flapSignature strong {
+  display: block;
+  font-family: var(--theme-script-font), cursive;
+  font-size: 1.3rem;
+  margin-top: 2px;
+}
+
+.envelopeOpen .flapTop {
+  transform: translateY(-115%) rotateX(20deg);
+}
+
+.envelopeOpen .flapLeft {
+  transform: translateX(-115%);
+}
+
+.envelopeOpen .flapRight {
+  transform: translateX(115%);
+}
+
+.envelopeOpen .flapBottom {
+  transform: translateY(115%);
+}
+
+.envelopeOpen .seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+}
+
+.seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: radial-gradient(circle at 35% 30%, var(--gold), var(--gold-deep) 75%);
+  color: var(--ink);
+  font-family: var(--theme-label-font), serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  padding: 70px 24px 40px;
+  text-align: center;
+}
+
+.heroEyebrow {
+  margin-bottom: 18px;
+}
+
+.heroNames {
+  font-size: 2.6rem;
+  color: var(--accent);
+}
+
+.photoPairGrid {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin: 28px 0;
+  flex-wrap: wrap;
+  perspective: 900px;
+}
+
+.polaroid {
+  background: var(--paper-card);
+  padding: 10px 10px 22px;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.15);
+  transform: rotate(-3deg);
+  width: 150px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  will-change: transform;
+}
+
+.polaroid:nth-child(2) {
+  transform: rotate(3deg);
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) rotateY(-14deg) rotateX(6deg) scale(1.06);
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.28);
+}
+
+.polaroidImg {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroidCaption {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.singlePhotoWrap {
+  position: relative;
+  margin: 24px auto 0;
+  max-width: 320px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.singlePhotoImg {
+  width: 100%;
+  display: block;
+}
+
+.singlePhotoOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 20px;
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.55));
+}
+
+.singlePhotoNames {
+  color: #fff;
+  font-size: 1.8rem;
+}
+
+.scrollHint {
+  margin-top: 30px;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+/* ===== Sections ===== */
+.section {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 50px 26px;
+  text-align: center;
+}
+
+.card {
+  background: var(--paper-card);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: 40px 28px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.sectionTitle {
+  font-size: 1.9rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.greetingText {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+/* ---- Calendar ---- */
+.calendarHead {
+  font-family: var(--theme-label-font), serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--gold-deep);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.calendarCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.calendarEmpty {
+  aspect-ratio: 1;
+}
+
+.calendarHighlight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  position: relative;
+  color: var(--accent);
+  font-size: 1.6rem;
+}
+
+.calendarHighlight span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--envelope-text, #fff);
+  font-weight: 600;
+}
+
+/* ---- Location ---- */
+.venueName {
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.venueAddr {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.mapBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  border: 1px solid var(--gold-deep);
+  color: var(--ink);
+  padding: 10px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* ---- Gift ---- */
+.giftRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.giftNumber {
+  font-family: var(--theme-label-font), serif;
+  letter-spacing: 0.08em;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.copyBtn {
+  margin-top: 18px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.footer {
+  text-align: center;
+  padding: 30px 20px 60px;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}

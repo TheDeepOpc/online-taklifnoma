@@ -1,0 +1,685 @@
+.root {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: var(--theme-body-font), serif;
+  font-size: 1.05rem;
+}
+
+.script {
+  font-family: var(--theme-script-font), cursive;
+  font-style: normal;
+}
+
+.display {
+  font-family: var(--theme-display-font), serif;
+}
+
+.label {
+  font-family: var(--theme-label-font), sans-serif;
+}
+
+/* ===== Preloader ===== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  background: var(--bg);
+  transition: opacity 0.7s ease, visibility 0.7s ease, transform 0.7s ease;
+}
+
+
+.preloaderBtn {
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--ink);
+  padding: 12px 40px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.preloaderBtn:hover {
+  background: var(--gold);
+  color: #fff;
+}
+
+.preloaderGone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(1.15);
+}
+
+.preloaderSvg {
+  width: 12rem;
+  height: auto;
+  stroke: var(--gold);
+  transition: all 0.3s;
+  filter: drop-shadow(0px 0px 4px rgba(181, 147, 91, 0.4));
+}
+
+@media (min-width: 768px) {
+  .preloaderSvg {
+    width: 16rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .preloaderSvg {
+    width: 20rem;
+  }
+}
+
+/* ===== Calligraphy Overlay ===== */
+.calligraphyOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.calligraphyStage {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 390px;
+  height: auto;
+  overflow: visible;
+}
+
+.calligraphyPath {
+  fill: #fdf3de;
+  fill-opacity: 0;
+  stroke: #fdf3de;
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: blur(0.6px) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+  font-family: var(--theme-script-font), cursive;
+  transition:
+    fill-opacity 2.2s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke 1.8s ease,
+    stroke-width 1.8s ease,
+    filter 2s ease;
+}
+
+.calligraphyPathFilled {
+  fill-opacity: 1;
+  stroke: rgba(253, 243, 222, 0.35);
+  stroke-width: 1.1px;
+  filter: blur(0) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+}
+
+.calligraphyAmpersand {
+  stroke: #b08d57;
+  fill: #b08d57;
+  dominant-baseline: middle;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 40px 24px;
+  /* Video yuklanmasa/o'ynamasa (sekin tarmoq, kodek qo'llab-quvvatlanmasa) ham
+     bo'sh joy oq-kulrang bo'lib qolmasligi uchun fon gradienti. */
+  background: linear-gradient(160deg, var(--dark), var(--pink) 60%, var(--gold));
+}
+
+.heroPreview {
+  min-height: 420px;
+}
+
+.heroVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+}
+
+.heroEyebrow {
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--theme-label-font), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.heroNames {
+  font-family: var(--theme-script-font), cursive;
+  font-size: 2.6rem;
+  line-height: 1.3;
+  color: #fdf3de;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  word-break: break-word;
+}
+
+@media (min-width: 640px) {
+  .heroNames {
+    font-size: 3.1rem;
+  }
+}
+
+.heroAmp {
+  display: block;
+  font-size: 1.8rem;
+  margin: 6px 0;
+  background: linear-gradient(135deg, #fdf3de, var(--gold) 50%, #fdf3de);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (min-width: 640px) {
+  .heroAmp {
+    font-size: 2.2rem;
+  }
+}
+
+.heroPillar {
+  position: absolute;
+  top: 5rem;
+  width: 2.5rem;
+  height: 15rem;
+  background: linear-gradient(90deg, rgba(180, 188, 196, 0.1) 0%, rgba(220, 226, 232, 0.3) 45%, rgba(160, 170, 182, 0.15) 100%);
+  filter: blur(0.5px);
+  opacity: 0.5;
+  pointer-events: none;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.heroPillarLeft {
+  left: 0.5rem;
+  mask-image: linear-gradient(#000 60%, transparent);
+}
+
+.heroPillarRight {
+  right: 0.5rem;
+  mask-image: linear-gradient(#000 60%, transparent);
+}
+
+/* ===== Scroll Indicator ===== */
+.scrollIndicator {
+  position: absolute;
+  bottom: calc(8vh + 30px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scrollLine {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  margin-bottom: 8px;
+}
+
+.scrollChevrons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ===== Sections ===== */
+.section {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 60px 26px;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-family: var(--theme-script-font), cursive;
+  font-size: 2.1rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.sectionSub {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 34px;
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 30px;
+  position: relative;
+  opacity: 0.7;
+}
+
+.divider::before {
+  content: "❖";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg);
+  color: var(--gold);
+  padding: 0 10px;
+  font-size: 0.85rem;
+}
+
+/* ===== Greeting ===== */
+.greetingTitle {
+  position: relative;
+  font-family: var(--theme-label-font), sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-bottom: 10px;
+}
+
+.greetingBig {
+  display: block;
+  font-family: var(--theme-script-font), cursive;
+  font-size: 2.2rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  margin-top: 6px;
+}
+
+.greetingText {
+  font-size: 1.02rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+.greetingText + .greetingText {
+  margin-top: 16px;
+}
+
+.greetingSign {
+  margin-top: 28px;
+  font-size: 1rem;
+  color: var(--gold);
+  font-style: italic;
+}
+
+.greetingSign b {
+  display: block;
+  font-family: var(--theme-script-font), cursive;
+  font-size: 1.6rem;
+  color: var(--ink);
+  font-style: normal;
+  margin-top: 4px;
+}
+
+.signPhoto {
+  margin-top: 24px;
+  width: 100%;
+  max-width: 320px;
+  border-radius: 6px;
+  box-shadow: 0 12px 30px rgba(58, 47, 34, 0.25);
+}
+
+/* ===== Calendar ===== */
+.calendarSection {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 60px 26px;
+  text-align: center;
+}
+
+.calendarHead {
+  font-family: var(--theme-label-font), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.calendarLabel {
+  font-family: var(--theme-label-font), sans-serif;
+  color: var(--ink-soft);
+}
+
+.calendarCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.calendarEmpty {
+  aspect-ratio: 1;
+}
+
+.calendarHighlight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  position: relative;
+  color: var(--gold);
+  font-size: 1.6rem;
+}
+
+.calendarHighlight span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ===== Venue ===== */
+.venueName {
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.venueAddr {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.venueTime {
+  margin-top: 16px;
+  font-size: 1.4rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
+.venueLandmark {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.mapButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+
+.mapBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--gold);
+  color: var(--ink);
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-style: normal;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.mapBtn:hover {
+  background: var(--gold);
+  color: #fff;
+}
+
+/* ===== Car Animation ===== */
+.carWrap {
+  position: relative;
+  z-index: 2;
+  height: 120px;
+  overflow: hidden;
+  margin: -20px 0;
+}
+
+.carImage {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  width: 21rem;
+  height: auto;
+}
+
+.carImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.2));
+}
+
+/* ===== Building Image ===== */
+.buildingWrap {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 26px 40px;
+}
+
+.buildingImage {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Countdown ===== */
+.countdownTitle {
+  font-style: italic;
+  font-weight: 600;
+  font-size: 2.1rem;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #8a6a2c, var(--gold) 45%, #8a6a2c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  display: inline-block;
+  padding: 0 6px;
+  font-family: var(--theme-body-font), serif;
+}
+
+.countdownFrame {
+  padding: 30px 22px;
+  border: 1px solid var(--gold);
+  position: relative;
+  background: var(--bg-card);
+  clip-path: polygon(
+    24px 0,
+    calc(100% - 24px) 0,
+    100% 24px,
+    100% calc(100% - 24px),
+    calc(100% - 24px) 100%,
+    24px 100%,
+    0 calc(100% - 24px),
+    0 24px
+  );
+}
+
+.countdownFrame::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(176, 140, 79, 0.4);
+  pointer-events: none;
+  clip-path: polygon(
+    18px 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    18px 100%,
+    0 calc(100% - 18px),
+    0 18px
+  );
+}
+
+.countdownDiamond {
+  position: absolute;
+  color: var(--gold);
+  font-size: 0.7rem;
+}
+
+.countdownDiamondTl {
+  top: 10px;
+  left: 10px;
+}
+
+.countdownDiamondTr {
+  top: 10px;
+  right: 10px;
+}
+
+.countdownDiamondBl {
+  bottom: 10px;
+  left: 10px;
+}
+
+.countdownDiamondBr {
+  bottom: 10px;
+  right: 10px;
+}
+
+.ringsImage {
+  display: block;
+  margin: 0 auto 20px;
+  width: 150px;
+  height: auto;
+  opacity: 0.9;
+}
+
+.closingNote {
+  margin-top: 26px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ===== Guest Box ===== */
+.guestLabel {
+  font-family: var(--theme-label-font), sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.guestNote {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 20px 20px 44px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+/* ===== Keyframes ===== */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animatePulse {
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.animateBounce {
+  animation: bounce 1.6s ease-in-out infinite;
+}
+
+.animateFloat {
+  animation: 4s ease-in-out infinite float;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 380px) {
+  .heroNames {
+    font-size: 2.2rem;
+  }
+
+  .heroAmp {
+    font-size: 1.5rem;
+  }
+}
