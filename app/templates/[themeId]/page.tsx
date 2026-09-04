@@ -20,12 +20,12 @@ export default async function TemplateDemoPage({
   const invitation = { ...DEMO_INVITATION, template_id: theme.id };
 
   return (
-    <div>
+    <div className="min-h-screen bg-[#FDFBFB]">
       <Link
         href="/templates"
-        className="fixed left-4 top-4 z-[200] flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-slate-700 shadow-lg backdrop-blur transition hover:bg-white"
+        className="fixed left-3 top-3 z-[200] flex items-center gap-2 rounded-full border border-[#2E2A27]/10 bg-[#FDFBFB]/90 px-3 py-2 text-xs font-medium text-[#2E2A27] shadow-lg backdrop-blur transition-colors hover:bg-white sm:left-4 sm:top-4 sm:px-4 sm:py-2.5 sm:text-sm"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
         Shablonlar
       </Link>
       <TemplateRenderer invitation={invitation} musicTrack={null} />
