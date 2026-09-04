@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { LayoutDashboard, Music, LogOut, Plus, HeartHandshake, Palette } from "lucide-react";
+import { LayoutDashboard, Music, LogOut, Plus, HeartHandshake } from "lucide-react";
 import { signOut } from "./invitations/actions";
 
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/music", label: "Musiqalar", icon: Music },
-  { href: "/templates", label: "Shablonlar", icon: Palette, external: true },
 ];
 
 export default function AdminAppLayout({ children }: { children: React.ReactNode }) {
@@ -18,12 +17,10 @@ export default function AdminAppLayout({ children }: { children: React.ReactNode
         </Link>
 
         <nav className="flex gap-1 overflow-x-auto md:flex-col md:overflow-visible">
-          {NAV_ITEMS.map(({ href, label, icon: Icon, external }) => (
+          {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}
-              target={external ? "_blank" : undefined}
-              rel={external ? "noopener noreferrer" : undefined}
               className="flex items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
             >
               <Icon className="h-4 w-4" />

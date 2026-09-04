@@ -7,6 +7,8 @@ import { EnvelopeCalendarLetter } from "./families/EnvelopeCalendarLetter";
 import { DoorArabicLetter } from "./families/DoorArabicLetter";
 import { SwanNoirLetter } from "./families/SwanNoirLetter";
 import { LaceOvalLetter } from "./families/LaceOvalLetter";
+import { RoyalFrameLetter } from "./families/RoyalFrameLetter";
+import { VineFrameLetter } from "./families/VineFrameLetter";
 
 export function TemplateRenderer({
   invitation,
@@ -77,6 +79,28 @@ export function TemplateRenderer({
   if (theme.family === "lace-oval") {
     return (
       <LaceOvalLetter
+        invitation={invitation}
+        musicTrack={musicTrack}
+        theme={theme}
+        previewMode={previewMode}
+      />
+    );
+  }
+
+  if (theme.family === "royal-frame") {
+    return (
+      <RoyalFrameLetter
+        invitation={invitation}
+        musicTrack={musicTrack}
+        theme={theme}
+        previewMode={previewMode}
+      />
+    );
+  }
+
+  if (theme.family === "vine-frame") {
+    return (
+      <VineFrameLetter
         invitation={invitation}
         musicTrack={musicTrack}
         theme={theme}

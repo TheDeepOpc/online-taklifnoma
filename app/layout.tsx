@@ -14,6 +14,7 @@ import {
   Allura,
   Beau_Rivage,
   DM_Sans,
+  Dancing_Script,
 } from "next/font/google";
 import "./globals.css";
 
@@ -100,6 +101,12 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
 });
 
+const dancingScript = Dancing_Script({
+  variable: "--font-dancing-script",
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Onlayn to'y taklifnomasi",
   description: "To'y taklifnomangizni onlayn yarating va ulashing",
@@ -120,6 +127,7 @@ const FONT_VARIABLES = [
   allura.variable,
   beauRivage.variable,
   dmSans.variable,
+  dancingScript.variable,
 ].join(" ");
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

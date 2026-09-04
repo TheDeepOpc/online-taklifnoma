@@ -118,6 +118,37 @@ export function FlowerIcon({ className }: IconProps) {
   );
 }
 
+export function PalaceIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 100 60"
+      fill="none"
+      className={className}
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g stroke="currentColor" strokeWidth="0.8" strokeLinejoin="round">
+        <path d="M50 4 46 10h8L50 4Z" />
+        <line x1="50" y1="10" x2="50" y2="16" />
+        <rect x="10" y="16" width="80" height="34" />
+        <rect x="4" y="50" width="92" height="4" />
+        <path d="M10 16 20 6h60l10 10" />
+        {[18, 30, 42, 58, 70, 82].map((x) => (
+          <rect key={x} x={x - 3} y="24" width="6" height="14" />
+        ))}
+        <path d="M44 50V30a6 6 0 0 1 12 0v20" />
+        {[16, 84].map((x) => (
+          <g key={x}>
+            <line x1={x} y1="16" x2={x} y2="50" />
+            <line x1={x - 4} y1="50" x2={x - 4} y2="20" />
+            <line x1={x + 4} y1="50" x2={x + 4} y2="20" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  );
+}
+
 export function LeafIcon({ className }: IconProps) {
   return (
     <svg

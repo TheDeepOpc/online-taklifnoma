@@ -7,7 +7,9 @@ export type ThemeFamily =
   | "door-arabic"
   | "video-hero"
   | "swan-noir"
-  | "lace-oval";
+  | "lace-oval"
+  | "royal-frame"
+  | "vine-frame";
 
 export interface ThemeDefinition {
   id: string;
@@ -410,6 +412,44 @@ export const THEME_PRESETS: ThemeDefinition[] = [
       "theme-script-font": "var(--font-beau-rivage)",
       "theme-body-font": "var(--font-dm-sans)",
       "theme-label-font": "var(--font-dm-sans)",
+    },
+  },
+  {
+    id: "royal-champagne",
+    name: "Qirollik shampani",
+    family: "royal-frame",
+    minPriceTier: "200000",
+    colors: {
+      cream: "#f7f0e0",
+      "cream-deep": "#efe4c8",
+      paper: "#fbf7ec",
+      ink: "#2c2418",
+      "ink-soft": "#6b5f48",
+      gold: "#b9903e",
+      "gold-deep": "#8a6a2c",
+    },
+    fonts: {
+      "theme-script-font": "var(--font-dancing-script)",
+      "theme-body-font": "var(--font-cormorant)",
+      "theme-label-font": "var(--font-cormorant)",
+      "theme-display-font": "var(--font-bodoni-moda)",
+    },
+  },
+  {
+    id: "vine-navy",
+    name: "To'q ko'k tokzor",
+    family: "vine-frame",
+    minPriceTier: "200000",
+    colors: {
+      cream: "#f7f3ea",
+      ink: "#1c3a5e",
+      "ink-soft": "#4a5f7a",
+    },
+    fonts: {
+      "theme-script-font": "var(--font-great-vibes)",
+      "theme-body-font": "var(--font-cormorant)",
+      "theme-label-font": "var(--font-montserrat)",
+      "theme-display-font": "var(--font-cormorant)",
     },
   },
 ];
