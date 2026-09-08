@@ -131,12 +131,6 @@ export function SwanNoirLetter({
               <span className={styles.amp}>&amp;</span>
               {invitation.bride_name}
             </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={invitation.cover_photo_url || `${ASSETS}/swans.jpg`}
-              alt=""
-              className={styles.entranceSwans}
-            />
             <button type="button" className={styles.entranceBtn} onClick={handleOpen}>
               Ochish
             </button>

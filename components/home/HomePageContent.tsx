@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   Eye,
   Phone,
@@ -23,6 +23,7 @@ import {
 import { TemplateGallery } from "@/components/home/TemplateGallery";
 import { Reveal, RevealGroup, RevealItem, AnimatedWords } from "@/components/motion/Reveal";
 import { CountUp } from "@/components/motion/CountUp";
+import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { THEME_PRESETS, getUnlockedThemes } from "@/lib/themes";
 import { PRICE_TIER_LABELS, type PriceTier } from "@/lib/types";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -122,14 +123,31 @@ export function HomePageContent({ content }: { content: SiteContent }) {
   const [modalOpen, setModalOpen] = useState(false);
   const reduce = useReducedMotion();
 
+  // Hero fonining skrolldagi parallaksi — video sekinroq siljiydi.
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroSmooth = useSpring(heroProgress, { stiffness: 90, damping: 26, mass: 0.4 });
+  const heroBgY = useTransform(heroSmooth, [0, 1], ["0%", "18%"]);
+  const heroBgScale = useTransform(heroSmooth, [0, 1], [1, 1.12]);
+  const heroContentY = useTransform(heroSmooth, [0, 1], ["0px", "-60px"]);
+  const heroContentOpacity = useTransform(heroSmooth, [0, 0.7], [1, 0]);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#F7F2E9] font-sans text-[#2A241B] antialiased selection:bg-[#D4AF37]/30 selection:text-[#2A241B]">
+      <ScrollProgress />
       <SiteHeader dark overlay />
 
       {/* ================= HERO: VIDEO FON ================= */}
-      <section className="relative overflow-hidden">
+      <section ref={heroRef} className="relative overflow-hidden">
         {/* video fon */}
-        <div aria-hidden className="absolute inset-0 h-full w-full">
+        <motion.div
+          aria-hidden
+          className="absolute inset-0 h-full w-full"
+          style={reduce ? undefined : { y: heroBgY, scale: heroBgScale }}
+        >
           <video
             className={`h-full w-full object-cover ${reduce ? "" : "kenburns"}`}
             src="/video.mp4"
@@ -145,7 +163,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
           <div className="absolute inset-0 bg-[#120d07]/20" />
           {/* yuqoridagi oltin glowni yumshatish */}
           <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0d0905]/75 to-transparent" />
-        </div>
+        </motion.div>
 
         {/* suzuvchi mayda yurakchalar */}
         {!reduce &&
@@ -168,7 +186,10 @@ export function HomePageContent({ content }: { content: SiteContent }) {
             </span>
           ))}
 
-        <div className="relative mx-auto flex min-h-[92svh] max-w-6xl flex-col items-center justify-center px-5 pb-24 pt-28 text-center sm:pb-28 sm:pt-32">
+        <motion.div
+          className="relative mx-auto flex min-h-[92svh] max-w-6xl flex-col items-center justify-center px-5 pb-24 pt-28 text-center sm:pb-28 sm:pt-32"
+          style={reduce ? undefined : { y: heroContentY, opacity: heroContentOpacity }}
+        >
           <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -249,7 +270,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
               </div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
