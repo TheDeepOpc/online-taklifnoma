@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const PRODUCT_LINKS = [
-  { label: "Dizaynlar", href: "/templates" },
+  { label: "Dizaynlar", href: "/#designs" },
   { label: "Narxlar", href: "/#pricing" },
   { label: "Qanday ishlaydi", href: "/#how" },
 ];
@@ -35,32 +35,32 @@ const SOCIALS = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[#2E2A27]/6 bg-white py-12 sm:py-16">
+    <footer className="border-t border-[#D4AF37]/15 bg-[#120d07] py-12 text-[#F7F2E9] sm:py-16">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 sm:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <svg viewBox="0 0 120 80" className="h-6 w-9 text-[#B8923F]" fill="none" aria-hidden>
+              <svg viewBox="0 0 120 80" className="h-6 w-9 text-[#D4AF37]" fill="none" aria-hidden>
                 <ellipse cx="42" cy="45" rx="28" ry="18" stroke="currentColor" strokeWidth="1.5" transform="rotate(-12 42 45)" />
                 <ellipse cx="78" cy="45" rx="28" ry="18" stroke="currentColor" strokeWidth="1.5" transform="rotate(12 78 45)" />
               </svg>
-              <span className="font-display text-lg tracking-tight text-[#2E2A27]">
-                Oila<span className="text-[#BD7E5F]">-</span>Uchun
+              <span className="font-display text-lg tracking-tight text-[#F7F2E9]">
+                Oila<span className="text-[#D4AF37]">-</span>Uchun
               </span>
             </Link>
-            <p className="max-w-[220px] text-sm leading-relaxed text-[#2E2A27]/50">
-              Sevganlaringiz uchun onlayn to&apos;y taklifnomasini yarating.
+            <p className="max-w-[220px] text-sm leading-relaxed text-[#F7F2E9]/50">
+              Sevganlaringiz uchun onlayn to&apos;y taklifnomasini yarating — har bir havola sevgi hikoyasidir.
             </p>
           </div>
 
           {/* Product */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-[#2E2A27]">Mahsulot</h4>
+            <h4 className="mb-3 text-sm font-semibold text-[#D4AF37]">Mahsulot</h4>
             <ul className="space-y-2.5">
               {PRODUCT_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-[#2E2A27]/50 transition-colors hover:text-[#BD7E5F]">
+                  <Link href={link.href} className="text-sm text-[#F7F2E9]/50 transition-colors hover:text-[#D4AF37]">
                     {link.label}
                   </Link>
                 </li>
@@ -70,11 +70,11 @@ export function SiteFooter() {
 
           {/* Company */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-[#2E2A27]">Kompaniya</h4>
+            <h4 className="mb-3 text-sm font-semibold text-[#D4AF37]">Kompaniya</h4>
             <ul className="space-y-2.5">
               {COMPANY_LINKS.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-sm text-[#2E2A27]/50 transition-colors hover:text-[#BD7E5F]">
+                  <a href={link.href} className="text-sm text-[#F7F2E9]/50 transition-colors hover:text-[#D4AF37]">
                     {link.label}
                   </a>
                 </li>
@@ -84,7 +84,7 @@ export function SiteFooter() {
 
           {/* Social */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-[#2E2A27]">Ijtimoiy tarmoqlar</h4>
+            <h4 className="mb-3 text-sm font-semibold text-[#D4AF37]">Ijtimoiy tarmoqlar</h4>
             <div className="flex gap-3">
               {SOCIALS.map((s) => (
                 <a
@@ -93,7 +93,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F6EFE9] text-[#2E2A27]/50 transition-colors hover:bg-[#BD7E5F] hover:text-white"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[#D4AF37]/10 text-[#F7F2E9]/50 transition-colors hover:bg-[#D4AF37] hover:text-[#16110b]"
                 >
                   {s.icon}
                 </a>
@@ -102,8 +102,9 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-[#2E2A27]/6 pt-6 text-center">
-          <p className="text-xs text-[#2E2A27]/40">&copy; 2026 Oila-Uchun. Barcha huquqlar himoyalangan.</p>
+        <div className="mt-10 flex flex-col items-center gap-2 border-t border-[#D4AF37]/10 pt-6 sm:flex-row sm:justify-between">
+          <p className="text-xs text-[#F7F2E9]/40">&copy; 2026 Oila-Uchun. Barcha huquqlar himoyalangan.</p>
+          <p className="font-script text-lg text-[#D4AF37]/60">made with love</p>
         </div>
       </div>
     </footer>

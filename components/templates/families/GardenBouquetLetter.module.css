@@ -46,7 +46,7 @@
   text-transform: uppercase;
   letter-spacing: 0.32em;
   font-weight: 600;
-  font-size: 11px;
+  font-size: clamp(9px, 2.65vw, 21px);;
   line-height: 1.6;
   color: var(--ink-soft);
   margin: 0;
@@ -245,7 +245,7 @@
 
 .dateSide {
   width: 5rem;
-  font-size: 10px;
+  font-size: clamp(8px, 2.41vw, 20px);;
 }
 
 .dateSide:first-of-type {
@@ -312,7 +312,7 @@
   display: block;
   margin-top: 0.375rem;
   font-family: var(--theme-label-font), serif;
-  font-size: 8px;
+  font-size: clamp(8px, 1.93vw, 16px);;
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -335,7 +335,7 @@
 .calendarLabel {
   color: #7d9160;
   font-weight: 600;
-  font-size: 11px;
+  font-size: clamp(9px, 2.65vw, 21px);;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding-bottom: 8px;
@@ -350,7 +350,7 @@
   height: 32px;
   margin: 3px 0;
   font-family: var(--theme-body-font), serif;
-  font-size: 16px;
+  font-size: clamp(12px, 3.86vw, 31px);;
   color: var(--accent);
 }
 

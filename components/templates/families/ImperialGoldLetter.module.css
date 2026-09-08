@@ -201,7 +201,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--theme-label-font), sans-serif;
-  font-size: 11px;
+  font-size: clamp(9px, 2.65vw, 21px);;
   font-weight: 600;
   letter-spacing: 0.32em;
   text-transform: uppercase;

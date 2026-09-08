@@ -22,7 +22,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, Arial, Helvetica, sans-serif;
 }
 
 @layer components {
@@ -41,6 +41,69 @@ body {
   .font-display {
     font-family: var(--font-playfair), serif;
   }
+
+  .font-script {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+  }
+}
+
+/* Oltin gradiент matn */
+.text-gold {
+  background: linear-gradient(115deg, #f3e0a0 0%, #d4af37 35%, #fff2c4 50%, #b8860b 78%, #e6c15a 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 5s ease-in-out infinite;
+}
+
+@keyframes gold-shimmer {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1.02) translateY(0);
+  }
+  50% {
+    transform: scale(1.16) translateY(-1.6%);
+  }
+  100% {
+    transform: scale(1.02) translateY(0);
+  }
+}
+
+.kenburns {
+  animation: kenburns 30s ease-in-out infinite;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(112vh) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.85;
+  }
+  82% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(-14vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-float-up {
+  animation: float-up linear infinite;
 }
 
 @keyframes float-down {
@@ -175,6 +238,9 @@ iframe {
   .aurora-c,
   .animate-scroll-cue,
   .animate-sheen,
+  .kenburns,
+  .animate-float-up,
+  .text-gold,
   .marquee-mask > div {
     animation: none !important;
   }

@@ -232,8 +232,9 @@
 /* ---- Salomlashuv (to'q bo'lim) ---- */
 .welcomeSection {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   width: min(100%, 430px);
   min-height: 100svh;
   margin: 0 auto;

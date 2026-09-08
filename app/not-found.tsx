@@ -22,7 +22,7 @@ export default function NotFound() {
           Bosh sahifaga qaytish
         </Link>
         <Link
-          href="/templates"
+          href="/#designs"
           className="inline-flex items-center gap-2 rounded-full border border-[#2E2A27]/20 px-6 py-3 text-sm font-medium text-[#2E2A27] transition-colors duration-300 hover:border-[#2E2A27]/40 hover:bg-[#2E2A27]/5"
         >
           Shablonlarni ko&apos;rish

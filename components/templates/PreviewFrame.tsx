@@ -1,6 +1,7 @@
 import { TemplateRenderer } from "./TemplateRenderer";
 import { getTheme } from "@/lib/themes";
 import { DEMO_INVITATION } from "@/lib/demoInvitation";
+import type { Invitation } from "@/lib/types";
 
 /**
  * Reference mobile viewport width the template families are designed for
@@ -20,10 +21,21 @@ export function TemplatePreviewFrame({
   scaleClassName: string;
 }) {
   const theme = getTheme(themeId);
-  const invitation = { ...DEMO_INVITATION, template_id: theme.id };
+  const invitation: Invitation = {
+    ...DEMO_INVITATION,
+    template_id: theme.id,
+    // Preview kartalari `<Link>` (a) ichida ochiladi — ichki `<a>` (xarita
+    // havolasi) yoki `<button>` (to'yona nusxalash) nested interaktiv element
+    // bo'lib hydration xatosiga olib keladi. Demo bog'lanishlarini o'chiramiz.
+    venue_map_url: null,
+    gift_card_number: null,
+  };
 
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden bg-white">
+    <div
+      className="pointer-events-none absolute inset-0 overflow-hidden bg-white"
+      style={{ contentVisibility: "auto", containIntrinsicSize: "400px 800px" }}
+    >
       <div
         className={`origin-top-left ${scaleClassName}`}
         style={{ width: DEVICE_WIDTH }}
