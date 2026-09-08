@@ -1,6 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
+import { MUSIC_TRACKS_TAG } from "@/lib/musicTracks";
 import { createClient } from "@/lib/supabase/server";
 
 const MUSIC_BUCKET = "music";
@@ -43,6 +44,7 @@ export async function addMusicTrack(formData: FormData) {
     throw new Error(`Bazaga saqlashda xatolik: ${insertError.message}`);
   }
 
+  updateTag(MUSIC_TRACKS_TAG);
   revalidatePath("/admin/music");
 }
 
@@ -86,5 +88,6 @@ export async function deleteMusicTrack(id: string, storagePath: string | null) {
     await supabase.storage.from(MUSIC_BUCKET).remove([storagePath]);
   }
 
+  updateTag(MUSIC_TRACKS_TAG);
   revalidatePath("/admin/music");
 }

@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { InvitationFormWithPreview } from "@/components/admin/InvitationFormWithPreview";
 import { updateInvitation } from "../../actions";
-import type { Invitation, MusicTrack } from "@/lib/types";
+import { getMusicTracks } from "@/lib/musicTracks";
+import type { Invitation } from "@/lib/types";
 
 export default async function EditInvitationPage({
   params,
@@ -12,9 +13,9 @@ export default async function EditInvitationPage({
   const { id } = await params;
   const supabase = await createClient();
 
-  const [{ data: invitation }, { data: musicTracks }] = await Promise.all([
+  const [{ data: invitation }, musicTracks] = await Promise.all([
     supabase.from("invitations").select("*").eq("id", id).single(),
-    supabase.from("music_tracks").select("*").order("title"),
+    getMusicTracks(),
   ]);
 
   if (!invitation) {
@@ -28,7 +29,7 @@ export default async function EditInvitationPage({
       <h1 className="mb-6 text-2xl font-semibold text-slate-900">Taklifnomani tahrirlash</h1>
       <InvitationFormWithPreview
         invitation={invitation as Invitation}
-        musicTracks={(musicTracks as MusicTrack[]) ?? []}
+        musicTracks={musicTracks}
         action={boundUpdateInvitation}
       />
     </div>
