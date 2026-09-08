@@ -8,11 +8,16 @@ import { PRICE_TIER_LABELS, type Invitation } from "@/lib/types";
 
 type StatusFilter = "all" | "paid" | "unpaid";
 
+type InvitationListItem = Pick<
+  Invitation,
+  "id" | "slug" | "groom_name" | "bride_name" | "wedding_date" | "is_paid" | "price_tier"
+>;
+
 export function InvitationList({
   invitations,
   onDelete,
 }: {
-  invitations: Invitation[];
+  invitations: InvitationListItem[];
   onDelete: (id: string) => Promise<void>;
 }) {
   const [search, setSearch] = useState("");

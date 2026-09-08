@@ -27,7 +27,7 @@ body {
 
 @layer components {
   .input {
-    @apply w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-indigo-500;
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-indigo-500;
   }
 
   .btn {
@@ -59,4 +59,123 @@ body {
 
 .animate-float-down {
   animation: float-down linear infinite;
+}
+
+/* Media responsivligi: hech qanday rasm/video/iframe konteynerdan tashqariga
+   chiqmasin va gorizontal scroll paydo qilmasin. Shablonlardagi absolute
+   bezaklar (gullar, ornamentlar) o'z modulida `max-width: none` bilan
+   bu qoidadan chiqadi — klass selektori element selektoridan kuchliroq. */
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+/* ===== Bosh sahifa animatsiyalari ===== */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 0.75rem));
+  }
+}
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee-mask:hover > div {
+  animation-play-state: paused;
+}
+
+/* Hero orqasidagi sekin harakatlanuvchi rangli dog'lar */
+@keyframes aurora-drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(6%, -8%) scale(1.14);
+  }
+}
+
+@keyframes aurora-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate(-8%, 6%) scale(0.92);
+  }
+}
+
+@keyframes aurora-drift-c {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(0.95);
+  }
+  50% {
+    transform: translate(5%, 7%) scale(1.18);
+  }
+}
+
+.aurora-a {
+  animation: aurora-drift-a 22s ease-in-out infinite;
+}
+.aurora-b {
+  animation: aurora-drift-b 28s ease-in-out infinite;
+}
+.aurora-c {
+  animation: aurora-drift-c 25s ease-in-out infinite;
+}
+
+/* Pastga suring ko'rsatkichi */
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-cue {
+  animation: scroll-cue 2s ease-in-out infinite;
+}
+
+/* Yumshoq shimmer (tugma yaltirashi) */
+@keyframes sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  60%,
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+.animate-sheen {
+  animation: sheen 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-a,
+  .aurora-b,
+  .aurora-c,
+  .animate-scroll-cue,
+  .animate-sheen,
+  .marquee-mask > div {
+    animation: none !important;
+  }
 }

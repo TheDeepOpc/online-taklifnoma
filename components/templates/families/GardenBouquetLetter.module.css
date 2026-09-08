@@ -1,0 +1,487 @@
+/* FLORAL — "Bog' gulzori". Original: templates/FLORAL (.gdn-*). */
+.root {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--accent);
+  font-family: var(--theme-body-font), serif;
+}
+
+.script {
+  font-family: var(--theme-script-font), cursive;
+}
+
+.canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--paper) url("/imported-assets/garden-bouquet/canvas-bg.webp") center center /
+    cover no-repeat;
+}
+
+.hero,
+.section,
+.footer {
+  position: relative;
+  z-index: 10;
+}
+
+/* ---- Frosted karta ---- */
+.card {
+  position: relative;
+  background: var(--card-bg);
+  backdrop-filter: blur(18px) saturate(1.05);
+  -webkit-backdrop-filter: blur(18px) saturate(1.05);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 24px 60px rgba(63, 82, 51, 0.18);
+  border-radius: 26px;
+  padding: 3.5rem 1.75rem;
+  text-align: center;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.label {
+  font-family: var(--theme-label-font), serif;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+
+.divider span {
+  display: block;
+  height: 1px;
+  width: 40px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.divider i {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.namesStack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  margin: 1.25rem 0 0;
+}
+
+.nameLine {
+  font-family: var(--theme-body-font), serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.nameLineLg {
+  font-family: var(--theme-body-font), serif;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.amp {
+  font-size: 1.6rem;
+  margin: 0.35rem 0;
+  color: var(--accent-deep);
+}
+
+.cardTitle {
+  margin: 0.35rem 0 0;
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+/* ---- Kirish ---- */
+.entrance {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: var(--paper) url("/imported-assets/garden-bouquet/canvas-bg.webp") center center /
+    cover no-repeat;
+  transition: opacity 0.7s ease, visibility 0.7s;
+}
+
+.entranceGone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.entranceStack {
+  position: relative;
+  width: min(92vw, 430px);
+}
+
+.entranceFlowerTop {
+  position: absolute;
+  top: -4rem;
+  right: -1rem;
+  width: 58%;
+  z-index: 20;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(63, 82, 51, 0.2));
+}
+
+.entranceFlowerBottom {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62%;
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(63, 82, 51, 0.2));
+}
+
+.entranceCard {
+  padding: 4rem 1.75rem;
+}
+
+.entranceRing {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  margin: 0 auto 1.75rem;
+  background: var(--accent-deep);
+  color: var(--accent-text);
+}
+
+.entranceRing svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.entranceIntro {
+  margin: 1.5rem auto 0;
+  max-width: 20rem;
+}
+
+.heroDate {
+  margin: 0 0 1.5rem;
+  font-size: 1.125rem;
+  color: var(--accent);
+}
+
+.openBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2.25rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: var(--accent-text);
+  font-family: var(--theme-label-font), serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 26px rgba(63, 82, 51, 0.32);
+  cursor: pointer;
+}
+
+/* ---- Bo'limlar ---- */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 5rem 1.25rem;
+}
+
+.section {
+  padding: 3.5rem 1.25rem;
+}
+
+.venueName {
+  margin: 1rem 0 0;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.venueAddr {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.dateRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.dateSide {
+  width: 5rem;
+  font-size: 10px;
+}
+
+.dateSide:first-of-type {
+  text-align: right;
+}
+
+.dateRule {
+  display: block;
+  width: 1px;
+  height: 3rem;
+  background: var(--card-border);
+}
+
+.dateBig {
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.dateYear {
+  margin: 0.75rem 0 1.5rem;
+  font-size: 1.125rem;
+  color: var(--accent);
+}
+
+.greetingText {
+  margin: 1.25rem 0 0;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.signature {
+  margin: 0.5rem 0 0;
+  font-size: 2.25rem;
+  line-height: 1.15;
+}
+
+/* ---- Sanoq ---- */
+.countGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  max-width: 28rem;
+  margin: 1.5rem auto 0;
+}
+
+.countCell {
+  border-radius: 1rem;
+  padding: 1rem 0;
+  background: rgba(84, 104, 60, 0.08);
+  border: 1px solid var(--card-border);
+}
+
+.countValue {
+  display: block;
+  font-size: 1.875rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.countLabel {
+  display: block;
+  margin-top: 0.375rem;
+  font-family: var(--theme-label-font), serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---- Kalendar ---- */
+.calendarWrap {
+  margin-top: 3rem;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  margin-top: 1.25rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.calendarLabel {
+  color: #7d9160;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-bottom: 8px;
+}
+
+.calendarCell,
+.calendarHighlight {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 3px 0;
+  font-family: var(--theme-body-font), serif;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+.calendarHighlight {
+  color: var(--accent-text);
+  background: var(--accent);
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(63, 82, 51, 0.3);
+}
+
+.calendarHighlight svg {
+  display: none;
+}
+
+/* ---- Kun tartibi ---- */
+.timeline {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+  text-align: left;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.timelineTime {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.timelineLabel {
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+/* ---- Galereya ---- */
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.galleryItem {
+  aspect-ratio: 1;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 1px solid rgba(125, 145, 96, 0.35);
+}
+
+/* ---- Xarita tugmasi ---- */
+.mapBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  border: 1px solid rgba(84, 104, 60, 0.6);
+  border-radius: 999px;
+  color: var(--accent-deep);
+  font-family: var(--theme-label-font), serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.mapBtn:hover {
+  background: rgba(84, 104, 60, 0.1);
+}
+
+/* ---- To'yona ---- */
+.giftRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.giftLabel {
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.copyBtn {
+  padding: 0.6rem 1.4rem;
+  border: 1px solid rgba(84, 104, 60, 0.6);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent-deep);
+  font-family: var(--theme-label-font), serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ---- Yakun ---- */
+.closing {
+  text-align: center;
+}
+
+.closingGarland {
+  width: min(220px, 60%);
+  margin: 0 auto 1rem;
+  display: block;
+  filter: drop-shadow(0 6px 10px rgba(63, 82, 51, 0.2));
+}
+
+.footer {
+  text-align: center;
+  padding: 0 1.25rem 3rem;
+  font-family: var(--theme-label-font), serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}

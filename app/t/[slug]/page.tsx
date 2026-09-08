@@ -5,10 +5,13 @@ import type { Invitation, MusicTrack } from "@/lib/types";
 
 export default async function PublicInvitationPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ bare?: string }>;
 }) {
   const { slug } = await params;
+  const { bare } = await searchParams;
   const supabase = await createClient();
 
   const { data: invitation } = await supabase
@@ -35,5 +38,13 @@ export default async function PublicInvitationPage({
     musicTrack = data as MusicTrack | null;
   }
 
-  return <TemplateRenderer invitation={typedInvitation} musicTrack={musicTrack} />;
+  return (
+    <TemplateRenderer
+      invitation={typedInvitation}
+      musicTrack={musicTrack}
+      frame={bare !== "1"}
+      frameSrc={`/t/${slug}?bare=1`}
+      frameTitle={`${typedInvitation.groom_name} va ${typedInvitation.bride_name} — Taklifnoma`}
+    />
+  );
 }

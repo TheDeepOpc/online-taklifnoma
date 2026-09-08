@@ -176,11 +176,13 @@
   top: 48px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 2;
   font-family: var(--theme-label-font), sans-serif;
   font-size: 0.75rem;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  opacity: 0.8;
+  color: #fff;
+  opacity: 0.85;
   white-space: nowrap;
 }
 
@@ -682,4 +684,82 @@
   .heroAmp {
     font-size: 1.5rem;
   }
+}
+
+@media (min-width: 640px) {
+  .section,
+  .calendarSection,
+  .buildingWrap {
+    max-width: 600px;
+  }
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.galleryItem {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.giftRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 12px;
+}
+
+.giftLabel {
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.copyBtn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+/* Kirish ekranidagi monogramma va ismlar (TOY originalidagi kabi). */
+.preloaderMonogram {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin: 0;
+  font-family: var(--theme-display-font), serif;
+  font-size: clamp(3.4rem, 16vw, 5rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: -0.08em;
+}
+
+.preloaderMonogram span:last-child {
+  margin-left: -0.12em;
+}
+
+.preloaderNames {
+  margin: 0;
+  max-width: 18ch;
+  text-align: center;
+  font-family: var(--theme-script-font), cursive;
+  font-size: clamp(1.9rem, 8.5vw, 2.6rem);
+  line-height: 1.15;
+  color: color-mix(in srgb, var(--gold) 78%, var(--ink));
+}
+
+.preloader {
+  gap: 22px;
+  padding: 32px 24px;
 }

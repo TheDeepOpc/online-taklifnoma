@@ -12,6 +12,7 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { CalendarHighlight } from "../CalendarHighlight";
 import { RevealCard } from "../RevealCard";
+import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon } from "../icons";
 import type { Invitation, MusicTrack } from "@/lib/types";
 import type { ThemeDefinition } from "@/lib/themes";
@@ -20,7 +21,15 @@ import styles from "./VideoHeroLetter.module.css";
 
 const ASSETS = "/imported-assets/taklifnomaaa";
 
-function Preloader({ onDone }: { onDone: () => void }) {
+function Preloader({
+  onDone,
+  groom,
+  bride,
+}: {
+  onDone: () => void;
+  groom: string;
+  bride: string;
+}) {
   const [gone, setGone] = useState(false);
 
   function handleOpen() {
@@ -112,6 +121,13 @@ function Preloader({ onDone }: { onDone: () => void }) {
           transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 1.0 }}
         />
       </svg>
+      <h1 className={styles.preloaderMonogram} aria-label={`${groom} & ${bride}`}>
+        <span>{groom.charAt(0)}</span>
+        <span>{bride.charAt(0)}</span>
+      </h1>
+      <p className={styles.preloaderNames}>
+        {groom} &amp; {bride}
+      </p>
       <button type="button" className={styles.preloaderBtn} onClick={handleOpen}>
         Ochish
       </button>
@@ -332,7 +348,11 @@ export function VideoHeroLetter({
   return (
     <div className={styles.root} style={rootStyle}>
       {!previewMode && !preloaderDone && (
-        <Preloader onDone={handleEnter} />
+        <Preloader
+          onDone={handleEnter}
+          groom={invitation.groom_name}
+          bride={invitation.bride_name}
+        />
       )}
 
       <section ref={heroRef} className={`${styles.hero} ${previewMode ? styles.heroPreview : ""}`}>
@@ -374,8 +394,14 @@ export function VideoHeroLetter({
 
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <div className={styles.greetingTitle}>
-          Qadrli va
-          <span className={styles.greetingBig}>hurmatli insonimiz!</span>
+          {invitation.guest_name ? (
+            <span className={styles.greetingBig}>Hurmatli {invitation.guest_name}!</span>
+          ) : (
+            <>
+              Qadrli va
+              <span className={styles.greetingBig}>hurmatli insonimiz!</span>
+            </>
+          )}
         </div>
         <div className={styles.divider} />
         {messageLines.map((line, i) => (
@@ -460,12 +486,39 @@ export function VideoHeroLetter({
           <span className={`${styles.countdownDiamond} ${styles.countdownDiamondBr}`}>◆</span>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={`${ASSETS}/rings.webp`} alt="" className={styles.ringsImage} />
-          <CountdownTimer targetDate={weddingDateTime} variant="ornate" />
+          <CountdownTimer targetDate={weddingDateTime} variant="ornate" live={!previewMode} />
         </div>
         <p className={styles.closingNote}>
           Quvonchli kunimizning aziz mehmoni bo&apos;lishingizni kutib qolamiz!
         </p>
       </RevealCard>
+
+      {invitation.gallery_photo_urls.length > 0 && (
+        <RevealCard className={styles.section} alwaysVisible={previewMode}>
+          <div className={styles.countdownTitle}>Xotira galereyasi</div>
+          <PhotoGallery
+            photos={invitation.gallery_photo_urls}
+            className={styles.galleryGrid}
+            itemClassName={styles.galleryItem}
+          />
+        </RevealCard>
+      )}
+
+      {invitation.gift_card_number && (
+        <RevealCard className={styles.section} alwaysVisible={previewMode}>
+          <div className={styles.countdownTitle}>To&apos;yona</div>
+          <div className={styles.giftRow}>
+            <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
+            <button
+              type="button"
+              className={styles.copyBtn}
+              onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
+            >
+              Nusxalash
+            </button>
+          </div>
+        </RevealCard>
+      )}
 
       <footer className={styles.footer}>
         {invitation.groom_name} va {invitation.bride_name} oilalari

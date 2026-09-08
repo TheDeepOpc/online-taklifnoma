@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { PhotoGallery } from "../PhotoGallery";
 import { PalaceIcon, MapPinIcon } from "../icons";
 import type { Invitation, MusicTrack } from "@/lib/types";
 import type { ThemeDefinition } from "@/lib/themes";
@@ -124,7 +125,7 @@ export function RoyalFrameLetter({
           <PalaceIcon className={styles.palaceIcon} />
         </div>
         <div className={`${styles.countdownTitle} ${styles.script}`}>To&apos;ygacha qoldi</div>
-        <CountdownTimer targetDate={weddingDateTime} variant="divided" />
+        <CountdownTimer targetDate={weddingDateTime} variant="divided" live={!previewMode} />
         <div className={styles.asterisks}>* * * * *</div>
       </RevealCard>
 
@@ -143,6 +144,33 @@ export function RoyalFrameLetter({
           </a>
         )}
       </RevealCard>
+
+      {invitation.gallery_photo_urls.length > 0 && (
+        <RevealCard className={styles.section} alwaysVisible={previewMode}>
+          <div className={`${styles.countdownTitle} ${styles.script}`}>Xotira galereyasi</div>
+          <PhotoGallery
+            photos={invitation.gallery_photo_urls}
+            className={styles.galleryGrid}
+            itemClassName={styles.galleryItem}
+          />
+        </RevealCard>
+      )}
+
+      {invitation.gift_card_number && (
+        <RevealCard className={styles.section} alwaysVisible={previewMode}>
+          <div className={`${styles.countdownTitle} ${styles.script}`}>To&apos;yona</div>
+          <div className={styles.giftRow}>
+            <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
+            <button
+              type="button"
+              className={styles.copyBtn}
+              onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
+            >
+              Nusxalash
+            </button>
+          </div>
+        </RevealCard>
+      )}
 
       <footer className={styles.footer}>
         {invitation.groom_name} va {invitation.bride_name} oilalari

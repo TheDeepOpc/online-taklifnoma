@@ -3,19 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye } from "lucide-react";
-import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
+import { TemplatePreviewFrame } from "@/components/templates/PreviewFrame";
 import { THEME_PRESETS, type ThemeDefinition } from "@/lib/themes";
-import { DEMO_INVITATION } from "@/lib/demoInvitation";
 import { PRICE_TIER_LABELS } from "@/lib/types";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
 function TemplateCard({ theme }: { theme: ThemeDefinition }) {
   const router = useRouter();
-  const invitation = { ...DEMO_INVITATION, template_id: theme.id };
+  const href = `/templates/${theme.id}`;
 
   function openDemo() {
-    router.push(`/templates/${theme.id}`);
+    router.push(href);
   }
 
   return (
@@ -26,13 +25,13 @@ function TemplateCard({ theme }: { theme: ThemeDefinition }) {
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") openDemo();
       }}
+      onMouseEnter={() => router.prefetch(href)}
+      onTouchStart={() => router.prefetch(href)}
       className="group flex cursor-pointer flex-col items-center gap-3"
     >
       <div className="relative h-[320px] w-[180px] overflow-hidden rounded-[1.3rem] border-[4px] border-[#2E2A27] bg-[#2E2A27] shadow-lg transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-xl sm:h-[480px] sm:w-[260px] sm:rounded-[1.6rem] sm:border-[5px] sm:shadow-2xl">
         <div className="absolute left-1/2 top-0 z-50 h-3 w-16 -translate-x-1/2 rounded-b-lg bg-[#2E2A27] sm:h-4 sm:w-20 sm:rounded-b-xl" />
-        <div className="pointer-events-none h-full w-full overflow-y-auto bg-white">
-          <TemplateRenderer invitation={invitation} musicTrack={null} previewMode />
-        </div>
+        <TemplatePreviewFrame themeId={theme.id} scaleClassName="scale-[0.45] sm:scale-[0.65]" />
         <div className="absolute inset-0 z-40 flex items-center justify-center bg-black/0 opacity-0 transition group-hover:bg-black/30 group-hover:opacity-100">
           <span className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#2E2A27] shadow-lg sm:px-5 sm:py-2.5 sm:text-sm">
             <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />

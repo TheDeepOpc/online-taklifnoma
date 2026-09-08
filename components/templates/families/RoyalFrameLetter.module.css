@@ -355,3 +355,60 @@
   color: var(--ink-soft);
   font-size: 0.85rem;
 }
+
+@media (max-width: 380px) {
+  .monogram {
+    font-size: 1.9rem;
+  }
+
+  .heroNames {
+    font-size: 1.8rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .section {
+    max-width: 500px;
+  }
+
+  .heroNames {
+    font-size: 2.3rem;
+  }
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.galleryItem {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.giftRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 12px;
+}
+
+.giftLabel {
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.copyBtn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-deep);
+  background: transparent;
+  color: var(--gold-deep);
+  font-size: 0.75rem;
+  cursor: pointer;
+}

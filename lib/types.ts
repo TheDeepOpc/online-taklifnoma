@@ -1,5 +1,6 @@
 export type PriceTier = "150000" | "200000" | "250000";
 export type InvitationStatus = "draft" | "published";
+export type TextSize = "normal" | "compact";
 
 export type TemplateId = string;
 
@@ -15,6 +16,11 @@ export interface MusicTrack {
   file_url: string;
   storage_path: string | null;
   min_price_tier: PriceTier;
+}
+
+export interface ScheduleItem {
+  time: string;
+  label: string;
 }
 
 export interface Invitation {
@@ -33,7 +39,11 @@ export interface Invitation {
   custom_message: string | null;
   cover_photo_url: string | null;
   second_photo_url: string | null;
+  gallery_photo_urls: string[];
+  schedule_items: ScheduleItem[];
   gift_card_number: string | null;
+  guest_name: string | null;
+  text_size: TextSize;
   is_paid: boolean;
   status: InvitationStatus;
   created_at: string;

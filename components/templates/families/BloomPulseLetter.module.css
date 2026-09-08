@@ -1,0 +1,477 @@
+.root {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--theme-body-font), serif;
+  overflow-x: hidden;
+}
+
+.script {
+  font-family: var(--theme-script-font), cursive;
+}
+
+@keyframes bloomPulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes bloomBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ---- Entrance ---- */
+.entrance {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: linear-gradient(to bottom right, var(--bg-amber), var(--bg-rose), var(--bg-pink));
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+
+.entranceGone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(2px);
+  animation: bloomPulse 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.blobRose {
+  top: 22%;
+  left: 18%;
+  width: 130px;
+  height: 130px;
+  background: var(--blob-rose);
+}
+
+.blobAmber {
+  top: 68%;
+  right: 18%;
+  width: 100px;
+  height: 100px;
+  background: var(--blob-amber);
+  animation-delay: 0.8s;
+}
+
+.blobPink {
+  top: 50%;
+  left: 10%;
+  width: 70px;
+  height: 70px;
+  background: var(--blob-pink);
+  animation-delay: 1.2s;
+}
+
+.entranceInner {
+  position: relative;
+  z-index: 1;
+  max-width: 380px;
+}
+
+.heartWrap {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 24px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom right, var(--blob-rose-solid), var(--accent));
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+}
+
+.heartIcon {
+  width: 44px;
+  height: 44px;
+  color: #fff;
+  animation: bloomPulse 2.2s ease-in-out infinite;
+}
+
+.entranceNames {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+.entranceBtn {
+  margin-top: 20px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.entranceBtn:hover {
+  transform: scale(1.05);
+}
+
+.entranceHint {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.entranceDots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.entranceDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--blob-rose-solid);
+  animation: bloomBounce 1.2s ease-in-out infinite;
+}
+
+.entranceDot:nth-child(2) {
+  background: #f472b6;
+  animation-delay: 0.15s;
+}
+
+.entranceDot:nth-child(3) {
+  background: #fbbf24;
+  animation-delay: 0.3s;
+}
+
+/* ---- Sections ---- */
+.section {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(6px);
+  border-radius: 1.25rem;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: var(--accent);
+}
+
+.greetingLabel {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.greetingText {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.signature {
+  font-size: 1.7rem;
+  margin-top: 24px;
+}
+
+.calendarHead {
+  font-size: 1.4rem;
+  margin-bottom: 14px;
+}
+
+.calendarCell {
+  padding: 8px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.calendarEmpty {
+  padding: 8px;
+}
+
+.calendarHighlight {
+  padding: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.countdownTitle {
+  font-size: 1.3rem;
+  margin-bottom: 14px;
+  color: var(--accent);
+}
+
+.venueAddr {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.venueName {
+  font-size: 1.7rem;
+  margin-bottom: 20px;
+}
+
+.mapBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.mapBtn:hover {
+  transform: scale(1.05);
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.galleryItem {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.giftRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+}
+
+.giftLabel {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+
+.copyBtn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.footer {
+  padding: 32px 24px 90px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+
+/* ---- Kirish darvozasi (GUL originalidagi kabi) ---- */
+.entranceInner {
+  position: relative;
+  z-index: 10;
+  max-width: 42rem;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.heartWrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 32px;
+}
+
+.heartBadge {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fb7185, #ec4899);
+  box-shadow: 0 25px 50px -12px rgba(236, 72, 153, 0.45);
+}
+
+.heartIcon {
+  width: 48px;
+  height: 48px;
+  color: #fff;
+  animation: bloomPulseSoft 2s ease-in-out infinite;
+}
+
+@keyframes bloomPulseSoft {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.heartDotA,
+.heartDotB {
+  position: absolute;
+  border-radius: 50%;
+  animation: bloomBounce 1.4s ease-in-out infinite;
+}
+
+.heartDotA {
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: #fda4af;
+}
+
+.heartDotB {
+  bottom: -8px;
+  left: -8px;
+  width: 16px;
+  height: 16px;
+  background: #f9a8d4;
+  animation-delay: 0.3s;
+}
+
+@keyframes bloomBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.entranceTitle {
+  margin: 0 0 24px;
+  font-family: var(--theme-display-font, var(--font-playfair)), serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 9vw, 3.75rem);
+  line-height: 1.15;
+  color: #1f2937;
+}
+
+.entranceLead {
+  margin: 0 auto 32px;
+  max-width: 32rem;
+  font-family: var(--theme-body-font), serif;
+  font-size: clamp(1.125rem, 4.4vw, 1.25rem);
+  line-height: 1.65;
+  color: #4b5563;
+}
+
+.entranceMusic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  color: #d97706;
+  font-family: var(--theme-label-font), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.entranceMusicIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.entranceBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f43f5e, #ec4899);
+  color: #fff;
+  font-family: var(--theme-label-font), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 20px 25px -5px rgba(236, 72, 153, 0.4);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.entranceBtn:hover {
+  transform: scale(1.05);
+}
+
+.entranceBtnIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.entranceHint {
+  margin-top: 24px;
+  font-family: var(--theme-label-font), sans-serif;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.entranceDots {
+  position: static;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 40px;
+}
+
+.entranceDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fda4af;
+  animation: bloomBounce 1.4s ease-in-out infinite;
+}
+
+.entranceDot:nth-child(2) {
+  background: #f9a8d4;
+  animation-delay: 0.15s;
+}
+
+.entranceDot:nth-child(3) {
+  background: #fcd34d;
+  animation-delay: 0.3s;
+}

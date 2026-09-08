@@ -498,3 +498,50 @@
     text-align: center;
   }
 }
+
+@media (min-width: 640px) {
+  .heroNames {
+    font-size: 3.8rem;
+  }
+
+  .section {
+    max-width: 620px;
+  }
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.galleryItem {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.giftRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 12px;
+}
+
+.giftLabel {
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--champagne);
+}
+
+.copyBtn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-dim);
+  background: transparent;
+  color: var(--ivory);
+  font-size: 0.75rem;
+  cursor: pointer;
+}

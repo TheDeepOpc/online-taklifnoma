@@ -7,10 +7,13 @@ import { DEMO_INVITATION } from "@/lib/demoInvitation";
 
 export default async function TemplateDemoPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ themeId: string }>;
+  searchParams: Promise<{ bare?: string }>;
 }) {
   const { themeId } = await params;
+  const { bare } = await searchParams;
   const theme = THEME_PRESETS.find((t) => t.id === themeId);
 
   if (!theme) {
@@ -18,6 +21,14 @@ export default async function TemplateDemoPage({
   }
 
   const invitation = { ...DEMO_INVITATION, template_id: theme.id };
+
+  const isBare = bare === "1";
+
+  if (isBare) {
+    return (
+      <TemplateRenderer invitation={invitation} musicTrack={null} frame={false} />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FDFBFB]">
@@ -28,7 +39,12 @@ export default async function TemplateDemoPage({
         <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
         Shablonlar
       </Link>
-      <TemplateRenderer invitation={invitation} musicTrack={null} />
+      <TemplateRenderer
+        invitation={invitation}
+        musicTrack={null}
+        frameSrc={`/templates/${themeId}?bare=1`}
+        frameTitle={`${theme.name} — namuna`}
+      />
     </div>
   );
 }

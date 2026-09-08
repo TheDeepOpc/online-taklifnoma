@@ -1,19 +1,80 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useFormStatus } from "react-dom";
+import { X } from "lucide-react";
 import { Eye, EyeOff } from "lucide-react";
 import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
 import { ThemePicker } from "./ThemePicker";
-import { THEME_PRESETS, getUnlockedThemes, isThemeUnlocked } from "@/lib/themes";
+import {
+  THEME_PRESETS,
+  getTheme,
+  getUnlockedThemes,
+  isThemeUnlocked,
+  familySupportsCoverPhoto,
+  familySupportsSecondPhoto,
+} from "@/lib/themes";
 import {
   PRICE_TIER_LABELS,
   type Invitation,
   type MusicTrack,
   type PriceTier,
+  type ScheduleItem,
+  type TextSize,
 } from "@/lib/types";
 
 function todayISODate(): string {
   return new Date().toISOString().slice(0, 10);
+}
+
+function subscribeIsDesktop(callback: () => void) {
+  const mq = window.matchMedia("(min-width: 1024px)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+function getIsDesktopSnapshot() {
+  return window.matchMedia("(min-width: 1024px)").matches;
+}
+function getIsDesktopServerSnapshot() {
+  return false;
+}
+
+const MAX_UPLOAD_WIDTH = 1600;
+const MAX_GALLERY_PHOTOS = 5;
+
+/**
+ * Admin ko'pincha rasmni telefondan to'g'ridan-to'g'ri yuklaydi (3-10 MB, 3000px+
+ * kenglikda) — sekin internetda bu formani saqlashni sezilarli sekinlashtiradi.
+ * Yuborishdan oldin brauzerda kichraytirib, hajmini bir necha barobar qisqartiramiz.
+ */
+async function compressImageFile(file: File): Promise<File> {
+  if (!file.type.startsWith("image/") || file.type === "image/svg+xml") return file;
+
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, MAX_UPLOAD_WIDTH / bitmap.width);
+    const width = Math.round(bitmap.width * scale);
+    const height = Math.round(bitmap.height * scale);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return file;
+    ctx.drawImage(bitmap, 0, 0, width, height);
+
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/jpeg", 0.82),
+    );
+    if (!blob || blob.size >= file.size) return file;
+
+    return new File([blob], file.name.replace(/\.\w+$/, "") + ".jpg", {
+      type: "image/jpeg",
+    });
+  } catch {
+    // Kichraytirib bo'lmasa, asl faylni yuboramiz — funksionallik buzilmasin.
+    return file;
+  }
 }
 
 export function InvitationFormWithPreview({
@@ -46,16 +107,99 @@ export function InvitationFormWithPreview({
     invitation?.second_photo_url ?? null,
   );
   const [giftCardNumber, setGiftCardNumber] = useState(invitation?.gift_card_number ?? "");
+  // Galereya: mavjud (serverda saqlangan) rasmlar va bu sessiyada qo'shilgan
+  // yangi (hali yuklanmagan) rasmlar alohida kuzatiladi — shunda admin
+  // qo'shishda avvalgilarini yo'qotmaydi, va ikkalasidan ham o'chira oladi.
+  const [existingGalleryUrls, setExistingGalleryUrls] = useState<string[]>(
+    invitation?.gallery_photo_urls ?? [],
+  );
+  const [pendingGalleryFiles, setPendingGalleryFiles] = useState<File[]>([]);
+  const [pendingGalleryPreviews, setPendingGalleryPreviews] = useState<string[]>([]);
+  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>(
+    invitation?.schedule_items ?? [],
+  );
+  const [useGuestName, setUseGuestName] = useState(Boolean(invitation?.guest_name));
+  const [guestName, setGuestName] = useState(invitation?.guest_name ?? "");
+  const [textSize, setTextSize] = useState<TextSize>(invitation?.text_size ?? "normal");
+  const galleryInputRef = useRef<HTMLInputElement>(null);
   const [showMobilePreview, setShowMobilePreview] = useState(false);
+  const isDesktop = useSyncExternalStore(
+    subscribeIsDesktop,
+    getIsDesktopSnapshot,
+    getIsDesktopServerSnapshot,
+  );
 
-  function handleCoverChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) setCoverPreviewUrl(URL.createObjectURL(file));
+  async function handleCoverChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const input = e.target;
+    const file = input.files?.[0];
+    if (!file) return;
+    setCoverPreviewUrl(URL.createObjectURL(file));
+
+    const compressed = await compressImageFile(file);
+    const dt = new DataTransfer();
+    dt.items.add(compressed);
+    input.files = dt.files;
   }
 
-  function handleSecondPhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) setSecondPhotoPreviewUrl(URL.createObjectURL(file));
+  async function handleSecondPhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const input = e.target;
+    const file = input.files?.[0];
+    if (!file) return;
+    setSecondPhotoPreviewUrl(URL.createObjectURL(file));
+
+    const compressed = await compressImageFile(file);
+    const dt = new DataTransfer();
+    dt.items.add(compressed);
+    input.files = dt.files;
+  }
+
+  function syncGalleryInput(files: File[]) {
+    const input = galleryInputRef.current;
+    if (!input) return;
+    const dt = new DataTransfer();
+    files.forEach((file) => dt.items.add(file));
+    input.files = dt.files;
+  }
+
+  async function handleGalleryChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const input = e.target;
+    const remainingSlots = MAX_GALLERY_PHOTOS - existingGalleryUrls.length - pendingGalleryFiles.length;
+    const selected = Array.from(input.files ?? []).slice(0, Math.max(0, remainingSlots));
+    if (selected.length === 0) {
+      input.value = "";
+      return;
+    }
+
+    const compressed = await Promise.all(selected.map(compressImageFile));
+    const nextFiles = [...pendingGalleryFiles, ...compressed];
+    setPendingGalleryFiles(nextFiles);
+    setPendingGalleryPreviews((urls) => [...urls, ...compressed.map((f) => URL.createObjectURL(f))]);
+    syncGalleryInput(nextFiles);
+  }
+
+  function removeExistingGalleryPhoto(index: number) {
+    setExistingGalleryUrls((urls) => urls.filter((_, i) => i !== index));
+  }
+
+  function removePendingGalleryPhoto(index: number) {
+    const nextFiles = pendingGalleryFiles.filter((_, i) => i !== index);
+    setPendingGalleryFiles(nextFiles);
+    setPendingGalleryPreviews((urls) => urls.filter((_, i) => i !== index));
+    syncGalleryInput(nextFiles);
+  }
+
+  function addScheduleItem() {
+    setScheduleItems((items) => [...items, { time: "", label: "" }]);
+  }
+
+  function updateScheduleItem(index: number, field: keyof ScheduleItem, value: string) {
+    setScheduleItems((items) =>
+      items.map((item, i) => (i === index ? { ...item, [field]: value } : item)),
+    );
+  }
+
+  function removeScheduleItem(index: number) {
+    setScheduleItems((items) => items.filter((_, i) => i !== index));
   }
 
   function handlePriceTierChange(nextPriceTier: PriceTier) {
@@ -66,7 +210,18 @@ export function InvitationFormWithPreview({
   }
 
   const selectedMusicTrack = musicTracks.find((t) => t.id === musicTrackId) ?? null;
+  const selectedTheme = getTheme(templateId);
+  const showCoverPhoto = familySupportsCoverPhoto(selectedTheme.family);
+  const showSecondPhoto = familySupportsSecondPhoto(selectedTheme.family);
+  const galleryPhotos = [
+    ...existingGalleryUrls.map((url) => ({ url, kind: "existing" as const })),
+    ...pendingGalleryPreviews.map((url) => ({ url, kind: "pending" as const })),
+  ];
+  const galleryFull = galleryPhotos.length >= MAX_GALLERY_PHOTOS;
 
+  // Live preview loyihasi (framer-motion, scroll kuzatuvchilar, IntersectionObserver)
+  // ancha og'ir — uni har bosilgan tugma bilan emas, faqat foydalanuvchi yozishni
+  // to'xtatgach qayta chizamiz, shunda inputlar sekin/tormozlanib qolmaydi.
   const previewInvitation: Invitation = useMemo(
     () => ({
       id: invitation?.id ?? "preview",
@@ -84,7 +239,11 @@ export function InvitationFormWithPreview({
       custom_message: customMessage || null,
       cover_photo_url: coverPreviewUrl,
       second_photo_url: secondPhotoPreviewUrl,
+      gallery_photo_urls: [...existingGalleryUrls, ...pendingGalleryPreviews],
+      schedule_items: scheduleItems.filter((item) => item.time || item.label),
       gift_card_number: giftCardNumber || null,
+      guest_name: useGuestName ? guestName || null : null,
+      text_size: textSize,
       is_paid: isPaid,
       status: isPaid ? "published" : "draft",
       created_at: invitation?.created_at ?? "",
@@ -105,10 +264,19 @@ export function InvitationFormWithPreview({
       customMessage,
       coverPreviewUrl,
       secondPhotoPreviewUrl,
+      existingGalleryUrls,
+      pendingGalleryPreviews,
+      scheduleItems,
       giftCardNumber,
+      useGuestName,
+      guestName,
+      textSize,
       isPaid,
     ],
   );
+
+  const deferredPreviewInvitation = useDeferredValue(previewInvitation);
+  const shouldMountPreview = isDesktop || showMobilePreview;
 
   return (
     <div className="lg:grid lg:grid-cols-[1fr_380px] lg:items-start lg:gap-8">
@@ -225,24 +393,145 @@ export function InvitationFormWithPreview({
           </select>
         </Field>
 
-        <Field label="Muqova rasm (ixtiyoriy)">
+        {showCoverPhoto ? (
+          <Field label="Muqova rasm (ixtiyoriy)">
+            <input
+              name="cover_photo"
+              type="file"
+              accept="image/*"
+              onChange={handleCoverChange}
+              className="input"
+            />
+          </Field>
+        ) : (
+          <Field label="Muqova rasm">
+            <p className="text-xs text-slate-400">
+              Bu shablon rejasida muqova rasm yo&apos;q.
+            </p>
+          </Field>
+        )}
+
+        {showSecondPhoto ? (
+          <Field label="Ikkinchi rasm — kuyov (ixtiyoriy)">
+            <input
+              name="second_photo"
+              type="file"
+              accept="image/*"
+              onChange={handleSecondPhotoChange}
+              className="input"
+            />
+          </Field>
+        ) : (
+          <Field label="Ikkinchi rasm — kuyov">
+            <p className="text-xs text-slate-400">
+              Bu shablon rejasida ikkinchi rasm yo&apos;q.
+            </p>
+          </Field>
+        )}
+
+        <Field label={`Xotira galereyasi — 1 dan ${MAX_GALLERY_PHOTOS} tagacha rasm (ixtiyoriy)`}>
           <input
-            name="cover_photo"
-            type="file"
-            accept="image/*"
-            onChange={handleCoverChange}
-            className="input"
+            type="hidden"
+            name="existing_gallery_urls"
+            value={JSON.stringify(existingGalleryUrls)}
           />
+          {galleryPhotos.length > 0 && (
+            <div className="mb-2 flex flex-wrap gap-2">
+              {galleryPhotos.map((photo, i) => {
+                const indexInKind =
+                  photo.kind === "existing"
+                    ? i
+                    : i - existingGalleryUrls.length;
+                return (
+                  <div key={photo.url + i} className="relative h-16 w-16 overflow-hidden rounded-lg border border-slate-200">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={photo.url} alt="" className="h-full w-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        photo.kind === "existing"
+                          ? removeExistingGalleryPhoto(indexInKind)
+                          : removePendingGalleryPhoto(indexInKind)
+                      }
+                      className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-black/60 text-white"
+                      aria-label="Rasmni olib tashlash"
+                    >
+                      <X className="h-2.5 w-2.5" />
+                    </button>
+                  </div>
+                );
+              })}
+              {!galleryFull && (
+                <label className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-lg border border-dashed border-slate-300 text-2xl leading-none text-slate-400 hover:border-slate-400 hover:text-slate-500">
+                  +
+                  <input
+                    ref={galleryInputRef}
+                    name="gallery_photos"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleGalleryChange}
+                    className="hidden"
+                  />
+                </label>
+              )}
+            </div>
+          )}
+          {galleryPhotos.length === 0 && (
+            <label className="input flex cursor-pointer items-center justify-center text-slate-400">
+              + Rasm qo&apos;shish
+              <input
+                ref={galleryInputRef}
+                name="gallery_photos"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleGalleryChange}
+                className="hidden"
+              />
+            </label>
+          )}
+          <p className="mt-1 text-xs text-slate-400">
+            Yuklanmasa, taklifnomada galereya bo&apos;limi umuman ko&apos;rinmaydi. &quot;+&quot;
+            bosib istalgan vaqt yana rasm qo&apos;shishingiz mumkin.
+          </p>
         </Field>
 
-        <Field label="Ikkinchi rasm — kuyov (ixtiyoriy, faqat ba'zi mavzular uchun)">
-          <input
-            name="second_photo"
-            type="file"
-            accept="image/*"
-            onChange={handleSecondPhotoChange}
-            className="input"
-          />
+        <Field label="Kun dasturi (ixtiyoriy)">
+          <input type="hidden" name="schedule_items" value={JSON.stringify(scheduleItems)} />
+          <div className="space-y-2">
+            {scheduleItems.map((item, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <input
+                  type="time"
+                  value={item.time}
+                  onChange={(e) => updateScheduleItem(i, "time", e.target.value)}
+                  className="input w-28 shrink-0"
+                />
+                <input
+                  value={item.label}
+                  onChange={(e) => updateScheduleItem(i, "label", e.target.value)}
+                  placeholder="Mehmonlarni kutib olish"
+                  className="input flex-1"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeScheduleItem(i)}
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                  aria-label="Bandni olib tashlash"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+          <button type="button" onClick={addScheduleItem} className="btn-secondary mt-2 text-sm">
+            + Band qo&apos;shish
+          </button>
+          <p className="mt-1 text-xs text-slate-400">
+            Masalan: 18:00 — Mehmonlarni kutib olish. Bo&apos;sh qoldirilsa, shablonning
+            standart kun dasturi ko&apos;rsatiladi.
+          </p>
         </Field>
 
         <Field label="Sovg'a karta raqami (ixtiyoriy)">
@@ -266,6 +555,51 @@ export function InvitationFormWithPreview({
           />
         </Field>
 
+        <Field label="Murojaat">
+          <input type="hidden" name="use_guest_name" value={useGuestName ? "on" : ""} />
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm text-slate-700">
+              <input
+                type="radio"
+                checked={!useGuestName}
+                onChange={() => setUseGuestName(false)}
+                className="h-4 w-4 border-slate-300"
+              />
+              Hammaga umumiy (&quot;Aziz mehmon&quot;)
+            </label>
+            <label className="flex items-center gap-2 text-sm text-slate-700">
+              <input
+                type="radio"
+                checked={useGuestName}
+                onChange={() => setUseGuestName(true)}
+                className="h-4 w-4 border-slate-300"
+              />
+              Shaxsiy — ism-familiya bilan
+            </label>
+            {useGuestName && (
+              <input
+                name="guest_name"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                className="input"
+                placeholder="Mehmon ism-familiyasi"
+              />
+            )}
+          </div>
+        </Field>
+
+        <Field label="Matn o'lchami">
+          <select
+            name="text_size"
+            value={textSize}
+            onChange={(e) => setTextSize(e.target.value as TextSize)}
+            className="input"
+          >
+            <option value="normal">Standart</option>
+            <option value="compact">Kichikroq</option>
+          </select>
+        </Field>
+
         <label className="flex items-center gap-2 text-sm text-slate-700">
           <input
             type="checkbox"
@@ -277,9 +611,7 @@ export function InvitationFormWithPreview({
           To&apos;lov qabul qilindi (taklifnoma jonli bo&apos;ladi)
         </label>
 
-        <button type="submit" className="btn">
-          Saqlash
-        </button>
+        <SaveButton />
       </form>
 
       <div className="mt-6 lg:mt-0">
@@ -295,15 +627,30 @@ export function InvitationFormWithPreview({
         <div className={`${showMobilePreview ? "" : "hidden"} lg:block lg:sticky lg:top-6`}>
           <p className="mb-2 hidden text-sm font-medium text-slate-500 lg:block">Jonli ko&apos;rish</p>
           <div className="mx-auto h-[600px] max-w-sm overflow-y-auto rounded-2xl border border-slate-200 shadow-sm">
-            <TemplateRenderer
-              invitation={previewInvitation}
-              musicTrack={selectedMusicTrack}
-              previewMode
-            />
+            {shouldMountPreview && (
+              <TemplateRenderer
+                invitation={deferredPreviewInvitation}
+                musicTrack={selectedMusicTrack}
+                previewMode
+              />
+            )}
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function SaveButton() {
+  // useFormStatus faqat <form>ning o'z ichidagi komponentda ishlaydi — shuning
+  // uchun alohida komponent. Rasmlar (muqova/ikkinchi/galereya) yuklanayotganda
+  // bu bir necha soniya davom etishi mumkin; tugma shu payt "muzlab qolgandek"
+  // ko'rinmasligi uchun aniq holat ko'rsatamiz va qayta bosishni bloklaymiz.
+  const { pending } = useFormStatus();
+  return (
+    <button type="submit" disabled={pending} className="btn disabled:cursor-not-allowed disabled:opacity-60">
+      {pending ? "Saqlanmoqda..." : "Saqlash"}
+    </button>
   );
 }
 

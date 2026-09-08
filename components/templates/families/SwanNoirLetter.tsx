@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { PhotoGallery } from "../PhotoGallery";
 import type { Invitation, MusicTrack } from "@/lib/types";
 import type { ThemeDefinition } from "@/lib/themes";
 import styles from "./SwanNoirLetter.module.css";
@@ -130,6 +131,12 @@ export function SwanNoirLetter({
               <span className={styles.amp}>&amp;</span>
               {invitation.bride_name}
             </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={invitation.cover_photo_url || `${ASSETS}/swans.jpg`}
+              alt=""
+              className={styles.entranceSwans}
+            />
             <button type="button" className={styles.entranceBtn} onClick={handleOpen}>
               Ochish
             </button>
@@ -162,7 +169,9 @@ export function SwanNoirLetter({
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <div className={styles.archCard}>
           <div className={`${styles.greetingTitle} ${styles.script}`}>
-            Aziz qadrdonlarimiz va yaqinlarimiz!
+            {invitation.guest_name
+              ? `Hurmatli ${invitation.guest_name}!`
+              : "Aziz qadrdonlarimiz va yaqinlarimiz!"}
           </div>
           {messageLines.map((line, i) => (
             <p key={i} className={styles.greetingText}>
@@ -280,6 +289,19 @@ export function SwanNoirLetter({
         </div>
       </RevealCard>
 
+      {invitation.gallery_photo_urls.length > 0 && (
+        <RevealCard className={styles.section} alwaysVisible={previewMode}>
+          <div className={styles.archCard}>
+            <div className={`${styles.sectionTitle} ${styles.script}`}>Xotira galereyasi</div>
+            <PhotoGallery
+              photos={invitation.gallery_photo_urls}
+              className={styles.galleryGrid}
+              itemClassName={styles.galleryItem}
+            />
+          </div>
+        </RevealCard>
+      )}
+
       <RevealCard className={`${styles.section} ${styles.closing}`} alwaysVisible={previewMode}>
         <div className={`${styles.closingTitle} ${styles.script}`}>Sizni kutamiz</div>
         <p className={styles.closingSign}>
@@ -287,7 +309,7 @@ export function SwanNoirLetter({
           <br />
           {invitation.groom_name} va {invitation.bride_name}
         </p>
-        <CountdownTimer targetDate={weddingDateTime} variant="divided" />
+        <CountdownTimer targetDate={weddingDateTime} variant="divided" live={!previewMode} />
       </RevealCard>
 
       <footer className={styles.footer}>

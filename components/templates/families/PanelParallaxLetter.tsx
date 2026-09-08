@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { PhotoGallery } from "../PhotoGallery";
 import type { Invitation, MusicTrack } from "@/lib/types";
 import type { ThemeDefinition } from "@/lib/themes";
 import { uzFullDate, uzWeekdayName } from "@/lib/uzDate";
@@ -306,7 +307,9 @@ export function PanelParallaxLetter({
           )}
           <div className={styles.guest}>
             <div className={styles.label}>Hurmatli mehmon</div>
-            <div className={`${styles.guestName} ${styles.display}`}>Aziz mehmonimiz</div>
+            <div className={`${styles.guestName} ${styles.display}`}>
+              {invitation.guest_name || "Aziz mehmonimiz"}
+            </div>
             <div className={styles.guestNote}>
               Bayramona kechamizda yonimizda bo&apos;lishingizni intizorlik bilan kutamiz
             </div>
@@ -326,10 +329,57 @@ export function PanelParallaxLetter({
           )}
           <div className={`${styles.sectionLabel} ${styles.label}`}>To&apos;ygacha qoldi</div>
           <div className={`${styles.sectionTitle} ${styles.display}`}>Ortga sanash</div>
-          <CountdownTimer targetDate={weddingDateTime} variant="divided" />
+          <CountdownTimer targetDate={weddingDateTime} variant="divided" live={!previewMode} />
           <div className={styles.closingNote}>Siz bilan uchrashishni orziqib kutamiz</div>
         </div>
       </RevealCard>
+
+      {invitation.gallery_photo_urls.length > 0 && (
+        <RevealCard className={styles.section} alwaysVisible={previewMode}>
+          <div className={panelClass}>
+            {panel === "bordered" && (
+              <>
+                <span className={`${styles.cornerMark} ${styles.cornerTl}`} />
+                <span className={`${styles.cornerMark} ${styles.cornerTr}`} />
+                <span className={`${styles.cornerMark} ${styles.cornerBl}`} />
+                <span className={`${styles.cornerMark} ${styles.cornerBr}`} />
+              </>
+            )}
+            <div className={`${styles.sectionLabel} ${styles.label}`}>Xotira galereyasi</div>
+            <PhotoGallery
+              photos={invitation.gallery_photo_urls}
+              className={styles.galleryGrid}
+              itemClassName={styles.galleryItem}
+            />
+          </div>
+        </RevealCard>
+      )}
+
+      {invitation.gift_card_number && (
+        <RevealCard className={styles.section} alwaysVisible={previewMode}>
+          <div className={panelClass}>
+            {panel === "bordered" && (
+              <>
+                <span className={`${styles.cornerMark} ${styles.cornerTl}`} />
+                <span className={`${styles.cornerMark} ${styles.cornerTr}`} />
+                <span className={`${styles.cornerMark} ${styles.cornerBl}`} />
+                <span className={`${styles.cornerMark} ${styles.cornerBr}`} />
+              </>
+            )}
+            <div className={`${styles.sectionLabel} ${styles.label}`}>To&apos;yona</div>
+            <div className={styles.giftRow}>
+              <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
+              <button
+                type="button"
+                className={styles.copyBtn}
+                onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
+              >
+                Nusxalash
+              </button>
+            </div>
+          </div>
+        </RevealCard>
+      )}
 
       <footer className={styles.footer}>
         <Monogram variant={monogram} className={styles.footerMonogram} />

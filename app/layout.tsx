@@ -15,6 +15,12 @@ import {
   Beau_Rivage,
   DM_Sans,
   Dancing_Script,
+  Corinthia,
+  Imperial_Script,
+  Ovo,
+  Cinzel_Decorative,
+  Amiri,
+  Newsreader,
 } from "next/font/google";
 import "./globals.css";
 
@@ -101,6 +107,42 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
 });
 
+const corinthia = Corinthia({
+  variable: "--font-corinthia",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
+const imperialScript = Imperial_Script({
+  variable: "--font-imperial-script",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const ovo = Ovo({
+  variable: "--font-ovo",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const cinzelDecorative = Cinzel_Decorative({
+  variable: "--font-cinzel-decorative",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
+const amiri = Amiri({
+  variable: "--font-amiri",
+  weight: ["400", "700"],
+  subsets: ["arabic", "latin"],
+});
+
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  weight: ["200", "300", "400", "500"],
+  subsets: ["latin"],
+});
+
 const dancingScript = Dancing_Script({
   variable: "--font-dancing-script",
   weight: ["400", "500", "600"],
@@ -128,6 +170,12 @@ const FONT_VARIABLES = [
   beauRivage.variable,
   dmSans.variable,
   dancingScript.variable,
+  corinthia.variable,
+  imperialScript.variable,
+  ovo.variable,
+  cinzelDecorative.variable,
+  amiri.variable,
+  newsreader.variable,
 ].join(" ");
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

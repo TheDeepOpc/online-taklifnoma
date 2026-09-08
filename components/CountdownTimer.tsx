@@ -19,12 +19,34 @@ function getRemaining(target: number): Remaining {
   };
 }
 
+export interface CountdownClasses {
+  root?: string;
+  cell?: string;
+  value?: string;
+  label?: string;
+}
+
 export function CountdownTimer({
   targetDate,
   variant = "ornate",
+  live = true,
+  classes,
+  pad = false,
+  labels,
 }: {
   targetDate: string;
   variant?: "ornate" | "divided";
+  /** Small preview cards (template gallery, admin live preview) render many of
+   * these at once — ticking every second in the background is pure wasted
+   * CPU there, so callers pass `live={false}` to freeze it after one read. */
+  live?: boolean;
+  /** Berilsa, umumiy Tailwind uslublari o'rniga shablonning o'z CSS moduli
+   * klasslari ishlatiladi — originaldagi katta raqamlar/ajratgichlar uchun. */
+  classes?: CountdownClasses;
+  /** Raqamlarni ikki xonali qilib ko'rsatish (01, 08, ...). */
+  pad?: boolean;
+  /** Kun/soat/daqiqa/soniya yorliqlari. */
+  labels?: [string, string, string, string];
 }) {
   const target = new Date(targetDate).getTime();
   // Serverda va mijozda "hozir" turlicha bo'lgani uchun, hidratsiyadan keyin
@@ -34,11 +56,34 @@ export function CountdownTimer({
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setRemaining(getRemaining(target));
+    if (!live) return;
     const id = setInterval(() => setRemaining(getRemaining(target)), 1000);
     return () => clearInterval(id);
-  }, [target]);
+  }, [target, live]);
 
   if (!remaining) return null;
+
+  if (classes) {
+    const [lDay, lHour, lMin, lSec] = labels ?? ["Kun", "Soat", "Daqiqa", "Soniya"];
+    const cells = [
+      { label: lDay, value: remaining.days },
+      { label: lHour, value: remaining.hours },
+      { label: lMin, value: remaining.minutes },
+      { label: lSec, value: remaining.seconds },
+    ];
+    return (
+      <div className={classes.root} role="timer" aria-live="polite">
+        {cells.map((c) => (
+          <div key={c.label} className={classes.cell}>
+            <span className={classes.value}>
+              {pad ? String(c.value).padStart(2, "0") : c.value}
+            </span>
+            <small className={classes.label}>{c.label}</small>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   if (variant === "divided") {
     const units = [

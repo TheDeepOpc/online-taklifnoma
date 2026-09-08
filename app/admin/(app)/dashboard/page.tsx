@@ -6,12 +6,20 @@ import type { Invitation } from "@/lib/types";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
+  // Ro'yxat va statistika uchun faqat kerakli ustunlarni olamiz — taklifnomalar
+  // soni ko'paysa, har birining to'liq JSON maydonlarini (kun dasturi, galereya
+  // ro'yxati, tabrik matni va h.k.) ro'yxat sahifasida yuklash keraksiz og'irlik
+  // qo'shadi.
   const { data: invitations } = await supabase
     .from("invitations")
-    .select("*")
-    .order("created_at", { ascending: false });
+    .select("id, slug, groom_name, bride_name, wedding_date, is_paid, price_tier")
+    .order("created_at", { ascending: false })
+    .limit(500);
 
-  const list = (invitations as Invitation[]) ?? [];
+  const list = (invitations as Pick<
+    Invitation,
+    "id" | "slug" | "groom_name" | "bride_name" | "wedding_date" | "is_paid" | "price_tier"
+  >[]) ?? [];
   const paidCount = list.filter((i) => i.is_paid).length;
   const revenue = list
     .filter((i) => i.is_paid)

@@ -1,0 +1,555 @@
+/* BLUE — "Lojuvard gazebo". Original: templates/BLUE. */
+.root {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0 18px 28px;
+  color: var(--primary);
+  background: radial-gradient(circle at 18% 12%, rgba(38, 72, 107, 0.08) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 74% 22%, rgba(38, 72, 107, 0.06) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 42% 72%, rgba(38, 72, 107, 0.04) 0 1px, transparent 1.5px),
+    var(--bg);
+  background-size: 116px 116px, 144px 144px, 172px 172px;
+  font-family: var(--theme-body-font), Montserrat, sans-serif;
+}
+
+.script {
+  font-family: var(--theme-script-font), cursive;
+}
+
+.numberFont {
+  font-family: var(--theme-label-font), sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 44px 0 28px;
+  overflow: hidden;
+}
+
+.blessing {
+  color: var(--primary);
+  margin: 0 auto 18px;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.65;
+}
+
+.blessing p {
+  margin: 0;
+}
+
+.eyebrow {
+  color: var(--primary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.illustration {
+  width: min(100%, 372px);
+  min-height: clamp(224px, 70vw, 300px);
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+}
+
+.illustration img {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+}
+
+.heroNames {
+  max-width: 330px;
+  color: var(--primary);
+  margin: 0 auto;
+  font-size: clamp(50px, 15.4vw, 66px);
+  font-weight: 400;
+  line-height: 1.02;
+}
+
+.ampersand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 10px 0 8px;
+  font-family: var(--theme-body-font), Montserrat, sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.heroDate {
+  color: var(--primary);
+  letter-spacing: 0.01em;
+  margin: 38px 0 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.openBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  width: min(100%, 286px);
+  margin-top: 24px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.18s;
+}
+
+.openBtn:active {
+  opacity: 0.86;
+  transform: scale(0.98);
+}
+
+.scrollHint {
+  margin-top: 24px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* ===== Bo'limlar ===== */
+.section {
+  text-align: center;
+  padding: 42px 0 54px;
+}
+
+.sectionTitle {
+  color: var(--primary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 24px 0 0;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* ===== Muqova rasmi ===== */
+.photoFrame {
+  position: relative;
+  aspect-ratio: 0.8;
+  width: min(100%, 286px);
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.photoFrame::before,
+.photoFrame::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid var(--primary);
+}
+
+.photoFrame::before {
+  inset: 10px;
+}
+
+.photoFrame::after {
+  inset: 18px;
+}
+
+.photoFrameImg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.74) contrast(0.94) brightness(1.04);
+  display: block;
+}
+
+.photoFrameLine {
+  position: absolute;
+  z-index: 2;
+  background: var(--primary);
+  pointer-events: none;
+}
+
+.photoFrameLine[data-pos="top"],
+.photoFrameLine[data-pos="bottom"] {
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.photoFrameLine[data-pos="top"] {
+  top: 10px;
+}
+
+.photoFrameLine[data-pos="bottom"] {
+  bottom: 10px;
+}
+
+.photoFrameLine[data-pos="left"],
+.photoFrameLine[data-pos="right"] {
+  top: 0;
+  bottom: 0;
+  width: 2px;
+}
+
+.photoFrameLine[data-pos="left"] {
+  left: 10px;
+}
+
+.photoFrameLine[data-pos="right"] {
+  right: 10px;
+}
+
+/* ===== Sanoq ===== */
+.countdownPanel {
+  position: relative;
+  z-index: 3;
+  background: rgba(247, 244, 238, 0.92);
+  margin: 0 -18px;
+  padding: 30px 18px 28px;
+}
+
+.countdownTitle {
+  color: var(--primary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.countdownTimer {
+  color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.countdownItem {
+  position: relative;
+  text-align: center;
+  min-width: 72px;
+}
+
+.countdownItem:not(:last-child)::after {
+  content: ":";
+  position: absolute;
+  top: 1px;
+  right: -7px;
+  color: var(--primary);
+  font-family: var(--theme-label-font), sans-serif;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.countdownValue {
+  display: block;
+  font-family: var(--theme-label-font), sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.04em;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.countdownLabel {
+  display: block;
+  color: var(--primary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 7px;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* ===== Kalendar ===== */
+.calendarCard {
+  position: relative;
+  aspect-ratio: 1;
+  width: min(100%, 420px);
+  margin: 0 auto;
+  container-type: inline-size;
+}
+
+.calendarFrame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 112%;
+  height: 112%;
+  object-fit: fill;
+  pointer-events: none;
+  display: block;
+}
+
+.calendarContent {
+  position: absolute;
+  inset: 11.43cqw 10.48cqw 12.38cqw;
+  color: var(--primary);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendarTitle {
+  color: var(--primary);
+  letter-spacing: 0.02em;
+  margin: 0 0 4.76cqw;
+  font-size: 5cqw;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  row-gap: 2.86cqw;
+  font-size: 3.1cqw;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.calendarHead {
+  letter-spacing: 0.06em;
+  font-size: 2.62cqw;
+  font-weight: 600;
+  line-height: 1;
+  padding-bottom: 3.81cqw;
+  opacity: 0.85;
+}
+
+.calendarCell,
+.calendarHighlight {
+  position: relative;
+  min-width: 0;
+  min-height: 5.71cqw;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--theme-label-font), sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.calendarHighlight {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.calendarHighlight::before {
+  content: "";
+  position: absolute;
+  border: 0.71cqw solid var(--primary);
+  border-radius: 50%;
+  width: 8.57cqw;
+  height: 8.57cqw;
+}
+
+/* Kalendar yurak SVG'si bu shablonda ishlatilmaydi. */
+.calendarHighlight svg {
+  display: none;
+}
+
+.calendarFooter {
+  border-top: 1px solid var(--primary);
+  color: var(--primary);
+  letter-spacing: 0.01em;
+  margin: auto 0 0;
+  padding-top: 2.86cqw;
+  font-size: 2.62cqw;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* ===== Manzil ===== */
+.houseImg {
+  width: min(100%, 382px);
+  height: 284px;
+  object-fit: contain;
+  object-position: center;
+  margin: 18px auto 16px;
+  display: block;
+}
+
+.venueName {
+  color: var(--primary);
+  letter-spacing: 0.01em;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.venueAddr {
+  color: var(--primary);
+  margin: 0 0 18px;
+  font-size: 16px;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+.mapBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+/* ===== Taklif matni ===== */
+.greetingTitle {
+  color: var(--primary);
+  margin: 0;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.featuredDate {
+  color: var(--primary);
+  letter-spacing: 0.03em;
+  margin: 24px auto 4px;
+  font-size: clamp(34px, 10vw, 46px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.greetingText {
+  max-width: 342px;
+  color: var(--primary);
+  letter-spacing: 0.01em;
+  margin: 16px auto 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.9;
+}
+
+/* ===== Galereya ===== */
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.galleryItem {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+}
+
+/* ===== To'yona ===== */
+.giftRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+}
+
+.giftLabel {
+  font-family: var(--theme-label-font), sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-size: 17px;
+}
+
+.copyBtn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ===== Yakun ===== */
+.closing {
+  padding: 22px 0 76px;
+}
+
+.attireImg {
+  width: min(100%, 360px);
+  height: 292px;
+  object-fit: contain;
+  object-position: center bottom;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.closing .sectionTitle {
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--theme-script-font), cursive;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.closingText {
+  max-width: 300px;
+  color: var(--primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 18px auto 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.footer {
+  text-align: center;
+  padding: 0 0 40px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+}
