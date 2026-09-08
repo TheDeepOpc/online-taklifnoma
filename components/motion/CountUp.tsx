@@ -22,19 +22,20 @@ export function CountUp({
 
   useEffect(() => {
     if (!inView) return;
-    if (reduce) {
-      setValue(to);
-      return;
-    }
     let raf = 0;
     const start = performance.now();
     const tick = (now: number) => {
       const p = Math.min(1, (now - start) / duration);
       // easeOutCubic
-      setValue(Math.round(to * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
+      setValue(reduce ? to : Math.round(to * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        setValue(to);
+      }
     };
-    raf = requestAnimationFrame(tick);
+    // Birinchi kadrda sync setState bo'lmasligi uchun navbatda keyin ishga tushamiz.
+    raf = requestAnimationFrame(() => requestAnimationFrame(tick));
     return () => cancelAnimationFrame(raf);
   }, [inView, to, duration, reduce]);
 

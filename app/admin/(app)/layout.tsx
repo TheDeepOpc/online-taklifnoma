@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { LayoutDashboard, Music, LogOut, Plus, HeartHandshake } from "lucide-react";
+import { LayoutDashboard, Music, LogOut, Plus, HeartHandshake, LayoutTemplate } from "lucide-react";
 import { signOut } from "./invitations/actions";
 
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/site", label: "Sayt tuzilmasi", icon: LayoutTemplate },
   { href: "/admin/music", label: "Musiqalar", icon: Music },
 ];
 
