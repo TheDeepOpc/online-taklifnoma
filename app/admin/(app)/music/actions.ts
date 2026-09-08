@@ -49,14 +49,41 @@ export async function addMusicTrack(formData: FormData) {
 export async function deleteMusicTrack(id: string, storagePath: string | null) {
   const supabase = await createClient();
 
-  if (storagePath) {
-    await supabase.storage.from(MUSIC_BUCKET).remove([storagePath]);
+  // MUHIM: avval qo'shiq ishlatilayotganini tekshiramiz.
+  //
+  // Ilgari bu funksiya avval storage'dagi mp3 faylni o'chirib, keyin bazadagi
+  // qatorni o'chirishga urinardi. Agar qo'shiq biror taklifnomada ishlatilgan
+  // bo'lsa, qator o'chmasdi (foreign key), lekin FAYL allaqachon o'chib
+  // ketgan bo'lardi — natijada eski taklifnomalarning `file_url` manzili 404
+  // qaytarib, musiqa ovozsiz qolardi. Endi ishlatilayotgan qo'shiq umuman
+  // o'chirilmaydi.
+  const { count, error: countError } = await supabase
+    .from("invitations")
+    .select("id", { count: "exact", head: true })
+    .eq("music_track_id", id);
+
+  if (countError) {
+    throw new Error(`Tekshirishda xatolik: ${countError.message}`);
   }
 
+  if ((count ?? 0) > 0) {
+    throw new Error(
+      `Bu qo'shiq ${count} ta taklifnomada ishlatilmoqda — o'chirib bo'lmaydi. ` +
+        `Avval o'sha taklifnomalarga boshqa qo'shiq tanlang.`,
+    );
+  }
+
+  // Endi tartib teskari: avval baza qatori, keyin fayl. Shunda qator o'chmay
+  // qolsa ham fayl joyida turadi (yetim fayl — zararsiz), teskarisi esa
+  // taklifnomani buzardi.
   const { error } = await supabase.from("music_tracks").delete().eq("id", id);
 
   if (error) {
     throw new Error(`O'chirishda xatolik: ${error.message}`);
+  }
+
+  if (storagePath) {
+    await supabase.storage.from(MUSIC_BUCKET).remove([storagePath]);
   }
 
   revalidatePath("/admin/music");
