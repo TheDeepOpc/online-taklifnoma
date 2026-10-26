@@ -4,6 +4,7 @@
 .root button, .root a { -webkit-tap-highlight-color: transparent; }
 .root button:focus-visible, .root a:focus-visible { outline: 2px solid var(--gold); outline-offset: 7px; }
 .root ::selection { background: var(--gold); color: var(--bg); }
+:global(html):has(.root[data-invitation-locked="true"]), :global(body):has(.root[data-invitation-locked="true"]) { overflow: hidden !important; overscroll-behavior: none; }
 .gate { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; overflow: hidden; background: var(--bg); color: #fff9eb; min-height: 100svh; }
 .gateImage, .gateShade, .heroImageWrap, .heroImage, .heroShade { position: absolute; inset: 0; width: 100%; height: 100%; }
 .gateImage { object-fit: cover; animation: breathe 24s ease-in-out infinite alternate; }
@@ -28,6 +29,18 @@
 .gateEdition { position: absolute; bottom: 32px; text-transform: uppercase; font-size: 8px; letter-spacing: .35em; opacity: .7; }
 .hero { position: relative; min-height: 880px; height: 100svh; max-height: 1100px; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--bg); }
 .heroImageWrap { overflow: hidden; }
+.hasParallax .heroImage { animation: none; }
+.venueScene { position: absolute; inset: 0; height: 100%; width: 100%; }
+.portraitPair { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; border-radius: 140px 140px 0 0; }
+.portraitPair > img { border-radius: 140px 140px 0 0; aspect-ratio: 2/3; }
+.scenicQuote { height: 430px; position: relative; overflow: hidden; margin: 0 0 35px; }
+.scenicScene { position: absolute; inset: 0; height: 100%; }
+.scenicShade { position: absolute; inset: 0; background: linear-gradient(180deg, #07151144, #07151188); }
+.scenicText { position: relative; z-index: 1; text-align: center; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff9ea; }
+.scenicText > span { font-size: 8px; letter-spacing: .23em; text-transform: uppercase; }
+.scenicText > p { font: 400 51px/1 var(--font-cormorant), serif; margin: 25px 0 0; }
+.scenicText em { font: 400 65px/1.2 var(--theme-script-font), cursive; }
+.scenicText .ornament { color: #dfcda6; width: 110px; }
 .heroImage { object-fit: cover; object-position: center; animation: breathe 28s ease-in-out infinite alternate; }
 .heroShade { background: linear-gradient(180deg, #182a3b26 10%, #182a3b00 32%, #182a3b91 65%, #182a3be0 100%); }
 .heroBorder { position: absolute; inset: 19px; border: 1px solid #fff9e84d; z-index: 1; pointer-events: none; }
@@ -62,6 +75,12 @@
 .summerParticles i { border-radius: 75% 10% 75% 10%; background: #fff2c4; animation-name: leaves; }
 .goldParticles i { background: #e6c674; box-shadow: 0 0 10px #e2bc66; animation-name: fireflies; }
 .skyParticles i { clip-path: polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); background: #fff; animation-name: fireflies; }
+.estateParticles i, .royalParticles i { background: #e7d0a0; width: calc(var(--size) * .65); height: calc(var(--size) * .65); box-shadow: 0 0 8px #e7d0a055; animation-name: fireflies; }
+.cinemaParticles i { background: #e3deed; width: 2px; height: 2px; animation-name: fireflies; }
+.floralParticles i { border-radius: 80% 0 80% 0; background: #fff4dd; width: calc(var(--size) * 1.1); animation-name: leaves; }
+.botanicalParticles i { border-radius: 80% 0 80% 0; background: #b1ba8a; animation-name: leaves; }
+.coastalParticles i { background: #eef9ff; width: 3px; height: 3px; animation-name: fireflies; }
+.editorialParticles { display: none; }
 .main { position: relative; max-width: 640px; margin: auto; }
 .main::before { content: ""; position: absolute; inset: 0 20px; pointer-events: none; border-left: 1px solid var(--line); border-right: 1px solid var(--line); opacity: .5; }
 .chapter { display: block; color: var(--accent); text-transform: uppercase; letter-spacing: .2em; font-size: 8px; line-height: 1.8; }
@@ -256,6 +275,142 @@
 .sky .venueCard { border-radius: 5px 5px 100px 100px; padding-bottom: 45px; }
 .sky .gateShade { background: linear-gradient(180deg, #1b3f6933, #1b3f6966 35%, #1b3f69d9); }
 .sky .gateFrame { border-radius: 230px 230px 0 0; }
+/* ESTATE — cinematic palace composition with a gold-foil typographic panel. */
+.estate .heroImageWrap { height: 78%; }
+.estate .heroShade { background: linear-gradient(180deg, #06181022, transparent 25%, color-mix(in srgb, var(--bg) 25%, transparent) 45%, var(--bg) 87%); }
+.estate .heroBorder { inset: 18px; border-color: var(--line); }
+.estate .heroMonogram { top: 25%; color: #f4e1b8; }
+.estate .heroText { margin-bottom: 115px; text-align: left; padding-inline: 42px; }
+.estate .names { align-items: flex-start; font-family: var(--font-cormorant), serif; font-size: clamp(43px, 12.8vw, 68px); line-height: 1.08; }
+.estate .names em { margin: 7px 0 7px 45px; color: var(--gold); font-size: 41px; }
+.estate .heroOrnament { margin: 23px 0 19px; width: 120px; color: var(--gold); }
+.estate .heroDate { justify-content: start; }
+.estate .heroText { color: var(--ink); }
+.estate .heroText .eyebrow, .estate .heroSubtitle { color: var(--ink-soft); }
+.estate .scrollCue, .estate .verticalNote { color: var(--ink-soft); }
+.estate .portraitFrame { border-radius: 0; padding: 10px; }
+.estate .gateFrame { border-radius: 0; inset: 19px; }
+.estate .gateContent { text-align: left; align-items: start; padding-inline: 45px; }
+.estate .gateNames { align-items: start; font-size: clamp(39px, 12vw, 65px); }
+.estate .gateNames em { margin-left: 35px; }
+.estate .gateOrnament { margin-left: 0; }
+.estate .openButton { align-self: start; margin-top: 4px; }
+.estate .gateGuest strong { font-size: 25px; }
+.estate .gateShade { background: linear-gradient(180deg, #09110d55, #09110d55 20%, #09110dbb 70%, #09110deb); }
+.estate .gateDate { color: #e8d2ad; }
+
+/* CINEMA — uninterrupted photographic scene, quiet white calligraphy. */
+.cinema .hero { min-height: 900px; }
+.cinema .heroShade { background: linear-gradient(180deg, #080b1622, #080b1600 25%, #080b1677 48%, var(--bg) 100%); }
+.cinema .heroBorder { inset: 16px; border-color: #f2e5cd44; }
+.cinema .heroText { margin-bottom: 125px; padding-inline: 40px; }
+.cinema .names { font-family: var(--font-cormorant), serif; font-style: italic; font-size: clamp(44px, 13.3vw, 69px); }
+.cinema .heroMonogram { top: 22%; width: 75px; height: 75px; }
+.cinema .heroMonogram i:last-child { inset: -10px; }
+.cinema .names em { font-size: 42px; margin: 8px 0; }
+.cinema .heroSubtitle { font-size: 17px; }
+.cinema .gateShade { background: linear-gradient(180deg, #080b1633, #080b1655 30%, #080b16d9); }
+.cinema .gateFrame { border-radius: 200px 200px 200px 200px; }
+.cinema .portraitFrame { border-radius: 200px 200px 0 0; }
+.cinema .venueCard { outline: 1px solid var(--line); outline-offset: -7px; }
+.cinema .dateStamp > span { font-style: italic; }
+
+/* FLORAL — sculptural photographed flowers and an asymmetrical stationery arch. */
+.floral .hero { min-height: 920px; }
+.floral .heroImageWrap { inset: 100px 24px auto; height: 58%; width: calc(100% - 48px); border-radius: 180px 180px 4px 4px; }
+.floral .heroShade { background: linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--bg) 50%, transparent) 54%, var(--bg) 69%); }
+.floral .heroText { margin-bottom: 110px; color: var(--ink); padding-inline: 35px; }
+.floral .heroTop { color: var(--ink); }
+.floral .names { font-family: var(--font-great-vibes), cursive; font-size: clamp(47px, 14vw, 70px); line-height: 1.12; letter-spacing: 0; }
+.floral .names em { color: var(--accent); font: italic 32px var(--font-cormorant), serif; margin: 7px 0; }
+.floral .heroMonogram { top: 24%; color: #fff8ef; }
+.floral .heroBorder { border-radius: 200px 200px 0 0; inset: 90px 17px 18px; border-color: var(--line); }
+.floral .heroOrnament { color: var(--gold); margin-block: 15px; }
+.floral .eyebrow, .floral .heroSubtitle, .floral .scrollCue, .floral .verticalNote { color: var(--ink-soft); }
+.floral .dateSection { border-radius: 190px 190px 0 0; padding-top: 70px; }
+.floral .portraitFrame { border-radius: 150px 150px 150px 150px; }
+.floral .gateFrame { border-radius: 220px 220px 0 0; }
+.floral .gateShade { background: linear-gradient(180deg, #35231d22, #35231d77 45%, #35231dd9); }
+
+/* EDITORIAL — monochrome photographs, generous margins, book-like typography. */
+.editorial .hero { min-height: 920px; text-align: left; }
+.editorial .heroImageWrap { inset: 110px 32px auto; width: calc(100% - 64px); height: 46%; }
+.editorial .heroImage { filter: grayscale(1); }
+.editorial .heroShade { background: linear-gradient(180deg, transparent 45%, var(--bg) 59%); }
+.editorial .heroText { color: var(--ink); padding-inline: 36px; margin-bottom: 110px; }
+.editorial .heroTop { color: var(--ink); }
+.editorial .heroBorder { inset: 22px; border-color: var(--line); }
+.editorial .names { align-items: start; font: 400 clamp(40px, 12.2vw, 62px)/1.02 var(--font-bodoni-moda), serif; }
+.editorial .names em { align-self: center; font: italic 33px var(--font-bodoni-moda), serif; color: var(--ink-soft); margin: 9px 0; }
+.editorial .names > span:last-child { align-self: end; font-style: italic; }
+.editorial .heroMonogram { display: none; }
+.editorial .heroOrnament { margin: 25px 0 20px; width: 95px; color: var(--gold); }
+.editorial .heroDate { justify-content: start; }
+.editorial .heroText .eyebrow { margin-bottom: 25px; }
+.editorial .scrollCue, .editorial .verticalNote { color: var(--ink-soft); }
+.editorial .heroSubtitle { font-style: normal; }
+.editorial .portraitFrame { border-radius: 0; transform: rotate(-2deg); padding: 10px; background: var(--paper); }
+.editorial .gateImage { filter: grayscale(1); }
+.editorial .gateFrame { border-radius: 0; inset: 24px; }
+.editorial .gateNames { font-family: var(--font-bodoni-moda), serif; font-size: clamp(35px, 10vw, 55px); }
+.editorial .gateNames span:last-child { font-style: italic; }
+.editorial .gateShade { background: linear-gradient(180deg, #11130f33, #11130f77 50%, #11130fdd); }
+.editorial .seal { border-radius: 0; }
+.editorial .seal::before { border-radius: 0; animation: none; }
+.editorial .galleryItem:first-child { border-radius: 0 !important; }
+
+/* ROYAL — photographed architecture with an elongated double-arch frame. */
+.royal .hero { min-height: 940px; }
+.royal .heroTop { color: var(--ink); }
+.royal .heroImageWrap { inset: 104px 35px auto; width: calc(100% - 70px); height: 56%; border-radius: 200px 200px 0 0; border: 1px solid var(--gold); }
+.royal .heroShade { background: linear-gradient(180deg, transparent 39%, color-mix(in srgb, var(--bg) 10%, transparent) 48%, var(--bg) 70%); }
+.royal .heroText { color: var(--ink); margin-bottom: 110px; padding-inline: 34px; }
+.royal .names { font-family: var(--font-cormorant), serif; font-size: clamp(43px, 12.8vw, 65px); }
+.royal .names em { font-size: 43px; margin: 7px; color: var(--accent); }
+.royal .heroBorder { inset: 18px; border-color: var(--line); }
+.royal .heroBorder::after { content: ""; position: absolute; inset: 6px; border: 1px solid var(--line); }
+.royal .heroMonogram { top: 24%; color: #fff7dc; width: 78px; height: 78px; }
+.royal .heroOrnament { color: var(--gold); margin-block: 18px; }
+.royal .scrollCue, .royal .verticalNote, .royal .heroText .eyebrow { color: var(--ink-soft); }
+.royal .gateFrame { border-radius: 220px 220px 0 0; }
+.royal .gateNames { font-family: var(--font-cormorant), serif; }
+.royal .gateShade { background: linear-gradient(180deg, #211a1022, #211a1077 45%, #211a10df); }
+.royal .venueCard { border-radius: 140px 140px 0 0; padding-top: 48px; outline: 1px solid var(--line); outline-offset: -7px; }
+.royal .portraitFrame { border-radius: 180px 180px 0 0; }
+
+/* COASTAL — a framed blue landscape and airy italic typography. */
+.coastal .hero { min-height: 900px; }
+.coastal .heroTop { color: var(--ink); }
+.coastal .heroImageWrap { inset: 115px 24px auto; width: calc(100% - 48px); height: 49%; border-radius: 3px; }
+.coastal .heroShade { background: linear-gradient(180deg, transparent 44%, var(--bg) 63%); }
+.coastal .heroText { color: var(--ink); margin-bottom: 100px; padding-inline: 32px; }
+.coastal .names { font-family: var(--font-cormorant), serif; font-style: italic; font-size: clamp(43px, 12.8vw, 65px); }
+.coastal .names em { color: var(--accent); margin: 7px; font-size: 38px; }
+.coastal .heroBorder { inset: 23px; border-color: var(--line); }
+.coastal .heroMonogram { color: #fff; top: 22%; width: 70px; height: 70px; }
+.coastal .heroOrnament { color: var(--gold); margin-block: 15px; }
+.coastal .scrollCue, .coastal .verticalNote, .coastal .heroText .eyebrow { color: var(--ink-soft); }
+.coastal .gateFrame { border-radius: 180px 180px 2px 2px; }
+.coastal .gateShade { background: linear-gradient(180deg, #13324c33, #13324c66 45%, #13324ce0); }
+.coastal .portraitFrame { border-radius: 0; }
+.coastal .dateSection { border-radius: 160px 160px 0 0; padding-top: 65px; }
+
+/* BOTANICAL — a verdant photographed oval and natural paper tones. */
+.botanical .hero { min-height: 940px; }
+.botanical .heroTop { color: var(--ink); }
+.botanical .heroImageWrap { inset: 110px 33px auto; width: calc(100% - 66px); height: 54%; border-radius: 200px 200px 90px 90px; }
+.botanical .heroShade { background: linear-gradient(180deg, transparent 43%, color-mix(in srgb, var(--bg) 25%, transparent) 52%, var(--bg) 68%); }
+.botanical .heroText { color: var(--ink); margin-bottom: 110px; padding-inline: 34px; }
+.botanical .names { font-family: var(--font-great-vibes), cursive; font-size: clamp(45px, 13.8vw, 70px); line-height: 1.2; }
+.botanical .names em { color: var(--accent); font: italic 32px var(--font-cormorant), serif; margin: 6px; }
+.botanical .heroBorder { inset: 20px; border-color: var(--line); border-radius: 180px 180px 0 0; top: 100px; }
+.botanical .heroMonogram { top: 25%; color: #fff; }
+.botanical .heroOrnament { color: var(--gold); margin-block: 15px; }
+.botanical .scrollCue, .botanical .verticalNote, .botanical .heroText .eyebrow { color: var(--ink-soft); }
+.botanical .portraitFrame { border-radius: 160px 160px 160px 160px; }
+.botanical .dateSection { margin-inline: 20px; border-radius: 180px 180px 0 0; padding-inline: 23px; }
+.botanical .gateShade { background: linear-gradient(180deg, #172d1b22, #172d1b77 45%, #172d1be0); }
+.botanical .gateFrame { border-radius: 230px 230px 0 0; }
 .preview .hero { height: 880px; min-height: 880px; }
 .preview .particles, .preview .scrollCue { display: none; }
 .preview .heroImage { animation: none; }

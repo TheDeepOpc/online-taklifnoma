@@ -1,0 +1,4 @@
+.scene { overflow: hidden; isolation: isolate; }
+.layer { position: absolute; inset: 0; transform-origin: center; }
+.layer img { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: reduce) { .layer { transform: none !important; } }

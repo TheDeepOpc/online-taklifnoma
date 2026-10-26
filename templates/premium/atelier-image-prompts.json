@@ -1,0 +1,95 @@
+{
+  "tool": "image_gen (built-in)",
+  "assets": [
+    {
+      "id": "eternal-vow",
+      "file": "public/invitation-art/eternal-vow.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A romantic emerald lakeside wedding pavilion at blue hour, gilded sculptural arch, tall cypress trees, white orchids, dark pine-green water reflecting candle lanterns, a beautiful old chateau in the distance. Deep emerald and antique gold, cinematic intimate luxury. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "green-gold",
+      "file": "public/invitation-art/green-gold.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. An exquisite sunlit olive grove wedding on an Italian lake, soft sage-green branches, tiny ivory roses, weathered limestone pergola, golden morning light, silk drapes and a peaceful green-blue lake. Light ivory, olive and subtle honey-gold. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "swan-noir-classic",
+      "file": "public/invitation-art/swan-noir-classic.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. Two graceful white swans on still dark water in an opulent moonlit estate, extravagant white roses and pearl-like hanging crystal drops framing an ivory stone arch, black velvet evening, gentle silver reflections, refined black-and-white wedding editorial photography. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "royal-champagne",
+      "file": "public/invitation-art/royal-champagne.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. An elegant champagne wedding in a French chateau orangery, antique gold architectural frames, pale carved stone, cream roses, tiny candlelights and a long formal garden beyond tall arched windows, soft dawn light. Warm ivory, pale champagne, subtle antique gold. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "navy-gazebo-blue",
+      "file": "public/invitation-art/navy-gazebo-blue.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A romantic white neoclassical gazebo beside a beautiful blue lake, powder-blue hydrangeas, deep navy delphiniums, graceful white silk curtains, lush climbing white roses, faraway mountains, calm morning air. White porcelain and muted blue, exquisite editorial photography. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "cocoa-blush",
+      "file": "public/invitation-art/cocoa-blush.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A warm intimate luxury wedding garden at a terracotta villa, dusky blush roses and cocoa dahlias, curved pale plaster archways, cappuccino silk fabric, travertine staircase and Tuscan hills, soft late afternoon light. Cocoa brown, nude blush and cream. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "milliy-anor",
+      "file": "public/invitation-art/milliy-anor.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A breathtaking traditional Uzbek courtyard wedding, authentic Samarkand carved wooden columns and ivory plaster arches with subtle warm gold ornaments, pomegranate tree branches with beautiful red fruit, red garden roses, woven silk suzani textiles at the far edges, soft evening lanterns. Burgundy red, warm parchment and antique gold; culturally authentic, refined. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "garden-bloom",
+      "file": "public/invitation-art/garden-bloom.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A lush secret English garden wedding at sunrise, romantic flowering garden arch, pale pink peonies, ivory garden roses, abundant green climbing foliage, old mossy stone garden wall and pale limestone pathway, a small conservatory in the distance. Fresh sage and soft ivory. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "sacred-peony-gold",
+      "file": "public/invitation-art/sacred-peony-gold.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. An extraordinarily beautiful ivory and pale-gold wedding pavilion surrounded by oversized natural white and blush peonies, delicate gilded stone arch, draping ivory silk, golden dawn light on a calm reflecting pool. Refined sacred serenity, soft parchment, peony ivory and antique gold. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "ivory-swan-arch",
+      "file": "public/invitation-art/ivory-swan-arch.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A dreamy ivory stone arch overlooking a misty lake, elegant white swan in the distance, abundant ivory garden roses and trailing white orchids, delicate carved columns, opalescent reflections, luminous cream and palest blush light. Exquisite soft romantic wedding editorial. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "aurora-dream-night",
+      "file": "public/invitation-art/aurora-dream-night.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. An ethereal luxury wedding under the northern lights, a realistic sapphire-blue Arctic lake and midnight pine forest, a sculptural glass wedding arch with white orchids, subtle curtains of lavender and emerald aurora reflected on water, warm candles. Beautiful credible night photography, magical but refined. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "amber-dawn-rose",
+      "file": "public/invitation-art/amber-dawn-rose.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A grand rose garden wedding terrace at amber sunrise, arches of pale peach and dusky pink roses, curving travertine steps, a sunlit historic palace, warm gold rays through light morning mist. Romantic warm amber, rose and pale ivory. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "bloom-pulse-rose",
+      "file": "public/invitation-art/bloom-pulse-rose.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A spectacular romantic pink garden wedding, lavish sculptural arch covered with real blush pink roses and soft peonies, pink silk fabric, a pale blush stone villa and ornamental garden, luminous soft morning light. Modern editorial beauty, delicate warm rose palette. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "lux-gold-night",
+      "file": "public/invitation-art/lux-gold-night.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. An exclusive gold wedding celebration on a candlelit palace terrace at night, magnificent dark bronze columns, lavish golden chandelier glow, white orchids, dark olive velvet shadows, reflecting pool with golden ripples, black night sky. Sophisticated dark gold and rich charcoal, truly expensive. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "imperial-noir-gold",
+      "file": "public/invitation-art/imperial-noir-gold.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A monumental imperial black-and-gold wedding salon, soaring gilded arched doorways, polished dark marble, beautiful white rose arrangements, dramatic low candlelight, gold architectural detail and deep black background. Luxury fashion editorial lighting, absolutely refined and cinematic. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "editorial-plate-ink",
+      "file": "public/invitation-art/editorial-plate-ink.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A timeless monochrome luxury wedding editorial, sculptural white marble arch and curved stairway in a historic Italian villa garden, a cypress and white calla lilies at the edges, deeply elegant architecture, subtle film grain and high-contrast black-and-white photography. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "regal-navy-gold",
+      "file": "public/invitation-art/regal-navy-gold.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. A royal navy and gold wedding pavilion on a deep blue lake at twilight, a magnificent golden arch with ivory roses, dark navy silk drapes, baroque golden details, white marble pillars and tiny candle lanterns. Rich royal blue, ivory and antique gold, exquisite editorial photography. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    },
+    {
+      "id": "velvet-crown-noir",
+      "file": "public/invitation-art/velvet-crown-noir.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: portrait 1024x1536 mobile luxury wedding invitation background. An intimate royal wedding in a dark burgundy velvet palace conservatory, a beautifully gilded crown-like architectural arch, rich plum and wine roses, antique crystal chandeliers, deep black cherry shadows, luminous warm gold candlelight. Elegant regal atmosphere, lavish yet tasteful. Composition: one continuous portrait photograph, exquisite foreground flowers and believable atmospheric perspective, central upper and lower thirds visually calm for overlaid typography. Medium-format editorial fine art photography with tactile, realistic material textures. No text, people, logos, watermark, UI, collage or artificial graphic borders. Not a rendering or an illustration."
+    }
+  ]
+}

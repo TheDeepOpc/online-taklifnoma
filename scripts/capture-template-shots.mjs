@@ -17,7 +17,7 @@ const PORT = 9333;
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 const OUT = process.argv[2] || "public/template-shots";
 const { readFile } = await import("node:fs/promises");
-// Mavzu ID'larini to'g'ridan-to'g'ri lib/themes.ts dan o'qiymiz.
+// Asosiy va premium kolleksiyalarning mavzu ID'larini o'qiymiz.
 const themesSrc = await readFile("lib/themes.ts", "utf8");
 const premiumSrc = await readFile("templates/premium/presets.ts", "utf8");
 const allIds = [...`${themesSrc}\n${premiumSrc}`.matchAll(/^\s{4}id: "([a-z0-9-]+)",/gm)].map((m) => m[1]);
@@ -95,6 +95,17 @@ for (const themeId of IDS_LIST) {
   for (let i = 0; i < 90 && !loaded; i++) await sleep(100);
   // shrift + rasm + animatsiyalar joyiga tushishi uchun
   await sleep(2600);
+  // Kartada yopiq kirish qopqog'i emas, ochilgan dizayn ko'rinsin.
+  const button = await send("Runtime.evaluate", {
+    expression: `(() => { const b = document.querySelector('[data-invitation-open]'); if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; })()`,
+    returnByValue: true,
+  }, sessionId);
+  const point = button.result.value;
+  if (point) {
+    await send("Input.dispatchMouseEvent", { type: "mousePressed", button: "left", clickCount: 1, ...point }, sessionId);
+    await send("Input.dispatchMouseEvent", { type: "mouseReleased", button: "left", clickCount: 1, ...point }, sessionId);
+    await sleep(1400);
+  }
   const { data } = await send("Page.captureScreenshot", { format: "webp", quality: 82, captureBeyondViewport: false }, sessionId);
   await writeFile(`${OUT}/${themeId}.webp`, Buffer.from(data, "base64"));
   console.log("ok", themeId);

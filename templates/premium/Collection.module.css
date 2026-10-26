@@ -18,6 +18,15 @@
 .introBottom a { height: 46px; width: 46px; border: 1px solid #b7a47e55; border-radius: 50%; display: grid; place-items: center; transition: background .4s; }
 .introBottom a:hover { background: #b7a47e22; }
 .collection { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 45px 28px; padding-bottom: 80px; scroll-margin-top: 25px; }
+.collectionNav { display: flex; gap: 30px; margin-top: 38px; border-top: 1px solid #e9e2d51a; padding-top: 22px; }
+.collectionNav a { display: inline-flex; align-items: center; gap: 12px; font: italic 22px var(--font-cormorant), serif; }
+.collectionNav span { font: 8px var(--font-dm-sans), sans-serif; color: var(--gold); }
+.sectionTitle { padding: 45px 0 38px; border-top: 1px solid #e9e2d51a; scroll-margin-top: 30px; }
+.sectionTitle > span { color: var(--gold); font-size: 8px; letter-spacing: .22em; }
+.sectionTitle h2 { font: 400 clamp(35px, 4vw, 60px)/1.1 var(--font-cormorant), serif; margin: 20px 0 14px; }
+.sectionTitle h2 em { color: var(--gold); font-weight: 400; }
+.sectionTitle p { font-size: 11px; line-height: 1.8; color: #b9b9ad; }
+.atelierCard .cardCaption > span:first-child { font-size: 17px; max-width: 75%; }
 .card { grid-column: span 2; }
 .card0, .card1 { grid-column: span 3; }
 .cardLink { display: block; }

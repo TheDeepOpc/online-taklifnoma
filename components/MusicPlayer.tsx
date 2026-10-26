@@ -15,8 +15,8 @@ const DEFAULT_BUTTON_STYLE: React.CSSProperties = {
 
 export const MusicPlayer = forwardRef<
   MusicPlayerHandle,
-  { src: string; buttonStyle?: React.CSSProperties }
->(function MusicPlayer({ src, buttonStyle }, ref) {
+  { src: string; buttonStyle?: React.CSSProperties; hidden?: boolean }
+>(function MusicPlayer({ src, buttonStyle, hidden = false }, ref) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   // Brauzer birinchi `play()` ni bloklasa (autoplay siyosati, audio hali
@@ -91,7 +91,7 @@ export const MusicPlayer = forwardRef<
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-[60]">
+    <div className="fixed bottom-4 right-4 z-[60]" style={hidden ? { visibility: "hidden", pointerEvents: "none" } : undefined} aria-hidden={hidden || undefined}>
       <audio ref={audioRef} src={src} loop preload="auto" />
       <button
         type="button"
@@ -99,6 +99,7 @@ export const MusicPlayer = forwardRef<
         style={{ ...DEFAULT_BUTTON_STYLE, ...buttonStyle }}
         className="flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition hover:scale-105"
         aria-label={playing ? "Musiqani to'xtatish" : "Musiqani yoqish"}
+        tabIndex={hidden ? -1 : 0}
       >
         {playing ? (
           <MusicNoteIcon className="h-5 w-5" />

@@ -2,11 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowDown, ArrowLeft, ArrowUpRight, Diamond } from "lucide-react";
 import { PREMIUM_THEMES } from "@/templates/premium/presets";
+import { THEME_PRESETS } from "@/lib/themes";
+import { INVITATION_ART, invitationArtwork } from "@/lib/invitationArt";
+import { PRICE_TIER_LABELS } from "@/lib/types";
 import styles from "@/templates/premium/Collection.module.css";
 
 export const metadata: Metadata = {
-  title: "Signature — 5 ta hashamatli taklifnoma | Oila-Uchun",
-  description: "Qish, Kuz, Yoz, Tilla va Hayot, Moviy osmon. Muhabbatingiz uchun beshta alohida olam.",
+  title: "23 ta nafis taklifnoma — Signature & Atelier | Oila-Uchun",
+  description: "Mavzuga mos rasmlar, musiqali ochilish va qatlamli parallax. Signature va Atelier to‘y taklifnomalari kolleksiyasi.",
 };
 
 const titles = ["Cristal", "Amber", "Riviera", "Éternité", "Céleste"];
@@ -23,8 +26,9 @@ export default function PremiumCollectionPage() {
 
     <header className={styles.intro}>
       <div className={styles.eyebrow}><i /><Diamond size={12} strokeWidth={1} /> FAQAT ENG GO‘ZAL LAHZALAR UCHUN <i /></div>
-      <h1>Muhabbatning<br /><em>besh xil</em> jilosi<span>™</span></h1>
-      <div className={styles.introBottom}><span>01 — 05 / EXCLUSIVE EDITIONS</span><p>Besh olam. Besh kayfiyat. Hayotingizdagi eng muhim<br className={styles.desktopBreak} /> kun uchun yaratilgan betakror taklifnomalar.</p><a href="#collection" aria-label="Kolleksiyani ko‘rish"><ArrowDown size={18} strokeWidth={1} /></a></div>
+      <h1>Muhabbatning<br /><em>betakror</em> jilosi</h1>
+      <div className={styles.introBottom}><span>23 DESIGNS / TWO COLLECTIONS</span><p>Har bir muhabbat — alohida bir olam.<br className={styles.desktopBreak} /> O‘z hikoyangizga munosib taklifnomani tanlang.</p><a href="#collection" aria-label="Kolleksiyani ko‘rish"><ArrowDown size={18} strokeWidth={1} /></a></div>
+      <nav className={styles.collectionNav} aria-label="Kolleksiyalar"><a href="#collection">Signature <span>05</span></a><a href="#atelier">Atelier <span>18</span></a></nav>
     </header>
 
     <section id="collection" className={styles.collection} aria-label="Beshta premium taklifnoma">
@@ -41,6 +45,26 @@ export default function PremiumCollectionPage() {
           <div className={styles.cardCaption}><span>{subjects[index]}</span><span>Taklifnomani ko‘rish <ArrowUpRight size={13} /></span></div>
         </Link>
       </article>)}
+    </section>
+
+    <div className={styles.sectionTitle} id="atelier"><span>THE ATELIER COLLECTION</span><h2>Har biri — <em>alohida hikoya</em></h2><p>Ranglar, fasllar va orzulardan ilhomlangan o‘n sakkiz dizayn.</p></div>
+    <section className={styles.collection} aria-label="Atelier taklifnomalari">
+      {THEME_PRESETS.filter(theme => theme.collection !== "signature").map((theme, index) => {
+        const art = INVITATION_ART[theme.id];
+        return <article key={theme.id} className={`${styles.card} ${styles.atelierCard}`}>
+          <Link href={`/templates/${theme.id}`} className={styles.cardLink} aria-label={`${theme.name} taklifnomasini ochish`}>
+            <div className={styles.cardImage}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={invitationArtwork(theme)} alt={theme.name} width={1024} height={1536} loading="lazy" />
+              <div className={styles.imageShade} />
+              <div className={styles.cardTop}><span>№ {String(index + 6).padStart(2, "0")}</span><span>{theme.minPriceTier === "250000" ? "PARALLAX EDITION" : "ATELIER EDITION"}</span></div>
+              <div className={styles.cardTitle}><span>{PRICE_TIER_LABELS[theme.minPriceTier]}</span><h2>{art.title}</h2><i /><p>{art.subtitle}</p></div>
+              <span className={styles.openCircle}><ArrowUpRight size={21} strokeWidth={1} /></span>
+            </div>
+            <div className={styles.cardCaption}><span>{theme.name}</span><span>Ko‘rish <ArrowUpRight size={13} /></span></div>
+          </Link>
+        </article>;
+      })}
     </section>
 
     <section className={styles.note}>

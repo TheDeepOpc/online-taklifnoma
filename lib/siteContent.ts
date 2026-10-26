@@ -1,3 +1,5 @@
+import { THEME_PRESETS } from "./themes";
+
 // Sayt tuzilmasi — bosh sahifa va footer'dagi barcha matn/dinamik miqdorlar shu yerda
 // yagona strukturda saqlanadi. Default qiymatlar DB'da biror bo'lim to'lmay qolganda
 // ishlatiladi; admin paneli ("Sayt tuzilmasi") bu strukturni to'liq tahrirlaydi.
@@ -156,7 +158,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     scrollHint: "Pastga suring",
   },
   stats: [
-    { value: 18, suffix: "+", label: "jonli dizayn" },
+    { value: THEME_PRESETS.length, suffix: "+", label: "jonli dizayn" },
     { value: 3, suffix: "", label: "narx darajasi" },
     { value: 15, suffix: "", label: "daqiqada tayyor" },
   ],
@@ -174,7 +176,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
       {
         n: "01",
         title: "Uslubni tanlang",
-        body: "18 ta jonli dizayn orasidan yurak qarorini qiling — har biri bir ko‘rinishda ko‘nglingizni zabt etadi.",
+        body: `${THEME_PRESETS.length} ta jonli dizayn orasidan yurak qarorini qiling — har biri bir ko‘rinishda ko‘nglingizni zabt etadi.`,
       },
       {
         n: "02",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Check, Heart, MapPin, Sparkles } from "lucide-react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
@@ -9,6 +9,9 @@ import { CopyGiftButton, formatCardNumber } from "@/components/templates/CopyGif
 import { PhotoGallery } from "@/components/templates/PhotoGallery";
 import { WishesSection } from "@/components/templates/WishesSection";
 import { useScrollLock } from "@/components/templates/useScrollLock";
+import { ParallaxScene } from "@/components/templates/ParallaxScene";
+import { useMotionPreference } from "@/components/motion/useMotionPreference";
+import type { InvitationLayout } from "@/lib/invitationArt";
 import type { ThemeDefinition } from "@/lib/themes";
 import type { Invitation, MusicTrack } from "@/lib/types";
 import { uzFullDate, uzMonthName } from "@/lib/uzDate";
@@ -21,7 +24,7 @@ export interface PremiumProps {
   previewMode?: boolean;
 }
 
-type Variant = "winter" | "autumn" | "summer" | "gold" | "sky";
+type Variant = InvitationLayout;
 
 function Ornament({ className = "" }: { className?: string }) {
   return (
@@ -40,7 +43,7 @@ function Particles({ variant }: { variant: Variant }) {
 }
 
 function Reveal({ children, className = "", previewMode }: { children: ReactNode; className?: string; previewMode: boolean }) {
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
   return <motion.section className={className} initial={previewMode || reduced ? false : { opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.section>;
 }
 
@@ -58,13 +61,16 @@ function WeddingCalendar({ date }: { date: string }) {
   </div>;
 }
 
-export function PremiumInvitation({ invitation, musicTrack, theme, previewMode = false, variant, edition, title, subtitle, image }: PremiumProps & { variant: Variant; edition: string; title: string; subtitle: string; image: string }) {
+export function PremiumInvitation({ invitation, musicTrack, theme, previewMode = false, variant, edition, title, subtitle, image, artworkSrc }: PremiumProps & { variant: Variant; edition: string; title: string; subtitle: string; image: string; artworkSrc?: string }) {
   const [opened, setOpened] = useState(previewMode);
   const musicRef = useRef<MusicPlayerHandle>(null);
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
   useScrollLock(!opened && !previewMode);
 
-  const imageSrc = `/premium-assets/${image}.webp`;
+  const imageSrc = artworkSrc || `/premium-assets/${image}.webp`;
+  const parallax = !previewMode && (theme.minPriceTier === "250000" || theme.collection === "signature");
+  const secondPortrait = theme.family === "swan-noir" ? invitation.second_photo_url : null;
+  const portraitSrc = invitation.cover_photo_url || secondPortrait;
   const [year, month, day] = invitation.wedding_date.split("-");
   const date = new Date(Number(year), Number(month) - 1, Number(day));
   const monogram = `${invitation.groom_name.charAt(0)}${invitation.bride_name.charAt(0)}`;
@@ -80,7 +86,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
     setOpened(true);
   }
 
-  return <div className={`${styles.root} ${styles[variant]} ${previewMode ? styles.preview : ""}`} style={rootStyle}>
+  return <div className={`${styles.root} ${styles[variant]} ${parallax ? styles.hasParallax : ""} ${previewMode ? styles.preview : ""}`} style={rootStyle} data-invitation-locked={!opened && !previewMode ? "true" : undefined} data-invitation-theme={theme.id} data-parallax-enabled={parallax ? "true" : "false"}>
     <AnimatePresence>
       {!opened && !previewMode && <motion.div key="invitation-cover" className={styles.gate} role="dialog" aria-modal="true" aria-labelledby={`gate-${theme.id}`} initial={false} exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 1.08, filter: "blur(12px)" }} transition={{ duration: reduced ? 0.15 : 0.9 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -92,9 +98,9 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           <span className={styles.gateEyebrow}>Siz uchun, qalbimizdan</span>
           <Ornament className={styles.gateOrnament} />
           {invitation.guest_name && <p className={styles.gateGuest}>Hurmatli <strong>{invitation.guest_name}</strong></p>}
-          <h1 id={`gate-${theme.id}`} className={styles.gateNames}><span>{invitation.groom_name}</span><em>&</em><span>{invitation.bride_name}</span></h1>
+          <h2 id={`gate-${theme.id}`} className={styles.gateNames}><span>{invitation.groom_name}</span><em>&</em><span>{invitation.bride_name}</span></h2>
           <p className={styles.gateDate}>{day} · {month} · {year}</p>
-          <button type="button" onClick={openInvitation} className={styles.openButton}>
+          <button type="button" onClick={openInvitation} className={styles.openButton} data-invitation-open>
             <span className={styles.seal} aria-hidden="true">{monogram}</span>
             <span>Taklifnomani ochish <ArrowUpRight size={14} /></span>
           </button>
@@ -106,18 +112,15 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
 
     <div inert={!opened && !previewMode ? true : undefined}>
       <header className={styles.hero}>
-        <div className={styles.heroImageWrap}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={imageSrc} alt="" className={styles.heroImage} fetchPriority="high" />
-        </div>
+        <ParallaxScene src={imageSrc} className={styles.heroImageWrap} imageClassName={styles.heroImage} enabled={parallax} priority />
         <div className={styles.heroShade} />
         <div className={styles.heroBorder} aria-hidden="true" />
         <Particles variant={variant} />
-        <div className={styles.heroTop}><span>{title}</span><span>Nikoh to‘yiga taklifnoma</span><span>{edition} / V</span></div>
+        <div className={styles.heroTop}><span>{title}</span><span>Nikoh to‘yiga taklifnoma</span><span>{theme.collection === "signature" ? `${edition} / V` : "ÉDITION I"}</span></div>
         <div className={styles.heroMonogram} aria-hidden="true"><span>{monogram}</span><i /><i /></div>
         <motion.div className={styles.heroText} initial={false} animate={opened ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} transition={{ duration: reduced ? 0 : 1.2, delay: reduced ? 0 : 0.3 }}>
           <span className={styles.eyebrow}>Bir kun. Bir va’da. Bir umr.</span>
-          <h2 className={styles.names}><span>{invitation.groom_name}</span><em>&</em><span>{invitation.bride_name}</span></h2>
+          <h1 className={styles.names}><span>{invitation.groom_name}</span><em>&</em><span>{invitation.bride_name}</span></h1>
           <Ornament className={styles.heroOrnament} />
           <div className={styles.heroDate}><span>{day}</span><i /><div>{uzMonthName(date)}<small>{year}</small></div></div>
           <p className={styles.heroSubtitle}>{subtitle}</p>
@@ -137,15 +140,29 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           <span className={styles.signature}>{invitation.groom_name} <Heart size={12} /> {invitation.bride_name}</span>
         </Reveal>
 
-        {invitation.cover_photo_url && <Reveal className={styles.portraitSection} previewMode={previewMode}>
+        {portraitSrc && <Reveal className={styles.portraitSection} previewMode={previewMode}>
           <span className={styles.photoCaption}>Bizning yangi bobimiz</span>
-          <div className={styles.portraitFrame}>
+          <div className={`${styles.portraitFrame} ${invitation.cover_photo_url && secondPortrait ? styles.portraitPair : ""}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={invitation.cover_photo_url} alt={`${invitation.groom_name} va ${invitation.bride_name}`} loading="lazy" />
+            <img src={portraitSrc} alt={`${invitation.groom_name} va ${invitation.bride_name}`} loading="lazy" />
+            {invitation.cover_photo_url && secondPortrait && (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img src={secondPortrait} alt={invitation.groom_name} loading="lazy" />
+            )}
             <span className={styles.photoSeal} aria-hidden="true">{monogram}</span>
           </div>
           <p className={styles.photoNote}>Barcha yo‘llar bizni bir-birimizga olib keldi.</p>
         </Reveal>}
+
+        {parallax && <section className={styles.scenicQuote} aria-label="Muhabbat hikoyamiz">
+          <ParallaxScene src={imageSrc} className={styles.scenicScene} enabled />
+          <div className={styles.scenicShade} />
+          <Reveal className={styles.scenicText} previewMode={previewMode}>
+            <span>Ikki qalb — bitta taqdir</span>
+            <p>Sen bilan<br /><em>abadiy.</em></p>
+            <Ornament className={styles.ornament} />
+          </Reveal>
+        </section>}
 
         <Reveal className={styles.dateSection} previewMode={previewMode}>
           <span className={styles.chapter}>02 — Unutilmas sana</span>
@@ -159,8 +176,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
 
         <Reveal className={styles.venueSection} previewMode={previewMode}>
           <div className={styles.venueVisual}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={imageSrc} alt="" loading="lazy" />
+            <ParallaxScene src={imageSrc} className={styles.venueScene} enabled={parallax} />
             <div className={styles.venueVisualShade} />
             <span className={styles.venueVisualCaption}>Birgalikda baxt sari</span>
           </div>
@@ -206,6 +222,6 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
       </main>
     </div>
 
-    {musicTrack && !previewMode && <MusicPlayer ref={musicRef} src={musicTrack.file_url} buttonStyle={{ background: "var(--paper)", color: "var(--ink)", border: "1px solid var(--gold)", boxShadow: "0 4px 25px #0002" }} />}
+    {musicTrack && !previewMode && <MusicPlayer ref={musicRef} src={musicTrack.file_url} hidden={!opened} buttonStyle={{ background: "var(--paper)", color: "var(--ink)", border: "1px solid var(--gold)", boxShadow: "0 4px 25px #0002" }} />}
   </div>;
 }

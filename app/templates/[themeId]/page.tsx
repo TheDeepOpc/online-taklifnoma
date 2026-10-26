@@ -40,7 +40,7 @@ export default async function TemplateDemoPage({
         dangerouslySetInnerHTML={{ __html: COPYRIGHT_MARKER }}
       />
       <Link
-        href="/#designs"
+        href="/templates"
         className="fixed left-3 top-3 z-[200] flex items-center gap-2 rounded-full border border-[#2E2A27]/10 bg-[#FDFBFB]/90 px-3 py-2 text-xs font-medium text-[#2E2A27] shadow-lg backdrop-blur transition-colors hover:bg-white sm:left-4 sm:top-4 sm:px-4 sm:py-2.5 sm:text-sm"
       >
         <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
