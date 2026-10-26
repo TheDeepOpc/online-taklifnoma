@@ -20,7 +20,7 @@ export type ThemeFamily =
   | "editorial-plate"
   | "regal-envelope"
   | "velvet-crown"
-  | "premium-qish"
+  | "premium-bardoviy-atirgul"
   | "premium-kuz"
   | "premium-yoz"
   | "premium-tilla-hayot"
@@ -464,7 +464,12 @@ export const THEME_PRESETS: ThemeDefinition[] = [
 ];
 
 export function getTheme(id: string): ThemeDefinition {
-  return THEME_PRESETS.find((t) => t.id === id) ?? THEME_PRESETS[0];
+  return THEME_PRESETS.find((t) => t.id === resolveThemeId(id)) ?? THEME_PRESETS[0];
+}
+
+/** Existing invitations keep working after a theme is replaced. */
+export function resolveThemeId(id: string): string {
+  return id === "premium-qish" ? "premium-bardoviy-atirgul" : id;
 }
 
 // Ikkinchi rasm (kuyov) faqat photo-pair hero'li oilada bor. Muqova rasm esa
@@ -482,7 +487,7 @@ export function getUnlockedThemes(priceTier: PriceTier): ThemeDefinition[] {
 }
 
 export function isThemeUnlocked(themeId: string, priceTier: PriceTier): boolean {
-  const theme = THEME_PRESETS.find((t) => t.id === themeId);
+  const theme = THEME_PRESETS.find((t) => t.id === resolveThemeId(themeId));
   if (!theme) return false;
   return PRICE_TIER_ORDER[theme.minPriceTier] <= PRICE_TIER_ORDER[priceTier];
 }

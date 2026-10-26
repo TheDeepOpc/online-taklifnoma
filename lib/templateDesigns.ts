@@ -1,5 +1,5 @@
 export type SectionId = "letter" | "portrait" | "quote" | "date" | "venue" | "schedule" | "gallery" | "wishes" | "gift" | "footer";
-export type Atmosphere = "snow" | "leaves" | "clouds" | "stars" | "petals" | "pearls" | "pollen" | "gold" | "heritage";
+export type Atmosphere = "rosepetals" | "leaves" | "clouds" | "stars" | "petals" | "pearls" | "pollen" | "gold" | "heritage";
 export type Ornament = "gold" | "uzbek" | "floral" | "silver" | "botanical" | "pearl";
 export interface TemplateDesign {
   hero: string;
@@ -30,7 +30,7 @@ export const TEMPLATE_DESIGNS: Record<string, TemplateDesign> = {
   "editorial-plate-ink": { hero: "fashion-cover", motion: "editorial-cut", effect: "pearls", ornament: "silver", columns: ".7fr 1.3fr", groups: [["portrait"],["letter","quote"],["gallery"],["venue"],["date"],["schedule"],...end] },
   "regal-navy-gold": { hero: "heraldry", motion: "heraldic-rise", effect: "gold", ornament: "gold", columns: "1.1fr .9fr", groups: [["date"],["letter"],["portrait","venue"],["quote"],["schedule"],["gallery"],...end] },
   "velvet-crown-noir": { hero: "theatre", motion: "velvet-curtain", effect: "gold", ornament: "gold", columns: "1fr 1.3fr", groups: [["quote"],["letter"],["date"],["portrait"],["gallery","venue"],["schedule"],...end] },
-  "premium-qish": { hero: "crystal-grid", motion: "ice-fracture", effect: "snow", ornament: "silver", columns: "1fr 1fr", groups: [["date"],["letter","portrait"],["quote"],["gallery"],["schedule","venue"],...end] },
+  "premium-bardoviy-atirgul": { hero: "rose-album", motion: "rose-album-open", effect: "rosepetals", ornament: "gold", columns: "1fr 1fr", groups: [["letter","portrait"],["quote"],["date"],["gallery"],["schedule","venue"],...end] },
   "premium-kuz": { hero: "scrapbook", motion: "autumn-tumble", effect: "leaves", ornament: "gold", columns: "1.2fr .8fr", groups: [["portrait","gallery"],["letter"],["quote"],["date"],["venue","schedule"],...end] },
   "premium-yoz": { hero: "riviera-magazine", motion: "sea-breeze", effect: "petals", ornament: "floral", columns: ".9fr 1.25fr", groups: [["letter"],["venue","portrait"],["gallery"],["date"],["quote"],["schedule"],...end] },
   "premium-tilla-hayot": { hero: "gold-exhibition", motion: "living-gold", effect: "gold", ornament: "gold", columns: "1.3fr 1fr", groups: [["quote"],["date"],["portrait","letter"],["venue"],["schedule"],["gallery"],...end] },

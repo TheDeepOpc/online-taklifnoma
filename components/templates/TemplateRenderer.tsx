@@ -3,14 +3,14 @@ import { PhoneFrame } from "./PhoneFrame";
 import { FitNames } from "./FitNames";
 import { getTheme, type ThemeFamily } from "@/lib/themes";
 import { CollectionInvitation } from "@/templates/premium/CollectionInvitation";
-import { Qish } from "@/templates/premium/Qish";
+import { BardoviyAtirgul } from "@/templates/premium/BardoviyAtirgul";
 import { Kuz } from "@/templates/premium/Kuz";
 import { Yoz } from "@/templates/premium/Yoz";
 import { TillaHayot } from "@/templates/premium/TillaHayot";
 import { MoviyOsmon } from "@/templates/premium/MoviyOsmon";
 
 const FAMILY_COMPONENTS: Record<ThemeFamily, typeof CollectionInvitation> = {
-  "premium-qish": Qish,
+  "premium-bardoviy-atirgul": BardoviyAtirgul,
   "premium-kuz": Kuz,
   "premium-yoz": Yoz,
   "premium-tilla-hayot": TillaHayot,

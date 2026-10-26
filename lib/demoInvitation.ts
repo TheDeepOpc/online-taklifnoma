@@ -9,8 +9,8 @@ function demoWeddingDate(): string {
 export const DEMO_INVITATION: Invitation = {
   id: "demo",
   slug: "demo",
-  groom_name: "Azizbek",
-  bride_name: "Malika",
+  groom_name: "Sardor",
+  bride_name: "Soliha",
   wedding_date: demoWeddingDate(),
   wedding_time: "18:00",
   venue_name: "Regal Palace",

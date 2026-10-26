@@ -4,10 +4,10 @@ import { useDeferredValue, useMemo, useRef, useState, useSyncExternalStore } fro
 import { useFormStatus } from "react-dom";
 import { X, Eye, EyeOff, Dices } from "lucide-react";
 import { randomWish } from "@/lib/wishTemplates";
-import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
+import { InvitationLivePreview } from "./InvitationLivePreview";
+import { DEMO_INVITATION } from "@/lib/demoInvitation";
 import { ThemePicker } from "./ThemePicker";
 import {
-  THEME_PRESETS,
   getTheme,
   getUnlockedThemes,
   isThemeUnlocked,
@@ -94,7 +94,7 @@ export function InvitationFormWithPreview({
   const [venueMapUrl, setVenueMapUrl] = useState(invitation?.venue_map_url ?? "");
   const [priceTier, setPriceTier] = useState<PriceTier>(invitation?.price_tier ?? "150000");
   const [templateId, setTemplateId] = useState(
-    invitation?.template_id ?? THEME_PRESETS[0].id,
+    getTheme(invitation?.template_id ?? getUnlockedThemes(invitation?.price_tier ?? "150000")[0].id).id,
   );
   const [musicTrackId, setMusicTrackId] = useState(invitation?.music_track_id ?? "");
   const [customMessage, setCustomMessage] = useState(invitation?.custom_message ?? "");
@@ -123,7 +123,7 @@ export function InvitationFormWithPreview({
   const [guestName, setGuestName] = useState(invitation?.guest_name ?? "");
   const [textSize, setTextSize] = useState<TextSize>(invitation?.text_size ?? "normal");
   const galleryInputRef = useRef<HTMLInputElement>(null);
-  const [showMobilePreview, setShowMobilePreview] = useState(false);
+  const [showMobilePreview, setShowMobilePreview] = useState(true);
   const isDesktop = useSyncExternalStore(
     subscribeIsDesktop,
     getIsDesktopSnapshot,
@@ -226,8 +226,8 @@ export function InvitationFormWithPreview({
     () => ({
       id: invitation?.id ?? "preview",
       slug: invitation?.slug ?? "preview",
-      groom_name: groomName || "Kuyov ismi",
-      bride_name: brideName || "Kelin ismi",
+      groom_name: groomName || DEMO_INVITATION.groom_name,
+      bride_name: brideName || DEMO_INVITATION.bride_name,
       wedding_date: weddingDate || todayISODate(),
       wedding_time: weddingTime || "18:00",
       venue_name: venueName || "To'yxona nomi",
@@ -651,16 +651,7 @@ export function InvitationFormWithPreview({
         </button>
 
         <div className={`${showMobilePreview ? "" : "hidden"} lg:block lg:sticky lg:top-6`}>
-          <p className="mb-2 hidden text-sm font-medium text-slate-500 lg:block">Jonli ko&apos;rish</p>
-          <div className="mx-auto h-[600px] max-w-sm overflow-y-auto rounded-2xl border border-slate-200 shadow-sm">
-            {shouldMountPreview && (
-              <TemplateRenderer
-                invitation={deferredPreviewInvitation}
-                musicTrack={selectedMusicTrack}
-                previewMode
-              />
-            )}
-          </div>
+          {shouldMountPreview && <InvitationLivePreview invitation={deferredPreviewInvitation} musicTrack={selectedMusicTrack} />}
         </div>
       </div>
     </div>

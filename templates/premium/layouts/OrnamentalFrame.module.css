@@ -1,14 +1,13 @@
-.frame { position: absolute; inset: 10px; z-index: 6; pointer-events: none; overflow: hidden; }
-.frame img { position: absolute; width: clamp(70px, 22vw, 115px); height: 115px; object-fit: contain; opacity: .83; }
+.frame { position: absolute; inset: 5px; z-index: 6; pointer-events: none; overflow: hidden; container-type: inline-size; }
+.frame img { position: absolute; width: clamp(24px, 20cqw, 90px); height: auto; aspect-ratio: 1; max-height: 38%; object-fit: contain; opacity: .83; }
 .corner0 { left: 0; top: 0; }
 .corner1 { right: 0; top: 0; transform: scaleX(-1); }
 .corner2 { right: 0; bottom: 0; transform: scale(-1); }
 .corner3 { left: 0; bottom: 0; transform: scaleY(-1); }
 .silver img { filter: grayscale(1) brightness(1.35); opacity: .62; }
-.pearl img { width: 75px; height: 130px; opacity: .9; }
-.floral img { width: 120px; height: 135px; opacity: .8; }
-.botanical img { width: 120px; height: 140px; opacity: .8; }
-.uzbek img { width: 115px; height: 150px; opacity: .95; }
+.pearl img { width: clamp(22px, 15cqw, 65px); opacity: .9; }
+.floral img, .botanical img { width: clamp(26px, 24cqw, 100px); opacity: .8; }
+.uzbek img { width: clamp(28px, 21cqw, 90px); opacity: .95; }
 .fashion-cover img { width: 55px; opacity: .35; }
 .herbarium .corner1, .herbarium .corner3, .ledger .corner1, .ledger .corner3, .couture .corner0, .couture .corner2 { display: none; }
 .diptych .corner2, .diptych .corner3 { display: none; }

@@ -19,7 +19,7 @@ export function sectionReveal(design: string) {
     "fashion-cover": { opacity: 0, x: 50, scale: .98 },
     heraldry: { opacity: 0, rotateX: 15, scale: .96 },
     theatre: { opacity: 0, scale: .9, filter: "blur(3px)" },
-    "crystal-grid": { opacity: 0, scale: 1.06, filter: "blur(8px)" },
+    "rose-album": { opacity: 0, rotateY: -12, y: 30 },
     scrapbook: { opacity: 0, y: -25, rotate: -7 },
     "riviera-magazine": { opacity: 0, x: 35, rotate: 1 },
     "gold-exhibition": { opacity: 0, scale: .92, y: 20 },

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
-import { THEME_PRESETS } from "@/lib/themes";
+import { THEME_PRESETS, resolveThemeId } from "@/lib/themes";
 import { DEMO_INVITATION } from "@/lib/demoInvitation";
 import { COPYRIGHT_MARKER } from "@/components/CopyrightNotice";
 
@@ -15,6 +15,8 @@ export default async function TemplateDemoPage({
 }) {
   const { themeId } = await params;
   const { bare } = await searchParams;
+  const canonicalId = resolveThemeId(themeId);
+  if (canonicalId !== themeId) redirect(`/templates/${canonicalId}${bare === "1" ? "?bare=1" : ""}`);
   const theme = THEME_PRESETS.find((t) => t.id === themeId);
 
   if (!theme) {

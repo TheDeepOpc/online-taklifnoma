@@ -170,23 +170,12 @@
 .footerBrand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 65px; font-size: 7px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); opacity: .7; }
 .footerBrand i { height: 13px; width: 1px; background: var(--gold); }
 
-/* CRISTAL — silver stationery, frosted arch, falling snow. */
-.winter .hero { min-height: 880px; padding-top: 0; }
-.winter .heroImageWrap { inset: 110px 38px auto; width: calc(100% - 76px); height: 52%; border-radius: 220px 220px 0 0; border: 1px solid #a2b7c5; }
-.winter .heroShade { background: linear-gradient(180deg, transparent 46%, #edf2f5aa 58%, #edf2f5 68%); }
-.winter .heroBorder { inset: 21px; border-color: var(--line); }
-.winter .heroText { color: var(--ink); margin-bottom: 88px; padding-inline: 32px; }
-.winter .heroTop { color: var(--ink); }
-.winter .heroMonogram { top: 21%; color: #fff; }
-.winter .heroText .eyebrow { margin-bottom: 19px; color: var(--accent); }
-.winter .names { font-size: clamp(40px, 12.5vw, 62px); }
-.winter .names em { color: var(--accent); font-size: 38px; }
-.winter .heroOrnament { color: var(--gold); margin-block: 12px; }
-.winter .scrollCue, .winter .verticalNote { color: var(--ink-soft); }
-.winter .particles { z-index: 1; }
-.winter .heroDate > span { font-size: 35px; }
-.winter .heroSubtitle { margin-top: 13px !important; }
-.winter .gateShade { background: linear-gradient(180deg, #122b4b44, #122b4b55 35%, #0e233dce); }
+.rose .gateShade { background: linear-gradient(180deg,#23061844,#23061877 30%,#230618ed); }
+.rose .gateFrame { border-radius: 6px; border-color: #d3b08388; }
+.rose .gateNames { font-family: var(--font-great-vibes),cursive; }
+.rose .portraitFrame { border-radius: 2px; padding: 10px; background: var(--paper); transform: rotate(-2deg); }
+.rose .dateSection { border-block: 3px double var(--gold); }
+.rose .venueCard { border-radius: 2px; outline: 1px solid var(--line); outline-offset: -7px; }
 
 /* AMBER — cinematic full bleed, asymmetric editorial typesetting. */
 .autumn .hero { text-align: left; }

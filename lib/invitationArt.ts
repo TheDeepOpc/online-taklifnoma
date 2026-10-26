@@ -1,7 +1,7 @@
 import type { ThemeDefinition } from "./themes";
 import { premiumArtwork } from "./templateDesigns";
 
-export type InvitationLayout = "winter" | "autumn" | "summer" | "gold" | "sky" | "estate" | "cinema" | "floral" | "editorial" | "royal" | "coastal" | "botanical";
+export type InvitationLayout = "rose" | "autumn" | "summer" | "gold" | "sky" | "estate" | "cinema" | "floral" | "editorial" | "royal" | "coastal" | "botanical";
 
 export interface InvitationArt {
   title: string;

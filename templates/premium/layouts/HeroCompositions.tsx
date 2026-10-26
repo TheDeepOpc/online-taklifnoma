@@ -15,9 +15,12 @@ export interface HeroProps {
 }
 
 function Photo({ p, slot = "a", children }: { p: HeroProps; slot?: string; children?: ReactNode }) {
+  const frameSlots: Record<string, string | null> = { triptych: "b", couture: "b", horizon: "b", orbit: null, rosette: null, "silk-letter": null, theatre: null, heraldry: null };
+  const frameSlot = p.design.hero in frameSlots ? frameSlots[p.design.hero] : "a";
   return <div className={`${styles.photo} ${styles[slot]}`} data-photo-slot={slot}>
     <ParallaxScene src={p.src} className={styles.scene} imageClassName={styles.picture} enabled={!p.previewMode} priority={slot === "a"} />
     {children}
+    {slot === frameSlot && <OrnamentalFrame kind={p.design.ornament} design={p.design.hero} />}
   </div>;
 }
 function Names({ p }: { p: HeroProps }) {
@@ -38,10 +41,10 @@ const compositions: Record<string, (p: HeroProps) => ReactNode> = {
   triptych: p => <><div className={styles.topNames}><Eyebrow>A ROYAL CELEBRATION</Eyebrow><Names p={p} /></div><div className={styles.threePanel}><Photo p={p} slot="b" /><Photo p={p} /><Photo p={p} slot="c" /></div><div className={styles.bottomDate}><DateStamp p={p} /><Note p={p} /></div></>,
   postcard: p => <><div className={styles.postcardHead}><span>AZURE / LOVE POST</span><DateStamp p={p} /></div><Photo p={p}><span className={styles.postmark}>WITH LOVE</span></Photo><div className={styles.content}><Names p={p} /><Note p={p} /></div><div className={styles.postcardLines}><i /><i /><i /></div></>,
   couture: p => <><Photo p={p} /><Photo p={p} slot="b" /><span className={styles.coutureWord}>amour</span><div className={styles.content}><Eyebrow>THE COUTURE EDITION</Eyebrow><Names p={p} /><DateStamp p={p} /></div><Note p={p} /></>,
-  heritage: p => <><div className={styles.suzaniBand} /><Photo p={p} /><div className={styles.heritagePaper}><Eyebrow>O‘ZBEKONA TO‘Y TAKLIFNOMASI</Eyebrow><Names p={p} /><DateStamp p={p} /><Note p={p} /></div><HeritageInstruments /><div className={styles.heritageAnor}><img src="/imported-assets/milliy-ornament/pomegranate.webp" alt="Anor bezagi" /></div></>,
+  heritage: p => <><Photo p={p} /><div className={styles.heritagePaper}><Eyebrow>O‘ZBEKONA TO‘Y TAKLIFNOMASI</Eyebrow><Names p={p} /><DateStamp p={p} /><Note p={p} /><OrnamentalFrame kind="uzbek" design="heritage" /></div><HeritageInstruments /><div className={styles.heritageAnor}><img src="/imported-assets/milliy-ornament/pomegranate.webp" alt="Anor bezagi" /></div></>,
   ledger: p => <><div className={styles.ledgerTitle}><Eyebrow>THE GARDEN ATELIER</Eyebrow><span>Jardin</span></div><div className={styles.ledgerGrid}><Photo p={p} /><Photo p={p} slot="b" /><div className={styles.ledgerText}><Names p={p} /><DateStamp p={p} /></div><Photo p={p} slot="c" /></div><Note p={p} /></>,
   "floral-jewel": p => <><Photo p={p} /><div className={styles.jewelCircle}><Monogram p={p} /></div><div className={styles.floralText}><Eyebrow>UNE FLEUR · UN AMOUR</Eyebrow><Names p={p} /><div className={styles.line} /><DateStamp p={p} /><Note p={p} /></div></>,
-  "silk-letter": p => <><Photo p={p} /><div className={styles.foldedLetter}><Eyebrow>A LETTER FROM OUR HEARTS</Eyebrow><Monogram p={p} /><Names p={p} /><DateStamp p={p} /><Note p={p} /></div><span className={styles.waxSeal}>avec amour</span></>,
+  "silk-letter": p => <><Photo p={p} /><div className={styles.foldedLetter}><Eyebrow>A LETTER FROM OUR HEARTS</Eyebrow><Monogram p={p} /><Names p={p} /><DateStamp p={p} /><Note p={p} /><OrnamentalFrame kind="pearl" design="silk-letter" /></div><span className={styles.waxSeal}>avec amour</span></>,
   orbit: p => <><Photo p={p} /><div className={styles.orbitRing} /><div className={styles.orbitRingSmall} /><div className={styles.orbitDate}><DateStamp p={p} /></div><div className={styles.content}><Eyebrow>UNDER THE SAME STARS</Eyebrow><Names p={p} /><Note p={p} /></div><Monogram p={p} /></>,
   horizon: p => <><div className={styles.horizonTitle}><Eyebrow>LOVE AT FIRST LIGHT</Eyebrow><Names p={p} /></div><div className={styles.horizonBands}><Photo p={p} /><Photo p={p} slot="b" /><Photo p={p} slot="c" /></div><div className={styles.bottomDate}><DateStamp p={p} /><Note p={p} /></div></>,
   rosette: p => <><span className={styles.largeNumber}>L’amour</span><div className={styles.rosettePhotos}><Photo p={p} /><Photo p={p} slot="b" /><Photo p={p} slot="c" /></div><div className={styles.content}><Eyebrow>LOVE IN FULL BLOOM</Eyebrow><Names p={p} /><DateStamp p={p} /><Note p={p} /></div></>,
@@ -49,8 +52,8 @@ const compositions: Record<string, (p: HeroProps) => ReactNode> = {
   staircase: p => <><div className={styles.stairPhotos}><Photo p={p} slot="b" /><Photo p={p} /><Photo p={p} slot="c" /></div><Monogram p={p} /><div className={styles.content}><Eyebrow>THE IMPERIAL PROMISE</Eyebrow><Names p={p} /><DateStamp p={p} /><Note p={p} /></div></>,
   "fashion-cover": p => <><div className={styles.magazineMasthead}>ÉDITORIAL</div><span className={styles.issue}>THE WEDDING ISSUE / 01</span><Photo p={p} /><div className={styles.fashionNames}><Names p={p} /></div><div className={styles.fashionDate}><DateStamp p={p} /></div><div className={styles.fashionCaption}><Eyebrow>OUR NEXT CHAPTER</Eyebrow><Note p={p} /></div></>,
   heraldry: p => <><div className={styles.heraldicGrid}><Photo p={p} slot="b" /><Photo p={p} /><Photo p={p} slot="c" /></div><div className={styles.heraldicCrest}><Monogram p={p} /></div><div className={styles.content}><Eyebrow>AN HEIRLOOM OF LOVE</Eyebrow><Names p={p} /><DateStamp p={p} /><Note p={p} /></div></>,
-  theatre: p => <><Photo p={p} /><div className={styles.stageCurtainLeft} /><div className={styles.stageCurtainRight} /><div className={styles.theatreBill}><Eyebrow>ONE NIGHT · A LIFETIME</Eyebrow><span className={styles.theatreRule} /><Names p={p} /><DateStamp p={p} /><Note p={p} /></div><Monogram p={p} /></>,
-  "crystal-grid": p => <><div className={styles.crystalMosaic}><Photo p={p} /><Photo p={p} slot="b" /><Photo p={p} slot="c" /><div className={styles.crystalDate}><DateStamp p={p} /></div></div><div className={styles.crystalNames}><Eyebrow>OUR WINTER FAIRYTALE</Eyebrow><Names p={p} /><Note p={p} /></div><Monogram p={p} /></>,
+  theatre: p => <><Photo p={p} /><div className={styles.stageCurtainLeft} /><div className={styles.stageCurtainRight} /><div className={styles.theatreBill}><Eyebrow>ONE NIGHT · A LIFETIME</Eyebrow><span className={styles.theatreRule} /><Names p={p} /><DateStamp p={p} /><Note p={p} /><OrnamentalFrame kind="gold" design="theatre" /></div><Monogram p={p} /></>,
+  "rose-album": p => <><div className={styles.roseAlbum}><Photo p={p} /><div className={styles.roseSpine} /><Photo p={p} slot="b" /><div className={styles.roseDedication}><Eyebrow>UNE ROSE · UN AMOUR</Eyebrow><Monogram p={p} /></div></div><div className={styles.roseNames}><Names p={p} /><div className={styles.roseFooter}><DateStamp p={p} /><Note p={p} /></div></div></>,
   scrapbook: p => <><div className={styles.scrapbookLabel}>a season of love</div><Photo p={p}><span>our golden days</span></Photo><Photo p={p} slot="b" /><div className={styles.scrapbookDate}><DateStamp p={p} /></div><div className={styles.content}><Names p={p} /><Note p={p} /></div></>,
   "riviera-magazine": p => <><div className={styles.rivieraHead}><span>RIVIERA</span><Eyebrow>THE SUMMER OF US</Eyebrow></div><Photo p={p} /><div className={styles.rivieraGrid}><div><DateStamp p={p} /><Monogram p={p} /></div><div><Names p={p} /><Note p={p} /></div></div><Photo p={p} slot="b" /></>,
   "gold-exhibition": p => <><div className={styles.exhibitionHeader}><Eyebrow>THE ART OF FOREVER</Eyebrow><span>ÉTERNITÉ</span></div><div className={styles.museumMat}><Photo p={p} /><Monogram p={p} /></div><div className={styles.exhibitionCaption}><Names p={p} /><div><DateStamp p={p} /><Note p={p} /></div></div></>,
@@ -70,7 +73,6 @@ export function HeroComposition(p: HeroProps) {
   return <header className={`${styles.hero} ${styles[p.design.hero]} ${p.previewMode ? styles.preview : ""} ${p.opened ? styles.opened : ""}`} data-hero-composition={p.design.hero} data-hero-animation={p.design.motion}>
     <div className={styles.edition}><span>{p.title}</span><span>PREMIUM WEDDING INVITATION</span></div>
     {render(p)}
-    <OrnamentalFrame kind={p.design.ornament} design={p.design.hero} />
     <a href="#premium-letter" className={styles.scroll} tabIndex={p.previewMode ? -1 : 0}><span>Hikoyamizni oching</span><ArrowDown size={14} /></a>
   </header>;
 }

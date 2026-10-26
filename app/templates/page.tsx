@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   description: "Mavzuga mos rasmlar, musiqali ochilish va qatlamli parallax. Signature va Atelier to‘y taklifnomalari kolleksiyasi.",
 };
 
-const titles = ["Cristal", "Amber", "Riviera", "Éternité", "Céleste"];
-const subjects = ["Qish", "Kuz", "Yoz", "Tilla va Hayot", "Moviy osmon"];
+const titles = ["Rose Noire", "Amber", "Riviera", "Éternité", "Céleste"];
+const subjects = ["Bardoviy atirgul", "Kuz", "Yoz", "Tilla va Hayot", "Moviy osmon"];
 
 export default function PremiumCollectionPage() {
   return <main className={styles.page}>

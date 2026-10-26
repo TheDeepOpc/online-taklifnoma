@@ -2,10 +2,10 @@ import type { ThemeDefinition } from "@/lib/themes";
 
 export const PREMIUM_THEMES: ThemeDefinition[] = [
   {
-    id: "premium-qish", name: "Qish · Cristal", family: "premium-qish", minPriceTier: "250000",
-    collection: "signature", description: "Muzli mozaika, yog‘ayotgan qor va kumush naqshlar.",
-    colors: { bg: "#edf2f5", paper: "#f5f7f8", ink: "#243c4a", gold: "#94abb9", accent: "#627f92", "ink-soft": "#657780" },
-    fonts: { "theme-display-font": "var(--font-cormorant)", "theme-script-font": "var(--font-imperial-script)", "theme-body-font": "var(--font-dm-sans)" },
+    id: "premium-bardoviy-atirgul", name: "Bardoviy atirgul · Rose Noire", family: "premium-bardoviy-atirgul", minPriceTier: "250000",
+    collection: "signature", description: "Bardoviy atirgullar, oltin naqshlar va uchayotgan gulbarglar.",
+    colors: { bg: "#2b0d1a", paper: "#391322", ink: "#f8e6d7", gold: "#d3b083", accent: "#d3b083", "ink-soft": "#cca9b3" },
+    fonts: { "theme-display-font": "var(--font-cormorant)", "theme-script-font": "var(--font-great-vibes)", "theme-body-font": "var(--font-dm-sans)" },
   },
   {
     id: "premium-kuz", name: "Kuz · Amber", family: "premium-kuz", minPriceTier: "250000",

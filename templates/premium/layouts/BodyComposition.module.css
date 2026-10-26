@@ -21,8 +21,7 @@
 .triptych .group:nth-child(3) { margin: 20px; outline: 1px solid var(--gold); outline-offset: 5px; }
 .postcard .group:nth-child(1) { margin-top: -20px; z-index: 1; }
 .couture .group:nth-child(1) { border-bottom: 1px solid var(--gold); border-radius: 100px 0 0 0; overflow: hidden; }
-.heritage { background-image: url('/imported-assets/milliy-ornament/border-ornament.webp'); background-size: 100% auto; background-repeat: repeat-y; }
-.heritage .group { margin-inline: 16px; background: color-mix(in srgb, var(--bg) 96%, transparent); }
+.heritage .group { margin: 20px 16px; border-inline: 1px solid var(--line); background: var(--paper); }
 .floral-jewel .group:nth-child(2), .silk-letter .group:nth-child(1) { margin: 30px 20px; background: var(--paper); box-shadow: 0 15px 50px #0000000a; }
 .orbit .group:nth-child(3) { border-radius: 180px 180px 0 0; overflow: hidden; }
 .horizon .group:nth-child(3) { border-block: 3px double var(--gold); }
@@ -33,7 +32,7 @@
 .fashion-cover .group:nth-child(2) { grid-template-columns: 1.4fr .6fr; }
 .heraldry .group:nth-child(3) { margin: 20px 14px; border: 3px double var(--gold); }
 .theatre .group:nth-child(5) { background: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
-.crystal-grid .group:nth-child(2) { margin: 14px; border: 1px solid var(--gold); background: color-mix(in srgb, white 40%, var(--bg)); }
+.rose-album .group:nth-child(1) { margin: 18px; border: 1px solid var(--gold); background: var(--paper); }
 .scrapbook .group:nth-child(1) { margin: 30px 18px; gap: 13px; transform: rotate(-2deg); }
 .riviera-magazine .group:nth-child(2) { background: #e5e6c6; }
 .gold-exhibition .group:nth-child(3) { margin: 25px 17px; border: 3px double var(--gold); }

@@ -1,7 +1,7 @@
 .atmosphere { position: fixed; inset: 0; z-index: 130; pointer-events: none; overflow: hidden; contain: layout paint; }
 .particle { position: absolute; left: var(--left); top: -12%; width: var(--size); height: var(--size); opacity: 0; animation: snowFall var(--duration) var(--delay) linear infinite; }
 .particle img { width: 100%; height: 100%; object-fit: contain; }
-.snow .particle:nth-child(3n) { filter: blur(1px); }.snow .particle:nth-child(4n) { opacity: .35; }
+.rosepetals .particle { width: calc(var(--size) * 1.6); height: calc(var(--size) * 1.6); animation-name: petalSpiral; }.rosepetals .particle:nth-child(3n) { filter: blur(.6px); }
 .leaves .particle { animation-name: leafFall; }.leaves .particle:nth-child(3n) img { filter: hue-rotate(-18deg); }.leaves .particle:nth-child(4n) { filter: blur(.8px); }
 .petals .particle { animation-name: petalSpiral; }.petals .particle:nth-child(2n) { animation-direction: reverse; }
 .pollen .particle { animation-name: pollenRise; opacity: .5; }

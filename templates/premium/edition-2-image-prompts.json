@@ -110,12 +110,6 @@
       "file": "public/invitation-art/edition-2/velvet-crown-noir.webp"
     },
     {
-      "id": "premium-qish",
-      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. CRYSTAL WINTER: a spectacular snowy alpine pine forest with a frozen waterfall, diamond-like ice branches and crystal snowflakes suspended near foreground, moonlit glacier in distance and a few warm candle lanterns in snow. Pearl white, ice silver and midnight blue. No arch, no generic palace. Exceptionally rich dimensional winter photography. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
-      "transparent_background": false,
-      "file": "public/invitation-art/edition-2/premium-qish.webp"
-    },
-    {
       "id": "premium-kuz",
       "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. AUTUMN SCRAPBOOK: a luxurious close-up view of a lakeside autumn landscape through rich copper maple leaves, a vintage dark wooden garden swing with burgundy velvet cushion at lower left, golden leaves floating in air, antique copper light. Rust, wine and warm brown. Intimate analog editorial photography, no villa arch. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
       "transparent_background": false,
@@ -146,12 +140,6 @@
       "file": "public/invitation-art/effects/autumn-leaf.webp"
     },
     {
-      "id": "snow-crystal",
-      "prompt": "One single intricate delicate six-sided real snow crystal, luminous icy white with silver-blue transparent facets, completely isolated on transparent background. Extremely detailed crystalline branches, clean alpha edges, no dark background, no words, no shadow. Macro photograph, square composition.",
-      "transparent_background": true,
-      "file": "public/invitation-art/effects/snow-crystal.webp"
-    },
-    {
       "id": "gold-filigree",
       "prompt": "A lavish antique gold rococo acanthus filigree corner ornament in an elegant L-shaped composition, exquisitely engraved botanical curls and tiny pearl details. Isolated on genuinely transparent background, entire ornament visible, no frame enclosing a photo, no text. Fine antique jewelry product photography, square.",
       "transparent_background": true,
@@ -180,6 +168,18 @@
       "prompt": "One luminous elegant eight-point celestial star with a bright silver-white center and soft powder-blue glow, tiny realistic diffraction rays, isolated on fully transparent background. Subtle luxury sparkle, not a cartoon, no text or other objects. Square composition.",
       "transparent_background": true,
       "file": "public/invitation-art/effects/celestial-star.webp"
+    },
+    {
+      "id": "premium-bardoviy-atirgul",
+      "prompt": "Use case: photorealistic-natural. Asset: portrait 1536x2304 premium burgundy rose wedding invitation background. An exceptionally beautiful couture still life of large velvety deep burgundy garden roses, dark wine-red satin folded diagonally, a few subtle antique gold botanical details and tiny warm candle bokeh. Rich black-cherry shadows and luminous ruby petal edges. Sumptuous realistic petal textures, sophisticated editorial macro photography, elegant asymmetric framing with quiet negative space at center and lower left for invitation names. This is a bold romantic burgundy-and-antique-gold design, not pink, no snow or ice, no architecture. One continuous image, no text, no people, no logo, no watermark.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/premium-bardoviy-atirgul.webp"
+    },
+    {
+      "id": "burgundy-rose-petal",
+      "prompt": "A single beautiful curled deep burgundy rose petal with a fine velvety wine-red surface and ruby edge, isolated on fully transparent background. High-end macro product photography, naturally asymmetric, entire petal visible, no text, no shadow, no other objects.",
+      "transparent_background": true,
+      "file": "public/invitation-art/effects/burgundy-rose-petal.webp"
     }
   ]
 }
