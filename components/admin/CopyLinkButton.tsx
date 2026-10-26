@@ -7,7 +7,12 @@ export function CopyLinkButton({ path }: { path: string }) {
 
   async function handleCopy() {
     const url = `${window.location.origin}${path}`;
-    await navigator.clipboard.writeText(url);
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      window.prompt("Linkni nusxalang:", url);
+      return;
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   }

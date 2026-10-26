@@ -475,3 +475,28 @@
   font-size: 0.8rem;
   color: rgba(244, 234, 216, 0.4);
 }
+
+.entranceGuest {
+  color: var(--gold-light);
+}
+
+/* Qopqoq uchi xat kartasidagi yozuvni yopib qo'yardi */
+.flap {
+  height: 40%;
+}
+
+/* ===== Kontrast: matn fon bilan qo'shilib ko'rinmay qolmasin ===== */
+.amp {
+  -webkit-text-fill-color: var(--gold-light);
+}
+
+.scrollHint,
+.footer {
+  color: rgba(244, 234, 216, 0.72);
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}

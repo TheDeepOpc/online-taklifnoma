@@ -5,6 +5,10 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { CalendarHighlight } from "../CalendarHighlight";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { CoverPhoto } from "../CoverPhoto";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { useScrollLock } from "../useScrollLock";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon, HeartIcon } from "../icons";
@@ -84,6 +88,7 @@ export function GardenBouquetLetter({
               <div className={styles.entranceRing} aria-hidden>
                 <HeartIcon />
               </div>
+              <GateGuest name={invitation.guest_name} className={styles.entranceGuest} />
               <div className={styles.namesStack}>
                 <span className={`${styles.nameLine} ${styles.script}`}>{invitation.groom_name}</span>
                 <span className={`${styles.amp} ${styles.script}`}>&amp;</span>
@@ -133,9 +138,15 @@ export function GardenBouquetLetter({
         </div>
       </section>
 
+      <CoverPhoto
+        src={invitation.cover_photo_url}
+        alt={`${invitation.groom_name} va ${invitation.bride_name}`}
+        previewMode={previewMode}
+      />
+
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <div className={styles.card}>
-          <p className={styles.label}>
+          <p className={invitation.guest_name ? `${styles.cardTitle} ${styles.script}` : styles.label}>
             {invitation.guest_name ? `Hurmatli ${invitation.guest_name}` : "Aziz mehmonimiz"}
           </p>
           {messageLines.map((line, i) => (
@@ -233,19 +244,15 @@ export function GardenBouquetLetter({
         </div>
       </RevealCard>
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <div className={styles.card}>
             <p className={styles.label}>To&apos;yona</p>
             <div className={styles.giftRow}>
-              <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-              >
-                Nusxalash
-              </button>
+              <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+              <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
             </div>
           </div>
         </RevealCard>

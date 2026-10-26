@@ -55,6 +55,9 @@ export function ThemePicker({
               style={{ background: `linear-gradient(135deg, ${base}, ${accent})` }}
             />
             <span className="text-xs font-medium leading-tight text-slate-700">{theme.name}</span>
+            {theme.collection === "signature" && (
+              <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[9px] font-semibold tracking-wider text-amber-800">SIGNATURE · PREMIUM</span>
+            )}
             {!unlocked && (
               <span className="flex items-center gap-1 text-[10px] text-slate-500">
                 <Lock className="h-3 w-3" />

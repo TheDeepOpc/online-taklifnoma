@@ -5,6 +5,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { GateGuest } from "../GateGuest";
+import { useScrollLock } from "../useScrollLock";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { PhotoGallery } from "../PhotoGallery";
 import type { Invitation, MusicTrack } from "@/lib/types";
 import type { ThemeDefinition } from "@/lib/themes";
@@ -34,7 +38,6 @@ export function SwanNoirLetter({
   theme: ThemeDefinition;
   previewMode?: boolean;
 }) {
-  const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState(previewMode);
   const [gone, setGone] = useState(previewMode);
   const musicRef = useRef<MusicPlayerHandle>(null);
@@ -44,6 +47,7 @@ export function SwanNoirLetter({
     musicRef.current?.play();
     setTimeout(() => setGone(true), 900);
   }
+  useScrollLock(!previewMode && !gone);
 
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroProgress } = useScroll({
@@ -103,16 +107,6 @@ export function SwanNoirLetter({
 
   const hasBothPhotos = Boolean(invitation.cover_photo_url && invitation.second_photo_url);
 
-  async function handleCopyGift() {
-    if (!invitation.gift_card_number) return;
-    try {
-      await navigator.clipboard.writeText(invitation.gift_card_number);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      // clipboard mavjud bo'lmasligi mumkin, jim o'tkazamiz
-    }
-  }
 
   return (
     <div className={styles.root} style={rootStyle}>
@@ -125,6 +119,7 @@ export function SwanNoirLetter({
           <div className={`${styles.curtain} ${styles.curtainLeft}`} />
           <div className={`${styles.curtain} ${styles.curtainRight}`} />
           <div className={styles.entranceContent}>
+            <GateGuest name={invitation.guest_name} />
             <div className={styles.entranceDate}>{dateLabel}</div>
             <div className={`${styles.entranceNames} ${styles.script}`}>
               {invitation.groom_name}
@@ -257,21 +252,23 @@ export function SwanNoirLetter({
         <img src={`${ASSETS}/pearl.png`} alt="" className={styles.pearl} />
       </div>
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <div className={styles.archCard} ref={flowerRef}>
-          <div className={`${styles.sectionTitle} ${styles.script}`}>Tafsilotlar</div>
+          <div className={`${styles.sectionTitle} ${styles.script}`}>
+            {invitation.gift_card_number ? "To'yona" : "Tafsilotlar"}
+          </div>
           <p className={styles.greetingText}>
             Biz uchun eng katta sovg&apos;a — sizning tashrifingiz!
           </p>
           {invitation.gift_card_number && (
             <>
               <div className={styles.giftRow}>
-                <span className={styles.label}>{invitation.groom_name}</span>
-                <span className={styles.giftNumber}>{invitation.gift_card_number}</span>
+                <span className={styles.label}>Karta raqami</span>
+                <span className={styles.giftNumber}>{formatCardNumber(invitation.gift_card_number)}</span>
               </div>
-              <button type="button" className={styles.copyBtn} onClick={handleCopyGift}>
-                {copied ? "Nusxalandi ✓" : "Nusxalash"}
-              </button>
+              <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
             </>
           )}
           <motion.img

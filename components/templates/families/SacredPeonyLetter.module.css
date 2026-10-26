@@ -723,3 +723,19 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+
+.coverGuest {
+  color: #5a3d14;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ===== Kontrast: matn fon bilan qo'shilib ko'rinmay qolmasin ===== */
+.countLbl {
+  color: var(--ink);
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}

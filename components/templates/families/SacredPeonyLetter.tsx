@@ -4,6 +4,10 @@ import { useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { CoverPhoto } from "../CoverPhoto";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { useScrollLock } from "../useScrollLock";
 import { PhotoGallery } from "../PhotoGallery";
 import type { Invitation, MusicTrack } from "@/lib/types";
@@ -84,6 +88,7 @@ export function SacredPeonyLetter({
             if (e.key === "Enter" || e.key === " ") handleOpen();
           }}
         >
+          <GateGuest name={invitation.guest_name} floating className={styles.coverGuest} />
           <div className={styles.coverArt}>
             <div className={styles.coverSeal}>{monogram}</div>
             <p className={styles.coverCta}>
@@ -130,6 +135,12 @@ export function SacredPeonyLetter({
             className={`${styles.bouquet} ${styles.bouquetRight}`}
           />
         </section>
+
+        <CoverPhoto
+          src={invitation.cover_photo_url}
+          alt={`${invitation.groom_name} va ${invitation.bride_name}`}
+          previewMode={previewMode}
+        />
 
         <section className={`${styles.band} ${styles.bandPaper}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -242,6 +253,8 @@ export function SacredPeonyLetter({
           </section>
         )}
 
+        <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
         {invitation.gift_card_number && (
           <section className={`${styles.band} ${styles.bandPaper}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -251,14 +264,8 @@ export function SacredPeonyLetter({
             <RevealCard className={styles.inner} alwaysVisible={previewMode}>
               <h2 className={`${styles.sectionTitle} ${styles.script}`}>To&apos;yona</h2>
               <div className={styles.giftRow}>
-                <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-                <button
-                  type="button"
-                  className={styles.btn}
-                  onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-                >
-                  Nusxalash
-                </button>
+                <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+                <CopyGiftButton text={invitation.gift_card_number} className={styles.btn} />
               </div>
             </RevealCard>
           </section>

@@ -550,3 +550,33 @@
   background: #fcd34d;
   animation-delay: 0.3s;
 }
+
+.gateGuest {
+  color: var(--accent-deep);
+}
+
+/* ===== Kontrast: matn fon bilan qo'shilib ko'rinmay qolmasin ===== */
+.heroEyebrow,
+.scrollHint,
+.footer,
+.countdownMsg,
+.detailLabel {
+  color: #6b7280;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
+
+/* Kichik ekranda (mehmon ismi qo'shilganda) gate kontenti sig'masa tepasi
+   kesilardi — margin:auto bilan "xavfsiz" markazlash va ichki skroll. */
+.gate {
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+.gateInner {
+  margin: auto 0;
+}

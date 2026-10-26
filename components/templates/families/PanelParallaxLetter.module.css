@@ -545,3 +545,37 @@
   font-size: 0.75rem;
   cursor: pointer;
 }
+
+.entranceGuest {
+  color: var(--champagne);
+  margin-bottom: 22px;
+}
+
+/* ===== Kontrast: matn fon bilan qo'shilib ko'rinmay qolmasin ===== */
+.signatureFrom,
+.detailKey {
+  color: var(--gold);
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
+
+/* Past ekranlarda "Taklifnomani ochish" ramka chizig'iga tegib qolardi */
+@media (max-height: 700px) {
+  .monogram {
+    width: 120px;
+    height: auto;
+    margin-bottom: 14px;
+  }
+
+  .entranceLabel {
+    margin-bottom: 14px;
+  }
+
+  .entranceGuest {
+    margin-bottom: 12px;
+  }
+}

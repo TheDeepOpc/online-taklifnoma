@@ -14,11 +14,16 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { setTimeout as sleep } from "node:timers/promises";
 
 const PORT = 9333;
+const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 const OUT = process.argv[2] || "public/template-shots";
 const { readFile } = await import("node:fs/promises");
 // Mavzu ID'larini to'g'ridan-to'g'ri lib/themes.ts dan o'qiymiz.
 const themesSrc = await readFile("lib/themes.ts", "utf8");
-const IDS_LIST = [...themesSrc.matchAll(/^\s{4}id: "([a-z0-9-]+)",/gm)].map((m) => m[1]);
+const premiumSrc = await readFile("templates/premium/presets.ts", "utf8");
+const allIds = [...`${themesSrc}\n${premiumSrc}`.matchAll(/^\s{4}id: "([a-z0-9-]+)",/gm)].map((m) => m[1]);
+// Masalan: TEMPLATE_IDS=premium-qish,premium-kuz npm run shots
+const requestedIds = process.env.TEMPLATE_IDS?.split(",").filter(Boolean);
+const IDS_LIST = requestedIds ? allIds.filter((id) => requestedIds.includes(id)) : allIds;
 if (IDS_LIST.length === 0) throw new Error("lib/themes.ts dan mavzu ID'lari topilmadi");
 const W = 430, H = 900, DPR = 2;
 
@@ -86,7 +91,7 @@ for (const themeId of IDS_LIST) {
   let loaded = false;
   const onLoad = () => { loaded = true; };
   on("Page.loadEventFired", onLoad);
-  await send("Page.navigate", { url: `http://localhost:3000/templates/${themeId}?bare=1` }, sessionId);
+  await send("Page.navigate", { url: `${BASE_URL}/templates/${themeId}?bare=1` }, sessionId);
   for (let i = 0; i < 90 && !loaded; i++) await sleep(100);
   // shrift + rasm + animatsiyalar joyiga tushishi uchun
   await sleep(2600);

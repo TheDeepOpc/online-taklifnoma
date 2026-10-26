@@ -41,7 +41,7 @@ export function PhoneFrame({
       <iframe
         src={src}
         title={title}
-        allow="autoplay; fullscreen"
+        allow="autoplay; fullscreen; clipboard-write"
         className="h-[880px] max-h-[92vh] w-[430px] rounded-[2.5rem] border-[10px] border-[#1c1a17] bg-white shadow-2xl"
       />
     </div>

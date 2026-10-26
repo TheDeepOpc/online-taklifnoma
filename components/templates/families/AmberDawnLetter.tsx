@@ -4,6 +4,10 @@ import { useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { CoverPhoto } from "../CoverPhoto";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { useScrollLock } from "../useScrollLock";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon, HeartIcon, MusicNoteIcon } from "../icons";
@@ -67,6 +71,7 @@ export function AmberDawnLetter({
             <span className={styles.gateBlob4} />
           </div>
           <div className={styles.gateInner}>
+            <GateGuest name={invitation.guest_name} className={styles.gateGuest} />
             <div className={styles.gateBadgeWrap}>
               <div className={styles.gateBadge}>
                 <HeartIcon className={styles.gateBadgeIcon} />
@@ -78,7 +83,9 @@ export function AmberDawnLetter({
               {invitation.groom_name} va {invitation.bride_name} to&apos;yiga xush kelibsiz
             </h1>
             <p className={styles.gateLead}>
-              Ularning maxsus kunini nishonlashda bizga qo&apos;shiling
+              {invitation.guest_name
+                ? "Quvonchli kunimizni siz bilan nishonlashni istaymiz"
+                : "Ularning maxsus kunini nishonlashda bizga qo'shiling"}
             </p>
             <div className={styles.gateMusic}>
               <MusicNoteIcon className={styles.gateMusicIcon} />
@@ -109,6 +116,12 @@ export function AmberDawnLetter({
         </p>
         {opened && !previewMode && <p className={styles.scrollHint}>Pastga suring ↓</p>}
       </section>
+
+      <CoverPhoto
+        src={invitation.cover_photo_url}
+        alt={`${invitation.groom_name} va ${invitation.bride_name}`}
+        previewMode={previewMode}
+      />
 
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <div className={styles.card}>
@@ -173,19 +186,15 @@ export function AmberDawnLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <div className={styles.card}>
             <h2 className={styles.sectionTitle}>To&apos;yona</h2>
             <div className={styles.giftRow}>
-              <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-              >
-                Nusxalash
-              </button>
+              <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+              <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
             </div>
           </div>
         </RevealCard>

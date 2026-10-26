@@ -1109,3 +1109,31 @@
   width: min(100%, 980px);
   margin: 0 auto;
 }
+
+.flapGuest {
+  margin-bottom: 0.2rem;
+  color: var(--gold);
+}
+
+/* Uzun ismlar konvert chetidan kesilib qolmasin */
+.signature strong {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+/* Muhrdagi "ochish" yozuvi oltin fonda ko'rinmay qolardi */
+.seal span {
+  color: #3a1206;
+  font-weight: 700;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
+
+.wishes {
+  --gold: var(--accent);
+  color: var(--ink);
+}

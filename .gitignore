@@ -38,7 +38,8 @@ yarn-error.log*
 .vercel
 
 # referens/qidiruv materiallari (ilova kodiga bog'liq emas)
-/templates/
+/templates/*
+!/templates/premium/
 /songs/
 
 # typescript

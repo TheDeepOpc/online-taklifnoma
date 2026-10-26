@@ -475,3 +475,30 @@
   background: #fcd34d;
   animation-delay: 0.3s;
 }
+
+.entranceGuest {
+  color: #be123c;
+}
+
+/* Gate 0.95 shaffof gradient edi — orqadagi sahifa matni xira ko'rinib turardi */
+.entrance {
+  background:
+    linear-gradient(to bottom right, var(--bg-amber), var(--bg-rose), var(--bg-pink)),
+    var(--bg);
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
+
+/* Kichik ekranda gate kontenti tepadan kesilmasin */
+.entrance {
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+.entranceInner {
+  margin: auto 0;
+}

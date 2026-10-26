@@ -559,3 +559,30 @@
   font-family: var(--theme-label-font), sans-serif;
   font-size: 0.8rem;
 }
+
+.entranceGuest {
+  color: var(--gold-deep);
+}
+
+/* ===== Kontrast ===== */
+.scrollHint small {
+  font-size: 0.62rem;
+  opacity: 0.85;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
+
+.wishes {
+  color: var(--cream);
+  --gold: #e9c99a;
+}
+
+/* Katta script sarlavha pastki "dumlari" bilan countdown raqamlari ustiga tushardi */
+.card > .sectionTitle {
+  margin-bottom: 18px;
+  line-height: 1.15;
+}

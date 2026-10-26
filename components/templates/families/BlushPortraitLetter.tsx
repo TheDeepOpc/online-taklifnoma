@@ -4,6 +4,10 @@ import { useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { CoverPhoto } from "../CoverPhoto";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { useScrollLock } from "../useScrollLock";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon } from "../icons";
@@ -62,6 +66,7 @@ export function BlushPortraitLetter({
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={`${ASSETS}/oval-frame.png`} alt="" className={styles.entranceFrame} />
+          <GateGuest name={invitation.guest_name} floating className={styles.entranceGuest} />
           <div className={styles.entranceCouple}>
             <p className={styles.script}>{invitation.groom_name}</p>
             <span>va</span>
@@ -88,6 +93,12 @@ export function BlushPortraitLetter({
           </div>
         )}
       </section>
+
+      <CoverPhoto
+        src={invitation.cover_photo_url}
+        alt={`${invitation.groom_name} va ${invitation.bride_name}`}
+        previewMode={previewMode}
+      />
 
       <RevealCard className={styles.welcomeSection} alwaysVisible={previewMode}>
         <h2 className={styles.welcomeTitle}>
@@ -168,19 +179,15 @@ export function BlushPortraitLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <div className={styles.card}>
             <h2 className={styles.sectionTitle}>To&apos;yona</h2>
             <div className={styles.giftRow}>
-              <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-              >
-                Nusxalash
-              </button>
+              <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+              <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
             </div>
           </div>
         </RevealCard>

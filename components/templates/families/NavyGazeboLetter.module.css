@@ -553,3 +553,45 @@
   letter-spacing: 0.06em;
   opacity: 0.6;
 }
+
+.heroGuest {
+  color: var(--primary);
+}
+
+/* Ochilmaguncha sahifa qulf — tugma uzun ism/rasmda ham doim ko'rinsin */
+.openBtnFloating {
+  position: fixed;
+  left: 50%;
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  margin: 0;
+  transform: translateX(-50%);
+  box-shadow: 0 14px 34px -12px rgba(38, 72, 107, 0.65);
+  animation: navyPulse 2.4s ease-in-out infinite;
+}
+
+.openBtnFloating:active {
+  transform: translateX(-50%) scale(0.98);
+}
+
+@keyframes navyPulse {
+  0%,
+  100% {
+    box-shadow: 0 14px 34px -12px rgba(38, 72, 107, 0.65), 0 0 0 0 rgba(38, 72, 107, 0.35);
+  }
+  50% {
+    box-shadow: 0 14px 34px -12px rgba(38, 72, 107, 0.65), 0 0 0 12px rgba(38, 72, 107, 0);
+  }
+}
+
+/* ===== Kontrast: matn fon bilan qo'shilib ko'rinmay qolmasin ===== */
+.scrollHint,
+.footer {
+  opacity: 0.85;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}

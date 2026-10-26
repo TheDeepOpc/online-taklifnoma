@@ -12,6 +12,10 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { CalendarHighlight } from "../CalendarHighlight";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { GateGuest } from "../GateGuest";
+import { useScrollLock } from "../useScrollLock";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon } from "../icons";
 import type { Invitation, MusicTrack } from "@/lib/types";
@@ -25,10 +29,12 @@ function Preloader({
   onDone,
   groom,
   bride,
+  guest,
 }: {
   onDone: () => void;
   groom: string;
   bride: string;
+  guest: string | null;
 }) {
   const [gone, setGone] = useState(false);
 
@@ -121,6 +127,7 @@ function Preloader({
           transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 1.0 }}
         />
       </svg>
+      <GateGuest name={guest} />
       <h1 className={styles.preloaderMonogram} aria-label={`${groom} & ${bride}`}>
         <span>{groom.charAt(0)}</span>
         <span>{bride.charAt(0)}</span>
@@ -161,6 +168,14 @@ function CalligraphyNames({
         el.style.strokeDashoffset = "0";
       }, delay);
       timeouts.push(t);
+    }
+
+    // viewBox 800 birlik keng; uzun ismlar ("Muhammadabdulloh") ekrandan chiqib
+    // ketmasligi uchun shriftni sig'adigan qilib kichraytiramiz.
+    for (const el of [name1Ref.current, name2Ref.current]) {
+      if (!el) continue;
+      const width = el.getComputedTextLength();
+      if (width > 720) el.setAttribute("font-size", String(Math.floor((240 * 720) / width)));
     }
 
     if (name1Ref.current) animateStroke(name1Ref.current, 2.5, 200);
@@ -315,13 +330,14 @@ export function VideoHeroLetter({
 }) {
   const musicRef = useRef<MusicPlayerHandle>(null);
   const [preloaderDone, setPreloaderDone] = useState(previewMode);
+  useScrollLock(!previewMode && !preloaderDone);
   const heroRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start end", "end start"],
   });
-  const heroX = useTransform(scrollYProgress, [0, 1], ["-20vw", "20vw"]);
+  const heroX = useTransform(scrollYProgress, [0, 1], ["-7vw", "7vw"]);
 
   const rootStyle = {
     ...Object.fromEntries(Object.entries(theme.colors).map(([k, v]) => [`--${k}`, v])),
@@ -352,6 +368,7 @@ export function VideoHeroLetter({
           onDone={handleEnter}
           groom={invitation.groom_name}
           bride={invitation.bride_name}
+          guest={invitation.guest_name}
         />
       )}
 
@@ -504,18 +521,14 @@ export function VideoHeroLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <div className={styles.countdownTitle}>To&apos;yona</div>
           <div className={styles.giftRow}>
-            <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-            <button
-              type="button"
-              className={styles.copyBtn}
-              onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-            >
-              Nusxalash
-            </button>
+            <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+            <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
           </div>
         </RevealCard>
       )}

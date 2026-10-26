@@ -4,6 +4,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { CoverPhoto } from "../CoverPhoto";
+import { GateGuest } from "../GateGuest";
+import { useScrollLock } from "../useScrollLock";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { PhotoGallery } from "../PhotoGallery";
 import type { Invitation, MusicTrack } from "@/lib/types";
 import type { ThemeDefinition } from "@/lib/themes";
@@ -80,6 +85,7 @@ export function PanelParallaxLetter({
   const [entranceOpen, setEntranceOpen] = useState(previewMode);
   const [entranceGone, setEntranceGone] = useState(previewMode);
   const rays = useSunburstRays();
+  useScrollLock(!previewMode && !entranceGone);
 
   const glowRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sunburstRef = useRef<HTMLDivElement>(null);
@@ -196,6 +202,7 @@ export function PanelParallaxLetter({
               if (e.key === "Enter" || e.key === " ") handleOpenEntrance();
             }}
           >
+            <GateGuest name={invitation.guest_name} className={styles.entranceGuest} />
             <Monogram variant={monogram} className={styles.monogram} />
             <div className={`${styles.entranceLabel} ${styles.label}`}>To&apos;y taklifnomasi</div>
             <div className={`${styles.entranceNames} ${styles.display}`}>
@@ -223,6 +230,12 @@ export function PanelParallaxLetter({
         </div>
       </div>
       {panel === "bordered" && <div className={styles.chevronRule} />}
+
+      <CoverPhoto
+        src={invitation.cover_photo_url}
+        alt={`${invitation.groom_name} va ${invitation.bride_name}`}
+        previewMode={previewMode}
+      />
 
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <div className={panelClass}>
@@ -355,6 +368,8 @@ export function PanelParallaxLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <div className={panelClass}>
@@ -368,14 +383,8 @@ export function PanelParallaxLetter({
             )}
             <div className={`${styles.sectionLabel} ${styles.label}`}>To&apos;yona</div>
             <div className={styles.giftRow}>
-              <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-              >
-                Nusxalash
-              </button>
+              <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+              <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
             </div>
           </div>
         </RevealCard>

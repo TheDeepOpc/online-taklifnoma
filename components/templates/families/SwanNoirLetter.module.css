@@ -456,3 +456,18 @@
   object-fit: cover;
   border-radius: 8px;
 }
+
+/* ===== Kontrast: matn fon bilan qo'shilib ko'rinmay qolmasin ===== */
+.venueSection .sectionTitle {
+  color: var(--cream);
+}
+
+.archCard .label {
+  color: var(--gold-deep);
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}

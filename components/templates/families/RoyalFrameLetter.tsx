@@ -4,6 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { CoverPhoto } from "../CoverPhoto";
+import { GateGuest } from "../GateGuest";
+import { useScrollLock } from "../useScrollLock";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { PhotoGallery } from "../PhotoGallery";
 import { PalaceIcon, MapPinIcon } from "../icons";
 import type { Invitation, MusicTrack } from "@/lib/types";
@@ -26,6 +31,7 @@ export function RoyalFrameLetter({
   const [loading, setLoading] = useState(!previewMode);
   const [ready, setReady] = useState(previewMode);
   const musicRef = useRef<MusicPlayerHandle>(null);
+  useScrollLock(!previewMode && loading);
 
   useEffect(() => {
     if (previewMode) return;
@@ -73,7 +79,13 @@ export function RoyalFrameLetter({
               />
             ))}
           </div>
+          <div className={styles.preloaderGuest}>
+            <GateGuest name={invitation.guest_name} />
+          </div>
           <div className={`${styles.preloaderMonogram} ${styles.script}`}>{monogram}</div>
+          <div className={`${styles.preloaderNames} ${styles.script}`}>
+            {invitation.groom_name} &amp; {invitation.bride_name}
+          </div>
           {ready && (
             <button type="button" className={styles.preloaderBtn} onClick={handleOpen}>
               Ochish
@@ -100,12 +112,21 @@ export function RoyalFrameLetter({
         {!previewMode && <p className={styles.scrollHint}>Pastga suring ↓</p>}
       </section>
 
+      <CoverPhoto
+        src={invitation.cover_photo_url}
+        alt={`${invitation.groom_name} va ${invitation.bride_name}`}
+        previewMode={previewMode}
+      />
+
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <p className={styles.verseText}>
           Alloh ularning qalblarini sevgi ila birlashtirdi.
         </p>
         <p className={styles.verseLabel}>«Anfol» surasi, 63-oyat</p>
         <div className={styles.divider} />
+        {invitation.guest_name && (
+          <p className={`${styles.guestTitle} ${styles.script}`}>Hurmatli {invitation.guest_name}!</p>
+        )}
         {messageLines.map((line, i) => (
           <p key={i} className={styles.greetingText}>
             {line}
@@ -156,18 +177,14 @@ export function RoyalFrameLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <div className={`${styles.countdownTitle} ${styles.script}`}>To&apos;yona</div>
           <div className={styles.giftRow}>
-            <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-            <button
-              type="button"
-              className={styles.copyBtn}
-              onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-            >
-              Nusxalash
-            </button>
+            <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+            <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
           </div>
         </RevealCard>
       )}

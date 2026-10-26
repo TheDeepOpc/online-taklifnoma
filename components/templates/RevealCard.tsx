@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useDeviceCapability } from "@/components/motion/useDeviceCapability";
+import styles from "./RevealCard.module.css";
 
 export function RevealCard({
   className,
@@ -13,6 +15,7 @@ export function RevealCard({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(alwaysVisible);
+  const lite = useDeviceCapability() === "low";
 
   useEffect(() => {
     if (alwaysVisible || !ref.current) return;
@@ -24,7 +27,8 @@ export function RevealCard({
           observer.disconnect();
         }
       },
-      { threshold: 0.12 },
+      // Bo'lim ekranga biroz kirgach ochiladi — chetida "yarim ko'rinib" qolmaydi.
+      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
     );
 
     observer.observe(ref.current);
@@ -34,12 +38,7 @@ export function RevealCard({
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(20px)",
-        transition: "opacity 1s ease, transform 1s ease",
-      }}
+      className={`${className ?? ""} ${styles.reveal} ${visible ? "" : styles.hidden} ${lite ? styles.lite : ""}`}
     >
       {children}
     </div>

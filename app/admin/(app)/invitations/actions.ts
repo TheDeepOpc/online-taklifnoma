@@ -120,6 +120,8 @@ function readInvitationForm(formData: FormData) {
     music_track_id: String(formData.get("music_track_id") ?? "") || null,
     custom_message: String(formData.get("custom_message") ?? "").trim() || null,
     gift_card_number: String(formData.get("gift_card_number") ?? "").trim() || null,
+    wishes_title: String(formData.get("wishes_title") ?? "").trim() || null,
+    wishes_text: String(formData.get("wishes_text") ?? "").trim() || null,
     schedule_items: readScheduleItems(formData),
     guest_name:
       formData.get("use_guest_name") === "on"
@@ -129,6 +131,23 @@ function readInvitationForm(formData: FormData) {
     is_paid: formData.get("is_paid") === "on",
     status: formData.get("is_paid") === "on" ? ("published" as const) : ("draft" as const),
   };
+}
+
+/**
+ * `wishes_*` ustunlari 0010 migratsiyasi bilan qo'shilgan. Migratsiya hali
+ * qo'llanmagan bazada saqlash butunlay yiqilmasligi uchun — ustun topilmasa,
+ * shu maydonlarsiz qayta urinamiz.
+ */
+const OPTIONAL_COLUMNS = ["wishes_title", "wishes_text"] as const;
+
+function isMissingOptionalColumn(message: string | undefined): boolean {
+  return Boolean(message && OPTIONAL_COLUMNS.some((c) => message.includes(c)));
+}
+
+function withoutOptionalColumns<T extends Record<string, unknown>>(row: T): T {
+  const copy = { ...row };
+  for (const column of OPTIONAL_COLUMNS) delete copy[column];
+  return copy;
 }
 
 export async function createInvitation(formData: FormData) {
@@ -141,9 +160,11 @@ export async function createInvitation(formData: FormData) {
     uploadGalleryPhotos(supabase, formData),
   ]);
 
-  const { error } = await supabase
-    .from("invitations")
-    .insert({ ...data, slug, cover_photo_url, second_photo_url, gallery_photo_urls });
+  const row = { ...data, slug, cover_photo_url, second_photo_url, gallery_photo_urls };
+  let { error } = await supabase.from("invitations").insert(row);
+  if (error && isMissingOptionalColumn(error.message)) {
+    ({ error } = await supabase.from("invitations").insert(withoutOptionalColumns(row)));
+  }
 
   if (error) {
     throw new Error(`Taklifnoma yaratishda xatolik: ${error.message}`);
@@ -162,15 +183,16 @@ export async function updateInvitation(id: string, formData: FormData) {
     uploadGalleryPhotos(supabase, formData),
   ]);
 
-  const { error } = await supabase
-    .from("invitations")
-    .update({
-      ...data,
-      ...(cover_photo_url ? { cover_photo_url } : {}),
-      ...(second_photo_url ? { second_photo_url } : {}),
-      gallery_photo_urls,
-    })
-    .eq("id", id);
+  const row = {
+    ...data,
+    ...(cover_photo_url ? { cover_photo_url } : {}),
+    ...(second_photo_url ? { second_photo_url } : {}),
+    gallery_photo_urls,
+  };
+  let { error } = await supabase.from("invitations").update(row).eq("id", id);
+  if (error && isMissingOptionalColumn(error.message)) {
+    ({ error } = await supabase.from("invitations").update(withoutOptionalColumns(row)).eq("id", id));
+  }
 
   if (error) {
     throw new Error(`Taklifnomani yangilashda xatolik: ${error.message}`);

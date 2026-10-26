@@ -1,4 +1,5 @@
 import type { PriceTier } from "./types";
+import { PREMIUM_THEMES } from "@/templates/premium/presets";
 
 export type ThemeFamily =
   | "panel-parallax"
@@ -18,13 +19,20 @@ export type ThemeFamily =
   | "imperial-gold"
   | "editorial-plate"
   | "regal-envelope"
-  | "velvet-crown";
+  | "velvet-crown"
+  | "premium-qish"
+  | "premium-kuz"
+  | "premium-yoz"
+  | "premium-tilla-hayot"
+  | "premium-moviy-osmon";
 
 export interface ThemeDefinition {
   id: string;
   name: string;
   family: ThemeFamily;
   minPriceTier: PriceTier;
+  collection?: "signature";
+  description?: string;
   /** CSS custom-property name (without "--") -> value, applied as inline style on the root element. */
   colors: Record<string, string>;
   /** CSS custom-property name (without "--") -> value, e.g. "theme-script-font": "var(--font-great-vibes)". */
@@ -83,9 +91,9 @@ export const THEME_PRESETS: ThemeDefinition[] = [
     colors: {
       bg: "#f5efe7",
       ink: "#2d4034",
-      "ink-soft": "#7a8c82",
-      "ink-muted": "#9aaa9f",
-      gold: "#b5935b",
+      "ink-soft": "#56685d",
+      "ink-muted": "#7d8e83",
+      gold: "#8f6f3c",
       pink: "#c4687a",
       dark: "#722020",
       "bg-card": "#f5efe7",
@@ -452,27 +460,17 @@ export const THEME_PRESETS: ThemeDefinition[] = [
       "theme-display-font": "var(--font-cinzel)",
     },
   },
+  ...PREMIUM_THEMES,
 ];
 
 export function getTheme(id: string): ThemeDefinition {
   return THEME_PRESETS.find((t) => t.id === id) ?? THEME_PRESETS[0];
 }
 
-// Har bir family komponenti cover/second rasmni haqiqatda ishlatadimi — admin
-// formasida shu maydonlarni faqat tegishli mavzular uchun ko'rsatish uchun.
-const FAMILIES_WITH_COVER_PHOTO = new Set<ThemeFamily>([
-  "video-hero",
-  "swan-noir",
-  "navy-gazebo",
-  "milliy-ornament",
-  "imperial-gold",
-  "editorial-plate",
-]);
+// Ikkinchi rasm (kuyov) faqat photo-pair hero'li oilada bor. Muqova rasm esa
+// endi barcha shablonlarda ko'rinadi (o'z dizayni bo'lmaganlarda umumiy
+// <CoverPhoto> ramkasi orqali).
 const FAMILIES_WITH_SECOND_PHOTO = new Set<ThemeFamily>(["swan-noir"]);
-
-export function familySupportsCoverPhoto(family: ThemeFamily): boolean {
-  return FAMILIES_WITH_COVER_PHOTO.has(family);
-}
 
 export function familySupportsSecondPhoto(family: ThemeFamily): boolean {
   return FAMILIES_WITH_SECOND_PHOTO.has(family);

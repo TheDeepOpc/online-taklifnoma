@@ -1,0 +1,30 @@
+{
+  "tool": "image_gen (built-in)",
+  "assets": [
+    {
+      "id": "qish",
+      "file": "public/premium-assets/qish.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: full-height mobile wedding invitation background, portrait 1024x1536. A moonlit winter palace garden for an ultra-luxury wedding invitation. Tall ivory stone arch framing a still frozen lake, snow-covered firs, sculptural white roses and delicate crystal branches in foreground corners, warm candle lanterns along snowy pathway, distant alpine peaks. Opalescent silver, midnight blue and pale icy blue. Exquisite real photography, no kitsch. Composition: symmetrical yet natural, rich dimensional foreground detail and atmospheric distance. Upper central third and central lower third are visually calm for overlaid typography. Cinematic medium-format lens, realistic fine material textures, sophisticated art direction, beautiful luminous light. No people, text, letters, numbers, logos, watermarks, UI, borders, collage or graphics. One single continuous portrait image."
+    },
+    {
+      "id": "kuz",
+      "file": "public/premium-assets/kuz.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: full-height mobile wedding invitation background, portrait 1024x1536. An extraordinary autumn wedding garden at a historic Italian lakeside villa. Rust and copper foliage, towering cypress trees, an old stone stairway and terrace descending to a still lake, sumptuous burgundy dahlias and burnt-orange garden roses, warm amber late-afternoon sunlight. Deep chocolate shadows, terracotta and antique copper, tactile editorial film photography. Composition: symmetrical yet natural, rich dimensional foreground detail and atmospheric distance. Upper central third and central lower third are visually calm for overlaid typography. Cinematic medium-format lens, realistic fine material textures, sophisticated art direction, beautiful luminous light. No people, text, letters, numbers, logos, watermarks, UI, borders, collage or graphics. One single continuous portrait image."
+    },
+    {
+      "id": "yoz",
+      "file": "public/premium-assets/yoz.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: full-height mobile wedding invitation background, portrait 1024x1536. A breathtaking summer Mediterranean wedding garden at sunrise. White limestone arched loggia, lush white bougainvillea and pink garden roses framing a turquoise sea view, pale travertine terrace, lime-green olive trees, one ivory fabric curtain softly moving, lemon branches in corners. Sunny ivory, sage, butter-yellow and delicate coral. High-end wedding editorial real photography. Composition: symmetrical yet natural, rich dimensional foreground detail and atmospheric distance. Upper central third and central lower third are visually calm for overlaid typography. Cinematic medium-format lens, realistic fine material textures, sophisticated art direction, beautiful luminous light. No people, text, letters, numbers, logos, watermarks, UI, borders, collage or graphics. One single continuous portrait image."
+    },
+    {
+      "id": "tilla-hayot",
+      "file": "public/premium-assets/tilla-hayot.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: full-height mobile wedding invitation background, portrait 1024x1536. A magnificent intimate wedding setting in an emerald-and-gold palace conservatory. Tall baroque gilt arches, living climbing olive branches and white orchids, a candlelit reflecting pool, masterful sculptural golden botanical details, dark forest-green velvet shadows, champagne light pouring from an ornate skylight. The theme is gold and flourishing life. Sumptuous refined high-end editorial photograph. Composition: symmetrical yet natural, rich dimensional foreground detail and atmospheric distance. Upper central third and central lower third are visually calm for overlaid typography. Cinematic medium-format lens, realistic fine material textures, sophisticated art direction, beautiful luminous light. No people, text, letters, numbers, logos, watermarks, UI, borders, collage or graphics. One single continuous portrait image."
+    },
+    {
+      "id": "moviy-osmon",
+      "file": "public/premium-assets/moviy-osmon.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: full-height mobile wedding invitation background, portrait 1024x1536. A dreamlike but photorealistic luxury wedding pavilion above a sea of white clouds. Elegant pale-blue neoclassical columns and a scalloped ivory stone arch, white delphiniums and blue hydrangeas climbing along the sides, pale silk draping, horizon of luminous blue sky, a marble stairway rising toward the center. Celestial airy powder blue, porcelain white and tiny silver details. Exquisite luxury wedding editorial photography. Composition: symmetrical yet natural, rich dimensional foreground detail and atmospheric distance. Upper central third and central lower third are visually calm for overlaid typography. Cinematic medium-format lens, realistic fine material textures, sophisticated art direction, beautiful luminous light. No people, text, letters, numbers, logos, watermarks, UI, borders, collage or graphics. One single continuous portrait image."
+    }
+  ]
+}

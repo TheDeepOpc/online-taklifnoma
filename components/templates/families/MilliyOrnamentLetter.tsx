@@ -5,6 +5,9 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { CalendarHighlight } from "../CalendarHighlight";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { PhotoGallery } from "../PhotoGallery";
 import { useScrollLock } from "../useScrollLock";
 import type { Invitation, MusicTrack } from "@/lib/types";
@@ -65,7 +68,11 @@ export function MilliyOrnamentLetter({
           <div className={styles.stage} role="img" aria-label="taklif qilamiz">
             <div className={`${styles.flap} ${styles.flapTop}`}>
               <p className={styles.note}>
-                <span className={styles.noteTop}>Sizni</span>
+                {invitation.guest_name ? (
+                  <GateGuest name={invitation.guest_name} className={styles.flapGuest} />
+                ) : (
+                  <span className={styles.noteTop}>Sizni</span>
+                )}
                 <span className={styles.noteMiddle}>To&apos;yimizga</span>
                 <span className={`${styles.noteScript} ${styles.script}`}>taklif qilamiz</span>
               </p>
@@ -76,7 +83,7 @@ export function MilliyOrnamentLetter({
               <p className={styles.signature}>
                 muhabbat ila,
                 <strong>
-                  {invitation.groom_name}&nbsp;va&nbsp;{invitation.bride_name}
+                  {invitation.groom_name} va {invitation.bride_name}
                 </strong>
               </p>
             </div>
@@ -247,6 +254,8 @@ export function MilliyOrnamentLetter({
           </RevealCard>
         )}
 
+        <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
         {invitation.gift_card_number && (
           <RevealCard
             className={`${styles.section} ${styles.sectionOuter}`}
@@ -254,14 +263,8 @@ export function MilliyOrnamentLetter({
           >
             <h2 className={`${styles.venueTitle} ${styles.script}`}>To&apos;yona</h2>
             <div className={styles.giftRow}>
-              <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-              >
-                Nusxalash
-              </button>
+              <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+              <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
             </div>
           </RevealCard>
         )}

@@ -5,6 +5,10 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { CalendarHighlight } from "../CalendarHighlight";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { GateGuest } from "../GateGuest";
+import { useScrollLock } from "../useScrollLock";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon } from "../icons";
 import type { Invitation, MusicTrack } from "@/lib/types";
@@ -29,6 +33,7 @@ export function NavyGazeboLetter({
 }) {
   const musicRef = useRef<MusicPlayerHandle>(null);
   const [opened, setOpened] = useState(previewMode);
+  useScrollLock(!previewMode && !opened);
 
   function handleOpen() {
     setOpened(true);
@@ -63,6 +68,7 @@ export function NavyGazeboLetter({
           <p>بسم الله الرحمن الرحيم</p>
           <p>السلام عليكم ورحمة الله وبركاته</p>
         </div>
+        <GateGuest name={invitation.guest_name} className={styles.heroGuest} />
         <p className={styles.eyebrow}>Nikoh to&apos;yiga taklifnoma</p>
         <div className={styles.illustration}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -75,7 +81,11 @@ export function NavyGazeboLetter({
         </h1>
         <p className={styles.heroDate}>{heroDate}</p>
         {!opened && (
-          <button type="button" className={styles.openBtn} onClick={handleOpen}>
+          <button
+            type="button"
+            className={`${styles.openBtn} ${previewMode ? "" : styles.openBtnFloating}`}
+            onClick={handleOpen}
+          >
             Taklifnomani ochish
           </button>
         )}
@@ -176,18 +186,14 @@ export function NavyGazeboLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <p className={styles.sectionTitle}>To&apos;yona</p>
           <div className={styles.giftRow}>
-            <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-            <button
-              type="button"
-              className={styles.copyBtn}
-              onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-            >
-              Nusxalash
-            </button>
+            <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+            <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
           </div>
         </RevealCard>
       )}

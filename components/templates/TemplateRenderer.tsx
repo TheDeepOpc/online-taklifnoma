@@ -1,5 +1,6 @@
 import type { Invitation, MusicTrack } from "@/lib/types";
 import { PhoneFrame } from "./PhoneFrame";
+import { FitNames } from "./FitNames";
 import { getTheme, type ThemeFamily } from "@/lib/themes";
 import { PanelParallaxLetter } from "./families/PanelParallaxLetter";
 import { VideoHeroLetter } from "./families/VideoHeroLetter";
@@ -19,8 +20,18 @@ import { ImperialGoldLetter } from "./families/ImperialGoldLetter";
 import { EditorialPlateLetter } from "./families/EditorialPlateLetter";
 import { RegalEnvelopeLetter } from "./families/RegalEnvelopeLetter";
 import { VelvetCrownLetter } from "./families/VelvetCrownLetter";
+import { Qish } from "@/templates/premium/Qish";
+import { Kuz } from "@/templates/premium/Kuz";
+import { Yoz } from "@/templates/premium/Yoz";
+import { TillaHayot } from "@/templates/premium/TillaHayot";
+import { MoviyOsmon } from "@/templates/premium/MoviyOsmon";
 
 const FAMILY_COMPONENTS: Record<ThemeFamily, typeof PanelParallaxLetter> = {
+  "premium-qish": Qish,
+  "premium-kuz": Kuz,
+  "premium-yoz": Yoz,
+  "premium-tilla-hayot": TillaHayot,
+  "premium-moviy-osmon": MoviyOsmon,
   "panel-parallax": PanelParallaxLetter,
   "video-hero": VideoHeroLetter,
   "swan-noir": SwanNoirLetter,
@@ -70,7 +81,9 @@ export function TemplateRenderer({
   // qisqartiradi (bo'sh joy qolmaydi).
   const content = (
     <div style={invitation.text_size === "compact" ? ({ zoom: 0.85 } as React.CSSProperties) : undefined}>
-      <Family invitation={invitation} musicTrack={musicTrack} theme={theme} previewMode={previewMode} />
+      <FitNames names={[invitation.groom_name, invitation.bride_name, invitation.guest_name ?? ""]}>
+        <Family invitation={invitation} musicTrack={musicTrack} theme={theme} previewMode={previewMode} />
+      </FitNames>
     </div>
   );
 

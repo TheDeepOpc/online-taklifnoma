@@ -124,8 +124,8 @@
 }
 
 .calligraphyAmpersand {
-  stroke: #b08d57;
-  fill: #b08d57;
+  stroke: #f1d29a;
+  fill: #f1d29a;
   dominant-baseline: middle;
 }
 
@@ -182,8 +182,8 @@
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: #fff;
-  opacity: 0.85;
   white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 14px rgba(0, 0, 0, 0.45);
 }
 
 .heroNames {
@@ -762,4 +762,10 @@
 .preloader {
   gap: 22px;
   padding: 32px 24px;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
 }

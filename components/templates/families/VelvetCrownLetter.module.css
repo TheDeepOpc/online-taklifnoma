@@ -509,3 +509,28 @@
     font-size: 2.6rem;
   }
 }
+
+.entranceGuest {
+  color: var(--gold);
+}
+
+/* Qopqoq yopiq turganda konvert matni (ism, yozuv) qopqoq ostida qolib
+   ketardi — qopqoqni pastroq qilib, matnni ochiq qismga tushiramiz. */
+.flap {
+  height: 44%;
+}
+
+.envelopeContent {
+  padding-top: 40%;
+  padding-bottom: 14px;
+}
+
+.entranceCrown {
+  display: none;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}

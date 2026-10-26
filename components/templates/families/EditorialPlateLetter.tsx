@@ -4,6 +4,9 @@ import { useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { useScrollLock } from "../useScrollLock";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon } from "../icons";
@@ -60,6 +63,7 @@ export function EditorialPlateLetter({
           }`}
         >
           <span className={styles.entranceOrb} aria-hidden />
+          <GateGuest name={invitation.guest_name} floating className={styles.entranceGuest} />
           <button
             type="button"
             className={styles.plateBtn}
@@ -83,7 +87,7 @@ export function EditorialPlateLetter({
                 </span>
                 <span className={styles.hairLine} aria-hidden />
                 <span className={styles.entranceEyebrow}>
-                  {invitation.groom_name} va {invitation.bride_name} to&apos;yiga xush kelibsiz
+                  {invitation.guest_name ? "Sizga shaxsiy taklifnoma" : "To'y taklifnomasi"}
                 </span>
               </span>
               <span className={`${styles.plateSplit} ${open ? styles.plateSplitOpen : ""}`} aria-hidden />
@@ -108,15 +112,17 @@ export function EditorialPlateLetter({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={invitation.cover_photo_url} alt="" className={styles.plateImg} />
             <span className={styles.plateShade} aria-hidden />
-            <span className={styles.plateLabel}>Plate I</span>
+            <span className={styles.plateLabel}>I</span>
           </div>
-          <p className={styles.plateCaption}>Photographed for the occasion</p>
+          <p className={styles.plateCaption}>Baxtli lahzalarimizdan</p>
         </RevealCard>
       )}
 
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <p className={styles.chapterNumber}>01-bob</p>
-        <h2 className={`${styles.chapterTitle} ${styles.serif}`}>Xush kelibsiz</h2>
+        <h2 className={`${styles.chapterTitle} ${styles.serif}`}>
+          {invitation.guest_name ? `Hurmatli ${invitation.guest_name}!` : "Xush kelibsiz"}
+        </h2>
         <p className={styles.vertical}>&laquo;Allah ularning qalblarini birlashtirdi&raquo;</p>
         <p className={styles.eyebrowSmall}>
           {invitation.groom_name} va {invitation.bride_name} to&apos;yiga xush kelibsiz
@@ -173,18 +179,14 @@ export function EditorialPlateLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <p className={styles.chapterNumber}>To&apos;yona</p>
           <div className={styles.giftRow}>
-            <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-            <button
-              type="button"
-              className={styles.copyBtn}
-              onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-            >
-              Nusxalash
-            </button>
+            <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+            <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
           </div>
         </RevealCard>
       )}

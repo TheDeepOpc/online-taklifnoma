@@ -4,6 +4,9 @@ import { useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { useScrollLock } from "../useScrollLock";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon } from "../icons";
@@ -70,6 +73,7 @@ export function ImperialGoldLetter({
               <span />
               <span />
             </div>
+            <GateGuest name={invitation.guest_name} onImage className={styles.goldText} />
             <p className={styles.label}>Sizga taklifnoma keldi</p>
             <h1 className={styles.entranceNames}>
               {invitation.groom_name}
@@ -170,18 +174,14 @@ export function ImperialGoldLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <p className={styles.sectionTitle}>To&apos;yona</p>
           <div className={styles.giftRow}>
-            <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-            <button
-              type="button"
-              className={styles.copyBtn}
-              onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-            >
-              Nusxalash
-            </button>
+            <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+            <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
           </div>
         </RevealCard>
       )}

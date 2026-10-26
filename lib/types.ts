@@ -43,6 +43,10 @@ export interface Invitation {
   schedule_items: ScheduleItem[];
   gift_card_number: string | null;
   guest_name: string | null;
+  /** "Qo'shimcha tilaklar" bo'limi. Bo'sh bo'lsa tayyor matnlardan biri chiqadi.
+   * Ixtiyoriy — 0010 migratsiyasidan oldingi bazada ustun bo'lmasligi mumkin. */
+  wishes_title?: string | null;
+  wishes_text?: string | null;
   text_size: TextSize;
   is_paid: boolean;
   status: InvitationStatus;

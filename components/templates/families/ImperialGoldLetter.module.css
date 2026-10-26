@@ -446,3 +446,9 @@
     max-width: 560px;
   }
 }
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}

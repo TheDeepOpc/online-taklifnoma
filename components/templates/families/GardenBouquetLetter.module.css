@@ -485,3 +485,45 @@
   text-transform: uppercase;
   color: var(--ink-soft);
 }
+
+.entranceGuest {
+  margin-top: 0.6rem;
+  color: var(--accent-deep);
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
+
+.wishes {
+  margin: 0 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--ink);
+  --gold: var(--accent-deep);
+}
+
+/* Yakuniy "Sizni kutamiz" va footer to'g'ridan-to'g'ri gulli fon ustida edi */
+.closing {
+  margin: 0 16px;
+  padding-bottom: 1.6rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.footer {
+  margin: 1rem auto 0;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--card-bg);
+}

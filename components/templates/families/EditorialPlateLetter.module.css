@@ -435,3 +435,29 @@
   color: rgba(26, 26, 26, 0.55);
   letter-spacing: 0.05em;
 }
+
+.entranceGuest {
+  color: var(--ink);
+}
+
+/* ===== Kontrast: matn fon bilan qo'shilib ko'rinmay qolmasin ===== */
+.vertical {
+  color: rgba(26, 26, 26, 0.62);
+}
+
+.chapterNumber,
+.detailLabel,
+.eyebrow {
+  color: rgba(26, 26, 26, 0.7);
+}
+
+.chapterTitle {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}

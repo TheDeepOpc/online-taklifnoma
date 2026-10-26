@@ -5,6 +5,10 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { CalendarHighlight } from "../CalendarHighlight";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { CoverPhoto } from "../CoverPhoto";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { useScrollLock } from "../useScrollLock";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon } from "../icons";
@@ -67,7 +71,11 @@ export function RegalEnvelopeLetter({
           <div className={styles.stage}>
             <div className={`${styles.flap} ${styles.flapTop}`}>
               <p className={styles.flapNote}>
-                <span className={styles.flapNoteTop}>Siz</span>
+                {invitation.guest_name ? (
+                  <GateGuest name={invitation.guest_name} className={styles.flapGuest} />
+                ) : (
+                  <span className={styles.flapNoteTop}>Siz</span>
+                )}
                 <span className={styles.flapNoteMiddle}>To&apos;yimizga</span>
                 <span className={`${styles.flapNoteScript} ${styles.script}`}>taklif etilgansiz</span>
               </p>
@@ -112,6 +120,12 @@ export function RegalEnvelopeLetter({
         <p className={styles.heroDate}>{monthLabel}</p>
         {!previewMode && <p className={styles.scrollHint}>Pastga suring &darr;</p>}
       </section>
+
+      <CoverPhoto
+        src={invitation.cover_photo_url}
+        alt={`${invitation.groom_name} va ${invitation.bride_name}`}
+        previewMode={previewMode}
+      />
 
       <RevealCard className={styles.section} alwaysVisible={previewMode}>
         <div className={styles.card}>
@@ -208,19 +222,15 @@ export function RegalEnvelopeLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <div className={styles.card}>
             <p className={styles.sectionTitle}>To&apos;yona</p>
             <div className={styles.giftRow}>
-              <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-              >
-                Nusxalash
-              </button>
+              <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+              <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
             </div>
           </div>
         </RevealCard>

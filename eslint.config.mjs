@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Original HTML references are archived; premium templates are app source.
+    "templates/*",
+    "!templates/premium/",
   ]),
 ]);
 

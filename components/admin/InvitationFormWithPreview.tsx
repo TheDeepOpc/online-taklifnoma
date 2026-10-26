@@ -2,8 +2,8 @@
 
 import { useDeferredValue, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useFormStatus } from "react-dom";
-import { X } from "lucide-react";
-import { Eye, EyeOff } from "lucide-react";
+import { X, Eye, EyeOff, Dices } from "lucide-react";
+import { randomWish } from "@/lib/wishTemplates";
 import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
 import { ThemePicker } from "./ThemePicker";
 import {
@@ -11,7 +11,6 @@ import {
   getTheme,
   getUnlockedThemes,
   isThemeUnlocked,
-  familySupportsCoverPhoto,
   familySupportsSecondPhoto,
 } from "@/lib/themes";
 import {
@@ -107,6 +106,8 @@ export function InvitationFormWithPreview({
     invitation?.second_photo_url ?? null,
   );
   const [giftCardNumber, setGiftCardNumber] = useState(invitation?.gift_card_number ?? "");
+  const [wishesTitle, setWishesTitle] = useState(invitation?.wishes_title ?? "");
+  const [wishesText, setWishesText] = useState(invitation?.wishes_text ?? "");
   // Galereya: mavjud (serverda saqlangan) rasmlar va bu sessiyada qo'shilgan
   // yangi (hali yuklanmagan) rasmlar alohida kuzatiladi — shunda admin
   // qo'shishda avvalgilarini yo'qotmaydi, va ikkalasidan ham o'chira oladi.
@@ -211,7 +212,6 @@ export function InvitationFormWithPreview({
 
   const selectedMusicTrack = musicTracks.find((t) => t.id === musicTrackId) ?? null;
   const selectedTheme = getTheme(templateId);
-  const showCoverPhoto = familySupportsCoverPhoto(selectedTheme.family);
   const showSecondPhoto = familySupportsSecondPhoto(selectedTheme.family);
   const galleryPhotos = [
     ...existingGalleryUrls.map((url) => ({ url, kind: "existing" as const })),
@@ -242,6 +242,8 @@ export function InvitationFormWithPreview({
       gallery_photo_urls: [...existingGalleryUrls, ...pendingGalleryPreviews],
       schedule_items: scheduleItems.filter((item) => item.time || item.label),
       gift_card_number: giftCardNumber || null,
+      wishes_title: wishesTitle || null,
+      wishes_text: wishesText || null,
       guest_name: useGuestName ? guestName || null : null,
       text_size: textSize,
       is_paid: isPaid,
@@ -268,6 +270,8 @@ export function InvitationFormWithPreview({
       pendingGalleryPreviews,
       scheduleItems,
       giftCardNumber,
+      wishesTitle,
+      wishesText,
       useGuestName,
       guestName,
       textSize,
@@ -393,23 +397,15 @@ export function InvitationFormWithPreview({
           </select>
         </Field>
 
-        {showCoverPhoto ? (
-          <Field label="Muqova rasm (ixtiyoriy)">
-            <input
-              name="cover_photo"
-              type="file"
-              accept="image/*"
-              onChange={handleCoverChange}
-              className="input"
-            />
-          </Field>
-        ) : (
-          <Field label="Muqova rasm">
-            <p className="text-xs text-slate-400">
-              Bu shablon rejasida muqova rasm yo&apos;q.
-            </p>
-          </Field>
-        )}
+        <Field label="Muqova rasm (ixtiyoriy)">
+          <input
+            name="cover_photo"
+            type="file"
+            accept="image/*"
+            onChange={handleCoverChange}
+            className="input"
+          />
+        </Field>
 
         {showSecondPhoto ? (
           <Field label="Ikkinchi rasm — kuyov (ixtiyoriy)">
@@ -553,6 +549,32 @@ export function InvitationFormWithPreview({
             className="input"
             placeholder="Sizni to'y marosimimizga taklif qilamiz..."
           />
+          <TemplateTextButton onPick={() => setCustomMessage(randomWish(customMessage).text)} />
+        </Field>
+
+        <Field label="Qo'shimcha tilaklar (ixtiyoriy)">
+          <input
+            name="wishes_title"
+            value={wishesTitle}
+            onChange={(e) => setWishesTitle(e.target.value)}
+            className="input mb-2"
+            placeholder="Sarlavha, masalan: Ikki qalb, bir manzil"
+          />
+          <textarea
+            name="wishes_text"
+            rows={4}
+            value={wishesText}
+            onChange={(e) => setWishesText(e.target.value)}
+            className="input"
+            placeholder="Bo'sh qoldirilsa — baxt va oila haqidagi tayyor matnlardan biri avtomatik chiqadi."
+          />
+          <TemplateTextButton
+            onPick={() => {
+              const wish = randomWish(wishesText);
+              setWishesTitle(wish.title);
+              setWishesText(wish.text);
+            }}
+          />
         </Field>
 
         <Field label="Murojaat">
@@ -585,6 +607,10 @@ export function InvitationFormWithPreview({
                 placeholder="Mehmon ism-familiyasi"
               />
             )}
+            <p className="text-xs text-slate-400">
+              Ko&apos;p mehmonga har birining ismi bilan yuborish uchun saqlagandan keyin
+              &quot;Shaxsiy havolalar&quot; bo&apos;limidan foydalaning.
+            </p>
           </div>
         </Field>
 
@@ -650,6 +676,19 @@ function SaveButton() {
   return (
     <button type="submit" disabled={pending} className="btn disabled:cursor-not-allowed disabled:opacity-60">
       {pending ? "Saqlanmoqda..." : "Saqlash"}
+    </button>
+  );
+}
+
+function TemplateTextButton({ onPick }: { onPick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onPick}
+      className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
+    >
+      <Dices className="h-3.5 w-3.5" />
+      Tayyor matn bilan to&apos;ldirish
     </button>
   );
 }

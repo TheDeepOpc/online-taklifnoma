@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { InvitationFormWithPreview } from "@/components/admin/InvitationFormWithPreview";
+import { GuestLinksGenerator } from "@/components/admin/GuestLinksGenerator";
 import { updateInvitation } from "../../actions";
 import { getMusicTracks } from "@/lib/musicTracks";
 import type { Invitation } from "@/lib/types";
@@ -27,6 +28,10 @@ export default async function EditInvitationPage({
   return (
     <div>
       <h1 className="mb-6 text-2xl font-semibold text-slate-900">Taklifnomani tahrirlash</h1>
+      <GuestLinksGenerator
+        slug={(invitation as Invitation).slug}
+        published={(invitation as Invitation).is_paid && (invitation as Invitation).status === "published"}
+      />
       <InvitationFormWithPreview
         invitation={invitation as Invitation}
         musicTracks={musicTracks}

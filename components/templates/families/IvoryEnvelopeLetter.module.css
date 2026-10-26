@@ -834,3 +834,45 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+
+.coverGuest {
+  color: var(--wine);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ===== Kontrast: matn fon bilan qo'shilib ko'rinmay qolmasin ===== */
+.countLbl {
+  color: var(--ink);
+  opacity: 1;
+}
+
+.closingNames,
+.sectionTitle {
+  color: #8a6620;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
+
+/* Yakuniy bo'limda matn muqova rasm ustida o'qilmay qolardi */
+.closingStage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(249, 240, 224, 0.86), rgba(249, 240, 224, 0.72));
+}
+
+/* To'yona raqamini gul bezagi yopib qo'yardi */
+.notes .inner {
+  z-index: 5;
+  padding: 0 calc(46 * var(--u));
+}
+
+.notes .giftRow {
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: rgba(249, 240, 224, 0.88);
+}

@@ -412,3 +412,45 @@
   font-size: 0.75rem;
   cursor: pointer;
 }
+
+/* ===== Shaxsiy murojaat ===== */
+.preloaderGuest {
+  position: relative;
+  z-index: 2;
+  color: var(--gold-deep);
+  opacity: 0;
+  animation: monogramIn 0.9s ease 0.6s forwards;
+}
+
+.preloaderNames {
+  position: relative;
+  z-index: 2;
+  max-width: 86vw;
+  margin-top: -14px;
+  font-size: clamp(1.4rem, 7vw, 2rem);
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  opacity: 0;
+  animation: monogramIn 0.9s ease 1.2s forwards;
+}
+
+.guestTitle {
+  margin: 0 0 14px;
+  font-size: clamp(1.6rem, 7.5vw, 2.1rem);
+  line-height: 1.2;
+  color: var(--gold-deep);
+  overflow-wrap: anywhere;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
+
+.wishes {
+  --gold: var(--gold-deep);
+  color: var(--ink);
+}

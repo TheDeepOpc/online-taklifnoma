@@ -4,6 +4,9 @@ import { useRef, useState } from "react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { RevealCard } from "../RevealCard";
+import { WishesSection } from "../WishesSection";
+import { GateGuest } from "../GateGuest";
+import { CopyGiftButton, formatCardNumber } from "../CopyGiftButton";
 import { useScrollLock } from "../useScrollLock";
 import { PhotoGallery } from "../PhotoGallery";
 import { MapPinIcon } from "../icons";
@@ -103,6 +106,7 @@ export function AuroraDreamLetter({
           }`}
         >
           <span className={styles.entranceGlow} aria-hidden />
+          <GateGuest name={invitation.guest_name} floating className={styles.entranceGuest} />
           <button
             type="button"
             className={styles.envelopeBtn}
@@ -130,7 +134,7 @@ export function AuroraDreamLetter({
                 <span className={styles.envelopeContent}>
                   <SparkleIcon className={styles.envelopeIcon} />
                   <span className={styles.envelopeEyebrow}>
-                    {invitation.groom_name} va {invitation.bride_name} to&apos;yiga xush kelibsiz
+                    {invitation.guest_name ? "Sizga shaxsiy taklifnoma" : "To'y taklifnomasi"}
                   </span>
                   <span className={`${styles.envelopeNames} ${styles.auroraText}`}>
                     {invitation.groom_name} &amp; {invitation.bride_name}
@@ -184,7 +188,7 @@ export function AuroraDreamLetter({
           </div>
           <p className={styles.eyebrow}>Allah ularning qalblarini birlashtirdi</p>
           <h1 className={`${styles.heroNames} ${styles.auroraText}`}>{invitation.groom_name}</h1>
-          <p className={styles.heroAmp}>and</p>
+          <p className={styles.heroAmp}>va</p>
           <h1 className={`${styles.heroNames} ${styles.auroraText}`}>{invitation.bride_name}</h1>
           <span className={styles.heroRule} aria-hidden />
           <p className={styles.heroDate}>{dateLabel}</p>
@@ -197,7 +201,7 @@ export function AuroraDreamLetter({
           <p className={styles.quoteText}>&laquo;Allah ularning qalblarini birlashtirdi&raquo;</p>
           <p className={styles.quoteAttr}>&mdash; Miratnama</p>
           <div className={styles.divider} />
-          <p className={styles.sectionEyebrow}>
+          <p className={invitation.guest_name ? styles.sectionTitle : styles.sectionEyebrow}>
             {invitation.guest_name ? `Hurmatli ${invitation.guest_name}` : "Aziz mehmonimiz"}
           </p>
           {messageLines.map((line, i) => (
@@ -257,19 +261,15 @@ export function AuroraDreamLetter({
         </RevealCard>
       )}
 
+      <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+
       {invitation.gift_card_number && (
         <RevealCard className={styles.section} alwaysVisible={previewMode}>
           <div className={styles.card}>
             <p className={styles.sectionEyebrow}>To&apos;yona</p>
             <div className={styles.giftRow}>
-              <span className={styles.giftLabel}>{invitation.gift_card_number}</span>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => navigator.clipboard.writeText(invitation.gift_card_number!)}
-              >
-                Nusxalash
-              </button>
+              <span className={styles.giftLabel}>{formatCardNumber(invitation.gift_card_number)}</span>
+              <CopyGiftButton text={invitation.gift_card_number} className={styles.copyBtn} />
             </div>
           </div>
         </RevealCard>

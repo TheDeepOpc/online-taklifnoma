@@ -712,3 +712,29 @@
     animation: none;
   }
 }
+
+.entranceGuest {
+  color: #f3eaff;
+  text-shadow: 0 0 18px rgba(184, 163, 255, 0.55);
+}
+
+/* Qopqoq yopiq turganda konvert matni (ism, yozuv) qopqoq ostida qolib
+   ketardi — qopqoqni pastroq qilib, matnni ochiq qismga tushiramiz. */
+.flap {
+  height: 44%;
+}
+
+.envelopeContent {
+  padding-top: 40%;
+  padding-bottom: 14px;
+}
+
+.envelopeIcon {
+  display: none;
+}
+
+/* "Qo'shimcha tilaklar" bo'limi */
+.wishes {
+  position: relative;
+  z-index: 1;
+}
