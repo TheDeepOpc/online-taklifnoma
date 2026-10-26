@@ -15,7 +15,7 @@ Barcha 23 ta dizayn premium sifatida ishlaydi. Har biri alohida surat, hero make
 
 ## Mavzuga xos harakatlar
 
-- Qish: 46 ta turli tezlikdagi qor zarrasi, alohida kristall rasmi va atirgulli albom animatsiyasi.
+- Bardoviy atirgul / Rose Noire: bordo atirgullar, albom maketi va generatsiya qilingan shaffof atirgul barglarining aylanib tushishi. Eski `premium-qish` havolalari shu mavzuga yo‘naltiriladi.
 - Kuz: generatsiya qilingan haqiqiy zarang yaprog‘i; 20 ta yaproq aylanish va shamol siljishi bilan tushadi. Kollajning kirish harakati ham alohida.
 - Samo va Moviy osmon: miltillovchi yulduzlar; Moviy osmonda uchta real shaffof bulut qatlami turli tezlikda suzadi va scroll bilan parallax qiladi.
 - Anor bog‘i: suzani, islimiy naqshlar, anorlar, asl karnay rasmlari va alohida yaratilgan surnay. Milliy bezaklar saqlanadi.
@@ -51,6 +51,6 @@ npm run shots
 
 ## Asosiy reklama sahifasi
 
-Video fon o‘rniga built-in `image_gen` bilan tayyorlangan ikkita to‘y surati ishlatiladi: `public/home-art/love-story.webp` va `public/home-art/wedding-details.webp`. `home-image-prompts.json` promptlar va fayllarni saqlaydi. Ijtimoiy tarmoqlardagi havola uchun `app/opengraph-image.tsx` va `app/twitter-image.tsx` rasmli kartochka yaratadi; ishlab chiqarish domeni `NEXT_PUBLIC_SITE_URL` orqali beriladi.
+Video fon o‘rniga built-in `image_gen` bilan tayyorlangan beshta to‘y va muhabbat surati ishlatiladi: `public/home-art/love-story.webp` va `public/home-art/wedding-details.webp`, shuningdek `rose-ceremony.webp`, `uzbek-garden.webp`, `love-letter.webp`. `home-image-prompts.json` promptlar va fayllarni saqlaydi. Ijtimoiy tarmoqlardagi havola uchun `app/opengraph-image.tsx` va `app/twitter-image.tsx` rasmli kartochka yaratadi; ishlab chiqarish domeni `NEXT_PUBLIC_SITE_URL` orqali beriladi.
 
 Barcha demo taklifnomalarda Sardor va Soliha ismlari ishlatiladi. Naqsh va ramkalar surat yoki aniq kartochka ichiga biriktirilgan.

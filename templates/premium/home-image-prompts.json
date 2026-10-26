@@ -10,7 +10,23 @@
       "id": "wedding-details",
       "path": "public/home-art/wedding-details.webp",
       "prompt": "Use case: photorealistic-natural. Asset: landscape 1536x1024 premium wedding website editorial photograph. A poetic intimate close-up of a fictional adult bride and groom's hands gently holding each other, delicate gold wedding rings, ivory silk sleeve and black tuxedo cuff, velvety burgundy garden roses and softly lit cream fabric nearby. Believable anatomy, natural gesture, refined golden late-afternoon light, ultra-real tactile fabrics and petals, fine-art film photography, ivory and warm bronze palette. Elegant asymmetrical composition, intimate luxury with no kitsch. No lettering, logos, watermark or UI."
+    },
+    {
+      "id": "rose-ceremony",
+      "path": "public/home-art/rose-ceremony.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: portrait 1536x2048 luxury wedding website editorial photo. An exquisite outdoor wedding ceremony arch made of abundant ivory and muted burgundy garden roses, warm pale stone courtyard with steps, elegant cream silk ribbons gently moving, soft chairs at edges, subtle sunlight through old olive trees. No people. Refined spacious real wedding design, lush flowers and tactile petals, warm ivory and forest green palette with deep wine accents, fine-art wedding photographer, natural golden hour light, authentic physical scene. No lettering, logo, watermark, UI, collage or digital fantasy."
+    },
+    {
+      "id": "uzbek-garden",
+      "path": "public/home-art/uzbek-garden.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: portrait 1536x2048 editorial photograph for premium Uzbek wedding invitation website. Elegant intimate wedding table in a historic Uzbek garden courtyard, beautiful authentic carved wooden columns and restrained turquoise tile details, ripe pomegranates and ivory flowers with a few burgundy roses on cream linen, antique brass vessels and delicate tea cups, dappled sunlight from grape vines, ornate architecture softly blurred behind. No people. Respectful national craftsmanship, luxurious real textures with sophisticated restraint, cinematic fine-art film photography, warm ivory, bronze, forest green. No text, watermark, logos or graphics."
+    },
+    {
+      "id": "love-letter",
+      "path": "public/home-art/love-letter.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: portrait 1536x2048 premium wedding editorial still life. A beautiful blank ivory cotton paper invitation partly tucked into a burgundy silk envelope, two refined gold wedding bands, one ivory garden rose with soft stem, natural silk ribbon and burgundy velvet on warm cream travertine. Close-up flatlay at a gentle angle, tactile embossed blank paper, believable wedding rings, late afternoon window light and poetic shadows, fine-art film photography, quiet intimate luxury, burgundy, ivory and warm bronze palette. Keep all paper fully blank with no letters or characters. No logos, watermark, printed typography, UI, hands or collage."
     }
   ],
-  "socialDerivative": "public/home-art/love-story-social.jpg"
+  "socialDerivative": "public/home-art/love-story-social.jpg",
+  "responsiveDirectory": "public/home-art/responsive"
 }

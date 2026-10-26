@@ -19,10 +19,37 @@ const ICONS = { music: Music, timer: Timer, images: Images, map: MapPin, heart: 
 const PICKS = ["premium-bardoviy-atirgul", "milliy-anor", "premium-moviy-osmon", "premium-kuz", "royal-champagne", "garden-bloom"];
 const FILTERS = [
   { id: "selected", label: "Tanlanganlar", ids: PICKS },
+  { id: "all", label: `Barchasi · ${THEME_PRESETS.length}`, ids: THEME_PRESETS.map(theme => theme.id) },
   { id: "national", label: "Milliy", ids: ["milliy-anor", "regal-navy-gold", "royal-champagne"] },
   { id: "romantic", label: "Romantik", ids: ["premium-bardoviy-atirgul", "cocoa-blush", "bloom-pulse-rose", "sacred-peony-gold", "ivory-swan-arch", "swan-noir-classic"] },
   { id: "sky", label: "Osmon va tabiat", ids: ["premium-moviy-osmon", "aurora-dream-night", "navy-gazebo-blue", "green-gold", "garden-bloom", "premium-yoz"] },
 ];
+const EDITORIAL = [
+  { id: "rose-ceremony", label: "Romantika", title: "Bir umrga aytilgan «ha».", alt: "Atirgullar va ipak tasmalar bilan bezatilgan bog‘dagi to‘y arkasi", href: "/templates/premium-bardoviy-atirgul" },
+  { id: "uzbek-garden", label: "Milliy nafislik", title: "Ildizlarimizdek go‘zal.", alt: "O‘ymakor ustunli milliy bog‘da gullar va anorlar bilan bezatilgan to‘y dasturxoni", href: "/templates/milliy-anor" },
+  { id: "love-letter", label: "Sizning hikoyangiz", title: "Yurakdan yozilgan taklif.", alt: "Bordo ipak konvert, nafis qog‘oz, oq atirgul va oltin nikoh uzuklari", href: "/templates/royal-champagne" },
+];
+
+function EditorialPhoto({ item, index }: { item: typeof EDITORIAL[number]; index: number }) {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useMotionPreference();
+  const lite = useDeviceCapability() === "low";
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 70, damping: 28 });
+  const y = useTransform(progress, [0, 1], [-25, 25]);
+  return <figure ref={ref} className={styles.editorialPhoto}>
+    <Link href={item.href} aria-label={`${item.label} uslubidagi taklifnomani ko‘rish`}>
+      <div className={styles.editorialImage}>
+        <motion.div style={reduce || lite ? undefined : { y }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={`/home-art/${item.id}.webp`} srcSet={`/home-art/responsive/${item.id}.webp 600w, /home-art/${item.id}.webp 1000w`} sizes="(max-width: 760px) 45vw, 32vw" alt={item.alt} width={1000} height={1333} loading="lazy" decoding="async" />
+        </motion.div>
+        <span className={styles.editorialIndex}>0{index + 1}</span><span className={styles.editorialArrow}><ArrowUpRight size={20} strokeWidth={1.2} /></span>
+      </div>
+      </Link>
+    <figcaption><span>{item.label}</span><h3><Link href={item.href}>{item.title}</Link></h3></figcaption>
+  </figure>;
+}
 const FAQ = [
   ["Mehmonlar ilova o‘rnatishi kerakmi?", "Yo‘q. Havola telefon yoki kompyuter brauzerida ochiladi. Taklifnomani Telegram va WhatsApp orqali yuborishingiz mumkin."],
   ["Taklifnomani tayyorlash uchun nimalar kerak?", "Ismlar, to‘y sanasi, vaqti va manzilini yuborasiz. Istasangiz, sevimli rasmlaringiz, musiqa va alohida tilaklaringizni ham qo‘shamiz."],
@@ -86,14 +113,14 @@ export function HomePageContent({ content }: { content: SiteContent }) {
       <div className={styles.heroArt}>
         <motion.div className={styles.heroPhoto} style={reduce || lite ? undefined : { y: imageY }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/home-art/love-story.webp" alt="Gulli bog‘da qo‘l ushlashib yurgan kelin-kuyov" width={1100} height={1650} fetchPriority="high" decoding="async" />
+          <img src="/home-art/love-story.webp" srcSet="/home-art/responsive/love-story.webp 640w, /home-art/love-story.webp 1024w" sizes="(max-width: 760px) 85vw, (max-width: 1500px) 42vw, 600px" alt="Gulli bog‘da qo‘l ushlashib yurgan kelin-kuyov" width={1100} height={1650} fetchPriority="high" decoding="async" />
           <div className={styles.photoCaption}><span>THE BEGINNING OF FOREVER</span><p>Bir havola.<br /><em>Bir umrga xotira.</em></p></div>
         </motion.div>
         <motion.div className={styles.heroPhone} style={reduce || lite ? undefined : { y: phoneY }}>
           <Link href="/templates/premium-bardoviy-atirgul" aria-label="Bardoviy atirgul taklifnomasini jonli ochish"><PhoneShot themeId="premium-bardoviy-atirgul" alt="Sardor va Solihaning bardoviy atirgulli taklifnomasi" eager frameClassName={styles.phoneWidth} /></Link>
           <span className={styles.phoneHint}><Play size={9} fill="currentColor" />NAMUNANI OCHISH</span>
         </motion.div>
-        <div className={styles.artLabel}><span>23</span><div>ALOHIDA MAKET<br />BITTA UNUTILMAS KUN</div><Sparkles strokeWidth={1} size={24} /></div>
+        <div className={styles.artLabel}><span>{THEME_PRESETS.length}</span><div>ALOHIDA MAKET<br />BITTA UNUTILMAS KUN</div><Sparkles strokeWidth={1} size={24} /></div>
       </div>
     </section>
 
@@ -102,7 +129,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
     <section id="designs" className={styles.designs}>
       <motion.div {...reveal} className={styles.sectionIntro}>
         <div><span className={styles.eyebrow}>THE INVITATION ATELIER</span><h2>{designs.title}<br /><em>{designs.accent}</em></h2></div>
-        <div><p>{designs.subtitle}</p><Link href="/templates" className={styles.textLink}>Barcha {THEME_PRESETS.length} ta dizayn<ArrowUpRight size={16} /></Link></div>
+        <div><p>{designs.subtitle}</p><a href="#designs" onClick={() => setFilter("all")} className={styles.textLink}>Barcha {THEME_PRESETS.length} ta dizayn<ArrowUpRight size={16} /></a></div>
       </motion.div>
       <div className={styles.filterBar} role="group" aria-label="Dizayn uslubi">{FILTERS.map(item => <button type="button" key={item.id} aria-pressed={filter === item.id} onClick={() => setFilter(item.id)} className={filter === item.id ? styles.activeFilter : undefined}>{item.label}</button>)}</div>
       <div className={styles.designGrid}>
@@ -116,13 +143,13 @@ export function HomePageContent({ content }: { content: SiteContent }) {
           </motion.article>;
         })}
       </div>
-      <div className={styles.galleryEnd}><span>Qalbingizga yaqin uslubni toping.</span><Link href="/templates" className={styles.secondary}>To‘liq kolleksiya<ArrowRight size={16} /></Link></div>
+      <div className={styles.galleryEnd}><span>Qalbingizga yaqin uslubni toping.</span><a href="#designs" onClick={() => setFilter("all")} className={styles.secondary}>To‘liq kolleksiya<ArrowRight size={16} /></a></div>
     </section>
 
     <section className={styles.story}>
       <motion.div {...reveal} className={styles.storyImage}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/home-art/wedding-details.webp" alt="Kelin-kuyovning uzukli qo‘llari va bardoviy atirgullar" width={1400} height={934} loading="lazy" decoding="async" />
+        <img src="/home-art/wedding-details.webp" srcSet="/home-art/responsive/wedding-details.webp 700w, /home-art/wedding-details.webp 1400w" sizes="(max-width: 760px) 90vw, 45vw" alt="Kelin-kuyovning uzukli qo‘llari va bardoviy atirgullar" width={1400} height={934} loading="lazy" decoding="async" />
         <span className={styles.storyNote}>Kichik tafsilotlar.<br /><em>Katta hislar.</em></span>
       </motion.div>
       <motion.div {...reveal} className={styles.storyCopy}>
@@ -131,18 +158,24 @@ export function HomePageContent({ content }: { content: SiteContent }) {
       </motion.div>
     </section>
 
+    <section className={styles.editorial} aria-labelledby="editorial-title">
+      <motion.div {...reveal} className={styles.editorialIntro}><span className={styles.eyebrow}>THE ART OF CELEBRATING LOVE</span><h2 id="editorial-title">Bir kun.<br /><em>Ming go‘zal tuyg‘u.</em></h2><p>Milliy latofat, sokin romantika yoki hashamatli tantana — taklifnomangiz sizning hikoyangizdan boshlanadi.</p></motion.div>
+      <div className={styles.editorialGrid}>{EDITORIAL.map((item, index) => <EditorialPhoto item={item} index={index} key={item.id} />)}</div>
+      <p className={styles.editorialEnd}>Eng go‘zal xotiralar <em>bir taklifdan boshlanadi.</em></p>
+    </section>
+
     <section id="how" className={styles.how}>
       <motion.div {...reveal} className={styles.centerIntro}><span className={styles.eyebrow}>{how.script}</span><h2>{how.title} <em>{how.accent}</em></h2><p>{how.subtitle}</p></motion.div>
-      <div className={styles.steps}>{how.steps.map(step => <motion.article {...reveal} key={step.n}><span>{step.n}</span><div><h3>{step.title}</h3><p>{step.body}</p></div><ArrowRight size={18} strokeWidth={1} /></motion.article>)}</div>
+      <div className={styles.steps}>{how.steps.map(step => <motion.article {...reveal} key={step.n}><span key="number">{step.n}</span><div key="copy"><h3>{step.title}</h3><p>{step.body}</p></div><ArrowRight key="arrow" size={18} strokeWidth={1} /></motion.article>)}</div>
     </section>
 
     <section id="pricing" className={styles.pricing}>
       <motion.div {...reveal} className={styles.sectionIntro}><div><span className={styles.eyebrow}>GO‘ZALLIK — TAFSILOTLARDA</span><h2>{pricing.title}<br /><em>sizga mos tanlov</em></h2></div><p>{pricing.subtitle}</p></motion.div>
       <div className={styles.priceGrid}>{(["150000", "200000", "250000"] as PriceTier[]).map((tier, index) => <motion.article {...reveal} key={tier} className={index === 2 ? styles.fullCollection : undefined}>
-        <div className={styles.priceTop}><span>0{index + 1} / {index === 0 ? "ESSENTIAL" : index === 1 ? "ELEGANCE" : "SIGNATURE"}</span>{index === 2 && <span className={styles.priceBadge}>To‘liq kolleksiya</span>}</div>
-        <h3>{PRICE_TIER_LABELS[tier].replace(" so'm", "")}<small>so‘m</small></h3><p>{pricing.accessNote.replace("{count}", String(getUnlockedThemes(tier).length))}</p>
-        <ul><li><Check size={14} />Musiqa, sanoq va lokatsiya</li><li><Check size={14} />Shaxsiy mehmon havolalari</li><li><Check size={14} />Suratlar va nafis animatsiyalar</li></ul>
-        <button type="button" onClick={() => setModalOpen(true)}>{pricing.cta}<ArrowUpRight size={17} /></button>
+        <div key="header" className={styles.priceTop}><span>0{index + 1} / {index === 0 ? "ESSENTIAL" : index === 1 ? "ELEGANCE" : "SIGNATURE"}</span>{index === 2 && <span className={styles.priceBadge}>To‘liq kolleksiya</span>}</div>
+        <h3 key="price">{PRICE_TIER_LABELS[tier].replace(" so'm", "")}<small>so‘m</small></h3><p key="access">{pricing.accessNote.replace("{count}", String(getUnlockedThemes(tier).length))}</p>
+        <ul key="benefits"><li><Check size={14} />Musiqa, sanoq va lokatsiya</li><li><Check size={14} />Shaxsiy mehmon havolalari</li><li><Check size={14} />Suratlar va nafis animatsiyalar</li></ul>
+        <button key="order" type="button" onClick={() => setModalOpen(true)}>Buyurtma berish<ArrowUpRight size={17} /></button>
       </motion.article>)}</div>
       <div className={styles.giftIntro}><Gift size={22} strokeWidth={1.3} /><div><h3>{gift.title} {gift.accent}</h3><p>{gift.subtitle}</p></div></div>
       <div className={styles.giftGrid}>{gift.offers.map(offer => <div key={offer.id}><span>{offer.title}</span><strong>{offer.guests ? `${offer.guests} + ${offer.free}` : gift.unlimitedLabel}<small>{offer.guests ? gift.offerCountSuffix : gift.loveLabel}</small></strong><p>{offer.note}</p></div>)}</div>
@@ -159,7 +192,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
     </section>
 
     <SiteFooter footer={footer} contact={contact} />
-    <div className={styles.mobileBar}><a href="#designs">Dizaynlar<Images size={16} /></a><button type="button" onClick={() => setModalOpen(true)}>Buyurtma berish<ArrowUpRight size={17} /></button></div>
+    <div className={styles.mobileBar}><a href="#designs">Dizaynlar<Images size={16} /></a><button key="order" type="button" onClick={() => setModalOpen(true)}>Buyurtma berish<ArrowUpRight size={17} /></button></div>
     <AnimatePresence>{modalOpen && <motion.div className={styles.modalBackdrop} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setModalOpen(false)}><motion.div data-home-dialog role="dialog" aria-modal="true" aria-labelledby="contact-dialog-title" className={styles.modal} initial={reduce ? false : { y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ opacity: 0 }} onClick={event => event.stopPropagation()}><button ref={closeRef} type="button" onClick={() => setModalOpen(false)} aria-label="Yopish" className={styles.modalClose}><X size={20} /></button><Heart size={27} strokeWidth={1.2} /><span className={styles.eyebrow}>KELING, HIKOYANGIZNI BOSHLAYMIZ</span><h2 id="contact-dialog-title">{modal.title}</h2><p>{modal.body}</p><a href={contact.telegramHref} target="_blank" rel="noopener noreferrer" className={styles.telegram}><Send size={17} />Telegramda yozish<ArrowUpRight size={16} /></a><a href={contact.phoneHref} className={styles.modalPhone}><Phone size={16} />{contact.phone}</a><span className={styles.modalHint}>{modal.hint}</span></motion.div></motion.div>}</AnimatePresence>
     <CopyrightNotice />
   </div>;
