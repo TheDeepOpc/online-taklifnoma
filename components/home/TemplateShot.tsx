@@ -22,10 +22,10 @@ export function TemplateShot({
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
-      src={`/template-shots/${themeId}.webp?v=2026-10-26-corners`}
+      src={`/template-shots/${themeId}.webp?v=2026-10-26-430`}
       alt={alt}
-      width={860}
-      height={1800}
+      width={430}
+      height={900}
       loading={eager ? "eager" : "lazy"}
       decoding="async"
       draggable={false}

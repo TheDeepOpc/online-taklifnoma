@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
 import { GUEST_PARAM, sanitizeGuestName } from "@/lib/guestLink";
-import type { Invitation, MusicTrack } from "@/lib/types";
+import { getPublishedInvitation } from "@/lib/invitationData";
 
 export default async function PublicInvitationPage({
   params,
@@ -13,17 +12,9 @@ export default async function PublicInvitationPage({
 }) {
   const { slug } = await params;
   const query = await searchParams;
-  const supabase = await createClient();
+  const published = await getPublishedInvitation(slug);
 
-  const { data: invitation } = await supabase
-    .from("invitations")
-    .select("*")
-    .eq("slug", slug)
-    .eq("is_paid", true)
-    .eq("status", "published")
-    .single();
-
-  if (!invitation) {
+  if (!published) {
     notFound();
   }
 
@@ -31,19 +22,10 @@ export default async function PublicInvitationPage({
   // bitta taklifnomani har bir mehmonga o'z ismi bilan yuborish mumkin.
   const guestFromLink = sanitizeGuestName(query[GUEST_PARAM]);
   const typedInvitation = {
-    ...(invitation as Invitation),
+    ...published.invitation,
     ...(guestFromLink ? { guest_name: guestFromLink } : {}),
   };
-  let musicTrack: MusicTrack | null = null;
-
-  if (typedInvitation.music_track_id) {
-    const { data } = await supabase
-      .from("music_tracks")
-      .select("*")
-      .eq("id", typedInvitation.music_track_id)
-      .single();
-    musicTrack = data as MusicTrack | null;
-  }
+  const musicTrack = published.musicTrack;
 
   const bareQuery = new URLSearchParams({ bare: "1" });
   if (guestFromLink) bareQuery.set(GUEST_PARAM, guestFromLink);

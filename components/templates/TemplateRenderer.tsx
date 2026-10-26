@@ -46,7 +46,7 @@ export function TemplateRenderer({
   invitation: Invitation;
   musicTrack: MusicTrack | null;
   previewMode?: boolean;
-  /** Desktop ramkasi uchun shu sahifaning ramkasiz (`?bare=1`) manzili. */
+  /** Desktop ramkasi uchun shu sahifaning ramkasiz manzili (`?bare=1` yoki `/bare`). */
   frameSrc?: string;
   frameTitle?: string;
   /** Set false to skip the desktop "phone" bezel even outside previewMode —

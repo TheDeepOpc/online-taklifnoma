@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Kirish konverti/parda ochilmaguncha orqadagi sahifa aylanmasin —
@@ -13,6 +13,16 @@ import { useEffect } from "react";
  * ikkalasini qulflaymiz, touchmove'ni to'xtatamiz va sahifani tepaga qaytaramiz.
  */
 export function useScrollLock(locked: boolean) {
+  // Bu effekt birinchi e'lon qilingan — unmount'da birinchi tozalanadi, shuning
+  // uchun pastdagi qulf effekti "gate ochildi" bilan "sahifa tark etildi"ni ajrata oladi.
+  const leavingRef = useRef(false);
+  useEffect(() => {
+    leavingRef.current = false;
+    return () => {
+      leavingRef.current = true;
+    };
+  }, []);
+
   useEffect(() => {
     if (!locked) return;
     const html = document.documentElement;
@@ -61,7 +71,16 @@ export function useScrollLock(locked: boolean) {
       window.removeEventListener("touchmove", block);
       window.removeEventListener("wheel", block);
       window.removeEventListener("keydown", blockKeys);
-      window.scrollTo(0, 0);
+
+      if (!leavingRef.current) {
+        // Gate ochildi — taklifnoma tepadan boshlansin.
+        window.scrollTo(0, 0);
+        return;
+      }
+      // Boshqa sahifaga o'tildi (masalan, "Orqaga" → /#designs). Qulf turgan paytda
+      // body `position: fixed` bo'lgani uchun Next hash'ga aylantira olmagan — endi aylantiramiz.
+      const hash = decodeURIComponent(window.location.hash.slice(1));
+      if (hash) document.getElementById(hash)?.scrollIntoView();
     };
   }, [locked]);
 }

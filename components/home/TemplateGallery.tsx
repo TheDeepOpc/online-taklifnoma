@@ -35,7 +35,9 @@ export function TemplateGallery({ themeIds }: { themeIds: string[] }) {
             transition={{ duration: 0.6, delay: (i % 4) * 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="group"
           >
-            <Link href={`/templates/${theme.id}`} className="flex flex-col items-center">
+            {/* prefetch o'chiq: galereya ko'rinishi bilan 23 ta shablon sahifasini oldindan yuklash
+                telefon internetini band qilib, bosishni sekinlashtirardi. */}
+            <Link href={`/templates/${theme.id}`} prefetch={false} className="flex flex-col items-center">
               <motion.div
                 whileHover={reduce ? undefined : { y: -12, scale: 1.04, rotateY: -6, rotateX: 4 }}
                 whileTap={reduce ? undefined : { scale: 0.99 }}

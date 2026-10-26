@@ -41,7 +41,7 @@ const compositions: Record<string, (p: HeroProps) => ReactNode> = {
   triptych: p => <><div className={styles.topNames}><Eyebrow>A ROYAL CELEBRATION</Eyebrow><Names p={p} /></div><div className={styles.threePanel}><Photo p={p} slot="b" /><Photo p={p} /><Photo p={p} slot="c" /></div><div className={styles.bottomDate}><DateStamp p={p} /><Note p={p} /></div></>,
   postcard: p => <><div className={styles.postcardHead}><span>AZURE / LOVE POST</span><DateStamp p={p} /></div><Photo p={p}><span className={styles.postmark}>WITH LOVE</span></Photo><div className={styles.content}><Names p={p} /><Note p={p} /></div><div className={styles.postcardLines}><i /><i /><i /></div></>,
   couture: p => <><Photo p={p} /><Photo p={p} slot="b" /><span className={styles.coutureWord}>amour</span><div className={styles.content}><Eyebrow>THE COUTURE EDITION</Eyebrow><Names p={p} /><DateStamp p={p} /></div><Note p={p} /></>,
-  heritage: p => <><Photo p={p} /><div className={styles.heritagePaper}><Eyebrow>O‘ZBEKONA TO‘Y TAKLIFNOMASI</Eyebrow><Names p={p} /><DateStamp p={p} /><Note p={p} /><OrnamentalFrame kind="uzbek" design="heritage" /></div><HeritageInstruments /><div className={styles.heritageAnor}><img src="/imported-assets/milliy-ornament/pomegranate.webp" alt="Anor bezagi" /></div></>,
+  heritage: p => <><Photo p={p} /><div className={styles.heritagePaper}><HeritageInstruments /><Eyebrow>O‘ZBEKONA TO‘Y TAKLIFNOMASI</Eyebrow><Names p={p} /><DateStamp p={p} /><Note p={p} /><OrnamentalFrame kind="uzbek" design="heritage" /><img src="/invitation-art/effects/surnay.webp" alt="" aria-hidden="true" className={styles.heritageSurnay} /></div></>,
   ledger: p => <><div className={styles.ledgerTitle}><Eyebrow>THE GARDEN ATELIER</Eyebrow><span>Jardin</span></div><div className={styles.ledgerGrid}><Photo p={p} /><Photo p={p} slot="b" /><div className={styles.ledgerText}><Names p={p} /><DateStamp p={p} /></div><Photo p={p} slot="c" /></div><Note p={p} /></>,
   "floral-jewel": p => <><Photo p={p} /><div className={styles.jewelCircle}><Monogram p={p} /></div><div className={styles.floralText}><Eyebrow>UNE FLEUR · UN AMOUR</Eyebrow><Names p={p} /><div className={styles.line} /><DateStamp p={p} /><Note p={p} /></div></>,
   "silk-letter": p => <><Photo p={p} /><div className={styles.foldedLetter}><Eyebrow>A LETTER FROM OUR HEARTS</Eyebrow><Monogram p={p} /><Names p={p} /><DateStamp p={p} /><Note p={p} /><OrnamentalFrame kind="pearl" design="silk-letter" /></div><span className={styles.waxSeal}>avec amour</span></>,
@@ -60,11 +60,12 @@ const compositions: Record<string, (p: HeroProps) => ReactNode> = {
   "sky-panorama": p => <><div className={styles.skyTitle}><Eyebrow>WRITTEN IN THE STARS</Eyebrow><Names p={p} /></div><div className={styles.skyCards}><Photo p={p} slot="b" /><Photo p={p} /><Photo p={p} slot="c" /></div><div className={styles.skyDate}><DateStamp p={p} /><Note p={p} /></div><span className={styles.skyWord}>céleste</span></>,
 };
 
+/** Karnay — anor — karnay: qog'oz tepasida markazlashgan simmetrik gerb (qog'oz bilan birga siljiydi). */
 export function HeritageInstruments() {
-  return <div className={styles.instruments} data-heritage-instruments>
-    <img src="/imported-assets/milliy-ornament/horn.webp" alt="Milliy karnay" className={styles.karnayLeft} />
-    <img src="/imported-assets/milliy-ornament/horn.webp" alt="Milliy karnay" className={styles.karnayRight} />
-    <img src="/invitation-art/effects/surnay.webp" alt="Milliy surnay" className={styles.surnay} />
+  return <div className={styles.heritageCrest} data-heritage-instruments aria-hidden="true">
+    <img src="/imported-assets/milliy-ornament/horn.webp" alt="" className={styles.karnayLeft} />
+    <img src="/imported-assets/milliy-ornament/pomegranate.webp" alt="" className={styles.crestAnor} />
+    <img src="/imported-assets/milliy-ornament/horn.webp" alt="" className={styles.karnayRight} />
   </div>;
 }
 

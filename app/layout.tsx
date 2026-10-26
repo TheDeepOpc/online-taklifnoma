@@ -1,36 +1,25 @@
 import type { Metadata } from "next";
 import {
   Geist,
-  Geist_Mono,
   Playfair_Display,
   Cormorant_Garamond,
   Great_Vibes,
   Cinzel,
   Bodoni_Moda,
-  EB_Garamond,
-  Italiana,
   Poiret_One,
   Montserrat,
   Allura,
   Beau_Rivage,
   DM_Sans,
   Dancing_Script,
-  Corinthia,
   Imperial_Script,
   Ovo,
-  Cinzel_Decorative,
-  Amiri,
   Newsreader,
 } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -45,105 +34,89 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
 });
 
+// Quyidagi shriftlar faqat taklifnoma shablonlarida kerak: `preload: false` —
+// har sahifada oldindan yuklanmaydi, shablon ularni ishlatganda yuklanadi.
+// (Ilgari 21 ta shrift har sahifada preload qilinardi: ~28 so'rov / ~930 KB.)
 const greatVibes = Great_Vibes({
+  preload: false,
   variable: "--font-great-vibes",
   weight: "400",
   subsets: ["latin"],
 });
 
 const cinzel = Cinzel({
+  preload: false,
   variable: "--font-cinzel",
   weight: ["400", "600"],
   subsets: ["latin"],
 });
 
 const bodoniModa = Bodoni_Moda({
+  preload: false,
   variable: "--font-bodoni-moda",
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   subsets: ["latin"],
 });
 
-const ebGaramond = EB_Garamond({
-  variable: "--font-eb-garamond",
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-});
-
-const italiana = Italiana({
-  variable: "--font-italiana",
-  weight: "400",
-  subsets: ["latin"],
-});
-
 const poiretOne = Poiret_One({
+  preload: false,
   variable: "--font-poiret-one",
   weight: "400",
   subsets: ["latin"],
 });
 
 const montserrat = Montserrat({
+  preload: false,
   variable: "--font-montserrat",
   weight: ["300", "400", "500", "600"],
   subsets: ["latin"],
 });
 
 const allura = Allura({
+  preload: false,
   variable: "--font-allura",
   weight: "400",
   subsets: ["latin"],
 });
 
 const beauRivage = Beau_Rivage({
+  preload: false,
   variable: "--font-beau-rivage",
   weight: "400",
   subsets: ["latin"],
 });
 
 const dmSans = DM_Sans({
+  preload: false,
   variable: "--font-dm-sans",
   weight: ["300", "400", "500"],
   subsets: ["latin"],
 });
 
-const corinthia = Corinthia({
-  variable: "--font-corinthia",
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
-
 const imperialScript = Imperial_Script({
+  preload: false,
   variable: "--font-imperial-script",
   weight: "400",
   subsets: ["latin"],
 });
 
 const ovo = Ovo({
+  preload: false,
   variable: "--font-ovo",
   weight: "400",
   subsets: ["latin"],
 });
 
-const cinzelDecorative = Cinzel_Decorative({
-  variable: "--font-cinzel-decorative",
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
-
-const amiri = Amiri({
-  variable: "--font-amiri",
-  weight: ["400", "700"],
-  subsets: ["arabic", "latin"],
-});
-
 const newsreader = Newsreader({
+  preload: false,
   variable: "--font-newsreader",
   weight: ["200", "300", "400", "500"],
   subsets: ["latin"],
 });
 
 const dancingScript = Dancing_Script({
+  preload: false,
   variable: "--font-dancing-script",
   weight: ["400", "500", "600"],
   subsets: ["latin"],
@@ -156,25 +129,19 @@ export const metadata: Metadata = {
 
 const FONT_VARIABLES = [
   geistSans.variable,
-  geistMono.variable,
   playfair.variable,
   cormorant.variable,
   greatVibes.variable,
   cinzel.variable,
   bodoniModa.variable,
-  ebGaramond.variable,
-  italiana.variable,
   poiretOne.variable,
   montserrat.variable,
   allura.variable,
   beauRivage.variable,
   dmSans.variable,
   dancingScript.variable,
-  corinthia.variable,
   imperialScript.variable,
   ovo.variable,
-  cinzelDecorative.variable,
-  amiri.variable,
   newsreader.variable,
 ].join(" ");
 

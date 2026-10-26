@@ -5,7 +5,7 @@
  *   1) `npm run build && npm run start`  (yoki `npm run dev`, PORT=3000)
  *   2) `npm run shots`
  *
- * Har bir shablon `/templates/<id>?bare=1` manzilida 430x900 mobil oynada
+ * Har bir shablon `/templates/<id>/bare` manzilida 430x900 mobil oynada
  * ochiladi va WebP skrinshot `public/template-shots/<id>.webp` ga yoziladi.
  * Shu sabab bosh sahifa jonli render qilmaydi — faqat rasm ko'rsatadi.
  */
@@ -25,7 +25,8 @@ const allIds = [...`${themesSrc}\n${premiumSrc}`.matchAll(/^\s{4}id: "([a-z0-9-]
 const requestedIds = process.env.TEMPLATE_IDS?.split(",").filter(Boolean);
 const IDS_LIST = requestedIds ? allIds.filter((id) => requestedIds.includes(id)) : allIds;
 if (IDS_LIST.length === 0) throw new Error("lib/themes.ts dan mavzu ID'lari topilmadi");
-const W = 430, H = 900, DPR = 2;
+// DPR 1: kartalar ~210px kenglikda ko'rinadi — 430px yetarli (ilgari DPR 2 → 860×1800, 100–250 KB).
+const W = 430, H = 900, DPR = 1;
 
 await mkdir(OUT, { recursive: true });
 
@@ -91,7 +92,7 @@ for (const themeId of IDS_LIST) {
   let loaded = false;
   const onLoad = () => { loaded = true; };
   on("Page.loadEventFired", onLoad);
-  await send("Page.navigate", { url: `${BASE_URL}/templates/${themeId}?bare=1` }, sessionId);
+  await send("Page.navigate", { url: `${BASE_URL}/templates/${themeId}/bare` }, sessionId);
   for (let i = 0; i < 90 && !loaded; i++) await sleep(100);
   // shrift + rasm + animatsiyalar joyiga tushishi uchun
   await sleep(2600);
@@ -106,7 +107,7 @@ for (const themeId of IDS_LIST) {
     await send("Input.dispatchMouseEvent", { type: "mouseReleased", button: "left", clickCount: 1, ...point }, sessionId);
     await sleep(1400);
   }
-  const { data } = await send("Page.captureScreenshot", { format: "webp", quality: 82, captureBeyondViewport: false }, sessionId);
+  const { data } = await send("Page.captureScreenshot", { format: "webp", quality: 80, captureBeyondViewport: false }, sessionId);
   await writeFile(`${OUT}/${themeId}.webp`, Buffer.from(data, "base64"));
   console.log("ok", themeId);
   listeners.set("Page.loadEventFired", (listeners.get("Page.loadEventFired") || []).filter((f) => f !== onLoad));

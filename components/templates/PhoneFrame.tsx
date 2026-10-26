@@ -25,7 +25,7 @@ export function PhoneFrame({
   title,
   children,
 }: {
-  /** Xuddi shu sahifaning ramkasiz (`?bare=1`) manzili. */
+  /** Xuddi shu sahifaning ramkasiz manzili (`?bare=1` yoki `/bare`). */
   src: string;
   title: string;
   children: React.ReactNode;

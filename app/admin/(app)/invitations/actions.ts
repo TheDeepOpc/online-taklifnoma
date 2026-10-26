@@ -1,10 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { createAuthenticatedClient, createClient } from "@/lib/supabase/server";
 import { messageIdFromMediaUrl } from "@/lib/discordCdn";
 import { deleteMediaIfUnreferenced, invitationMediaUrls } from "@/lib/mediaStore";
+import { INVITATIONS_TAG } from "@/lib/invitationData";
 import { generateInvitationSlug } from "@/lib/slug";
 import { isThemeUnlocked, getUnlockedThemes } from "@/lib/themes";
 import type { PriceTier, ScheduleItem } from "@/lib/types";
@@ -129,6 +130,8 @@ export async function createInvitation(formData: FormData) {
     throw new Error(`Taklifnoma yaratishda xatolik: ${error.message}`);
   }
 
+  // Mehmonlar ochadigan /t/<slug> keshi darhol yangilansin.
+  updateTag(INVITATIONS_TAG);
   revalidatePath("/admin/dashboard");
   redirect("/admin/dashboard");
 }
@@ -167,6 +170,8 @@ export async function updateInvitation(id: string, formData: FormData) {
     previousMedia.filter((url) => !kept.has(url)),
   ).catch(() => {});
 
+  // Mehmonlar ochadigan /t/<slug> keshi darhol yangilansin.
+  updateTag(INVITATIONS_TAG);
   revalidatePath("/admin/dashboard");
   redirect("/admin/dashboard");
 }
@@ -188,6 +193,8 @@ export async function deleteInvitation(id: string) {
   // Taklifnoma bilan birga uning rasmlari ham Discord'dan o'chadi.
   await deleteMediaIfUnreferenced(supabase, invitationMediaUrls(row)).catch(() => {});
 
+  // Mehmonlar ochadigan /t/<slug> keshi darhol yangilansin.
+  updateTag(INVITATIONS_TAG);
   revalidatePath("/admin/dashboard");
 }
 

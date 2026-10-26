@@ -6,6 +6,15 @@ function demoWeddingDate(): string {
   return d.toISOString().slice(0, 10);
 }
 
+/**
+ * Har chaqiruvda yangi sana bilan (bugun + 3 oy). Statik sahifalar shuni
+ * ishlatadi — modul darajasidagi DEMO_INVITATION server jarayoni ishga
+ * tushgan kundagi sanada qotib qolardi.
+ */
+export function createDemoInvitation(): Invitation {
+  return { ...DEMO_INVITATION, wedding_date: demoWeddingDate() };
+}
+
 export const DEMO_INVITATION: Invitation = {
   id: "demo",
   slug: "demo",

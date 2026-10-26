@@ -62,7 +62,9 @@ const KIND_EXTENSIONS: Record<MediaKind, readonly string[]> = {
 function webhookUrl(): string {
   const url = process.env.DISCORD_WEBHOOK_URL;
   if (!url) {
-    throw new Error("DISCORD_WEBHOOK_URL sozlanmagan (.env.local ga qo'shing).");
+    throw new Error(
+      "DISCORD_WEBHOOK_URL sozlanmagan: lokalda .env.local ga, productionda Vercel → Settings → Environment Variables ga qo'shing.",
+    );
   }
   return url;
 }
@@ -252,14 +254,22 @@ export async function finishDirectUpload(
   return { messageId: message.id, url: discordMediaUrl(message.id) };
 }
 
+/**
+ * Bot kanalga kira olmasa (serverga qo'shilmagan — 401/403), har rasmda
+ * avval botni, keyin webhook'ni so'ramaslik uchun botni bir muddat chetlab o'tamiz.
+ */
+const BOT_RETRY_AFTER_MS = 10 * 60 * 1000;
+let botUnavailableUntil = 0;
+
 /** `null` — xabar Discord'da yo'q (o'chirilgan). */
 async function readMessage(messageId: string): Promise<DiscordMessage | null> {
   const bot = botConfig();
-  if (bot) {
+  if (bot && Date.now() > botUnavailableUntil) {
     const res = await botFetch(bot.token, `/channels/${bot.channelId}/messages/${messageId}`);
     if (res.ok) return (await res.json()) as DiscordMessage;
     if (res.status === 404) return null;
-    // 401/403 — bot hali serverga qo'shilmagan yoki huquqi yo'q: webhook orqali o'qiymiz.
+    if (res.status === 401 || res.status === 403) botUnavailableUntil = Date.now() + BOT_RETRY_AFTER_MS;
+    // Bot o'qiy olmadi — webhook orqali o'qiymiz.
   }
 
   const res = await webhookFetch(`/messages/${messageId}`);
@@ -384,7 +394,17 @@ function expiresAt(url: string): number {
   return ex ? parseInt(ex, 16) * 1000 : 0;
 }
 
-export async function resolveDiscordMediaUrl(messageId: string): Promise<string | null> {
+/**
+ * Yo'naltirishni brauzer va Vercel CDN qancha keshlashi mumkin: havola
+ * eskirishidan 30 daqiqa oldingacha, lekin 12 soatdan ko'p emas. Shunda bir
+ * rasm uchun funksiya va Discord'ga deyarli so'rov ketmaydi.
+ */
+export function mediaCacheSeconds(url: string): number {
+  const seconds = Math.floor((expiresAt(url) - Date.now() - 30 * 60 * 1000) / 1000);
+  return Math.max(60, Math.min(seconds, 12 * 60 * 60));
+}
+
+async function resolveFresh(messageId: string): Promise<string | null> {
   const cached = await getCachedAttachmentUrl(messageId);
   // Kesh muddati o'tgach Next eskirgan qiymatni bir marta qaytaradi (fonda
   // yangilaydi). Uzoq ochilmagan taklifnomada bu eskirgan havola bo'lishi
@@ -393,4 +413,17 @@ export async function resolveDiscordMediaUrl(messageId: string): Promise<string 
     return cached;
   }
   return fetchAttachmentUrl(messageId);
+}
+
+// Taklifnoma ochilganda bir xil rasm bir vaqtda bir necha marta so'ralsa,
+// Discord'ga bitta so'rov ketadi.
+const inflight = new Map<string, Promise<string | null>>();
+
+export function resolveDiscordMediaUrl(messageId: string): Promise<string | null> {
+  let pending = inflight.get(messageId);
+  if (!pending) {
+    pending = resolveFresh(messageId).finally(() => inflight.delete(messageId));
+    inflight.set(messageId, pending);
+  }
+  return pending;
 }

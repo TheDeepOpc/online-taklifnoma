@@ -1,4 +1,4 @@
-import { isDiscordMessageId, resolveDiscordMediaUrl } from "@/lib/discordCdn";
+import { isDiscordMessageId, mediaCacheSeconds, resolveDiscordMediaUrl } from "@/lib/discordCdn";
 
 /**
  * Taklifnoma rasmlari va musiqalarning doimiy manzili. Discord CDN havolasi
@@ -19,13 +19,17 @@ export async function GET(
     if (!url) {
       return new Response("Topilmadi", { status: 404 });
     }
-    // Brauzer/CDN yo'naltirishni 1 soat eslab qoladi — havola kamida 1 soat
-    // yaroqli bo'lgandagina qaytariladi (resolveDiscordMediaUrl).
+    // Brauzer va Vercel CDN yo'naltirishni havola eskirguncha (12 soatgacha)
+    // eslab qoladi — keyingi ochilishlar funksiyaga ham, Discord'ga ham bormaydi.
+    const seconds = mediaCacheSeconds(url);
     return new Response(null, {
       status: 302,
-      headers: { Location: url, "Cache-Control": "public, max-age=3600" },
+      headers: { Location: url, "Cache-Control": `public, max-age=${seconds}, s-maxage=${seconds}` },
     });
-  } catch {
-    return new Response("Fayl vaqtincha mavjud emas", { status: 502 });
+  } catch (error) {
+    // Sabab Vercel log'ida va javobda ko'rinsin (masalan, "DISCORD_WEBHOOK_URL sozlanmagan").
+    // Xabarlar faqat bizniki — token yoki maxfiy qiymat yo'q.
+    console.error("[api/media]", messageId, error);
+    return new Response(`Fayl vaqtincha mavjud emas: ${(error as Error).message}`, { status: 502 });
   }
 }
