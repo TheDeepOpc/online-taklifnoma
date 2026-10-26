@@ -3,66 +3,47 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createAuthenticatedClient, createClient } from "@/lib/supabase/server";
-import { uploadToDiscord } from "@/lib/discordCdn";
+import { messageIdFromMediaUrl } from "@/lib/discordCdn";
+import { deleteMediaIfUnreferenced, invitationMediaUrls } from "@/lib/mediaStore";
 import { generateInvitationSlug } from "@/lib/slug";
 import { isThemeUnlocked, getUnlockedThemes } from "@/lib/themes";
 import type { PriceTier, ScheduleItem } from "@/lib/types";
 
-// Rasmlar Discord CDN'da saqlanadi; bazaga doimiy `/api/media/<id>` manzili yoziladi.
-async function uploadCoverPhoto(
-  formData: FormData,
-  fieldName: string = "cover_photo",
-): Promise<string | null> {
-  const file = formData.get(fieldName);
-  if (!(file instanceof File) || file.size === 0) return null;
-
-  try {
-    const { url } = await uploadToDiscord(file);
-    return url;
-  } catch (error) {
-    throw new Error(`Muqova rasmni yuklashda xatolik: ${(error as Error).message}`);
-  }
-}
-
 const MAX_GALLERY_PHOTOS = 5;
+const MEDIA_COLUMNS = "cover_photo_url, second_photo_url, gallery_photo_urls";
 
-function readExistingGalleryUrls(formData: FormData): string[] {
-  const raw = String(formData.get("existing_gallery_urls") ?? "[]");
+function readJsonStrings(value: FormDataEntryValue | null): string[] {
   try {
-    const parsed = JSON.parse(raw);
+    const parsed = JSON.parse(String(value ?? "[]"));
     return Array.isArray(parsed) ? parsed.filter((u): u is string => typeof u === "string") : [];
   } catch {
     return [];
   }
 }
 
-// Admin oldin saqlagan rasmlarni (existing_gallery_urls) va bu safar qo'shgan
-// yangi fayllarni birlashtiradi — shunda "+" bosib qo'shish avvalgilarini
-// o'chirib yubormaydi, jami 5 tadan oshmaydi.
-async function uploadGalleryPhotos(formData: FormData): Promise<string[]> {
-  const existing = readExistingGalleryUrls(formData);
-  const remainingSlots = Math.max(0, MAX_GALLERY_PHOTOS - existing.length);
-  const files = formData
-    .getAll("gallery_photos")
-    .filter((f): f is File => f instanceof File && f.size > 0)
-    .slice(0, remainingSlots);
+/**
+ * Rasmlar formada tanlanishi bilan Discord'ga yuklangan (media/actions.ts) —
+ * bu yerga faqat havolalar keladi. Qabul qilinadi: `/api/media/<id>` yoki shu
+ * taklifnomada avvaldan saqlangan havola (masalan, eski Supabase rasmlari).
+ * Boshqa ixtiyoriy tashqi havolalar yozilmaydi.
+ */
+function readInvitationMedia(formData: FormData, previous: string[] = []) {
+  const allowed = new Set(previous);
+  const pick = (value: FormDataEntryValue | string | null): string | null => {
+    const url = typeof value === "string" ? value.trim() : "";
+    if (!url) return null;
+    return messageIdFromMediaUrl(url) !== null || allowed.has(url) ? url : null;
+  };
 
-  // Fayllarni ketma-ket emas, parallel yuklaymiz — 5 ta rasm ketma-ket
-  // yuklansa administrator "Saqlash" tugmasini bosgandan keyin o'nlab
-  // soniya kutib, sahifa muzlab qolganday tuyulishi mumkin edi. Discord
-  // rate limit'iga (429) tushsa, uploadToDiscord o'zi kutib qayta uradi.
-  const uploaded = await Promise.all(
-    files.map(async (file) => {
-      try {
-        const { url } = await uploadToDiscord(file);
-        return url;
-      } catch (error) {
-        throw new Error(`Galereya rasmini yuklashda xatolik: ${(error as Error).message}`);
-      }
-    }),
-  );
+  const gallery = readJsonStrings(formData.get("gallery_photo_urls"))
+    .map(pick)
+    .filter((url): url is string => url !== null);
 
-  return [...existing, ...uploaded];
+  return {
+    cover_photo_url: pick(formData.get("cover_photo_url")),
+    second_photo_url: pick(formData.get("second_photo_url")),
+    gallery_photo_urls: [...new Set(gallery)].slice(0, MAX_GALLERY_PHOTOS),
+  };
 }
 
 function readScheduleItems(formData: FormData): ScheduleItem[] {
@@ -135,13 +116,10 @@ export async function createInvitation(formData: FormData) {
   const supabase = await createAuthenticatedClient();
   const data = readInvitationForm(formData);
   const slug = generateInvitationSlug(data.groom_name, data.bride_name);
-  const [cover_photo_url, second_photo_url, gallery_photo_urls] = await Promise.all([
-    uploadCoverPhoto(formData, "cover_photo"),
-    uploadCoverPhoto(formData, "second_photo"),
-    uploadGalleryPhotos(formData),
-  ]);
 
-  const row = { ...data, slug, cover_photo_url, second_photo_url, gallery_photo_urls };
+  // Saqlanmay qolsa, yuklangan rasmlar formada turadi (qayta urinish mumkin);
+  // forma tashlab ketilsa — ular /api/media/discard yoki tozalash orqali o'chadi.
+  const row = { ...data, ...readInvitationMedia(formData), slug };
   let { error } = await supabase.from("invitations").insert(row);
   if (error && isMissingOptionalColumn(error.message)) {
     ({ error } = await supabase.from("invitations").insert(withoutOptionalColumns(row)));
@@ -158,18 +136,19 @@ export async function createInvitation(formData: FormData) {
 export async function updateInvitation(id: string, formData: FormData) {
   const supabase = await createAuthenticatedClient();
   const data = readInvitationForm(formData);
-  const [cover_photo_url, second_photo_url, gallery_photo_urls] = await Promise.all([
-    uploadCoverPhoto(formData, "cover_photo"),
-    uploadCoverPhoto(formData, "second_photo"),
-    uploadGalleryPhotos(formData),
-  ]);
 
-  const row = {
-    ...data,
-    ...(cover_photo_url ? { cover_photo_url } : {}),
-    ...(second_photo_url ? { second_photo_url } : {}),
-    gallery_photo_urls,
-  };
+  const { data: before, error: readError } = await supabase
+    .from("invitations")
+    .select(MEDIA_COLUMNS)
+    .eq("id", id)
+    .single();
+  if (readError) {
+    throw new Error(`Taklifnomani yangilashda xatolik: ${readError.message}`);
+  }
+  const previousMedia = invitationMediaUrls(before);
+  const media = readInvitationMedia(formData, previousMedia);
+
+  const row = { ...data, ...media };
   let { error } = await supabase.from("invitations").update(row).eq("id", id);
   if (error && isMissingOptionalColumn(error.message)) {
     ({ error } = await supabase.from("invitations").update(withoutOptionalColumns(row)).eq("id", id));
@@ -179,17 +158,35 @@ export async function updateInvitation(id: string, formData: FormData) {
     throw new Error(`Taklifnomani yangilashda xatolik: ${error.message}`);
   }
 
+  // Almashtirilgan muqova yoki olib tashlangan galereya rasmlari endi hech
+  // qayerda ishlatilmasa — Discord'dan o'chiriladi. Xato saqlashni to'xtatmaydi:
+  // o'chmay qolgani keyinroq "Keraksiz fayllarni tozalash" bilan ketadi.
+  const kept = new Set(invitationMediaUrls(media));
+  await deleteMediaIfUnreferenced(
+    supabase,
+    previousMedia.filter((url) => !kept.has(url)),
+  ).catch(() => {});
+
   revalidatePath("/admin/dashboard");
   redirect("/admin/dashboard");
 }
 
 export async function deleteInvitation(id: string) {
-  const supabase = await createClient();
+  const supabase = await createAuthenticatedClient();
+  const { data: row } = await supabase
+    .from("invitations")
+    .select(MEDIA_COLUMNS)
+    .eq("id", id)
+    .maybeSingle();
+
   const { error } = await supabase.from("invitations").delete().eq("id", id);
 
   if (error) {
     throw new Error(`Taklifnomani o'chirishda xatolik: ${error.message}`);
   }
+
+  // Taklifnoma bilan birga uning rasmlari ham Discord'dan o'chadi.
+  await deleteMediaIfUnreferenced(supabase, invitationMediaUrls(row)).catch(() => {});
 
   revalidatePath("/admin/dashboard");
 }

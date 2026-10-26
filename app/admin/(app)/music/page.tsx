@@ -1,6 +1,7 @@
-import { Trash2, Upload } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { addMusicTrack, deleteMusicTrack } from "./actions";
+import { deleteMusicTrack } from "./actions";
+import { MusicUploadForm } from "@/components/admin/MusicUploadForm";
 import type { MusicTrack } from "@/lib/types";
 
 export default async function MusicLibraryPage() {
@@ -16,25 +17,7 @@ export default async function MusicLibraryPage() {
     <div className="mx-auto max-w-2xl">
       <h1 className="mb-6 text-2xl font-semibold text-slate-900">Musiqalar kutubxonasi</h1>
 
-      <form
-        action={addMusicTrack}
-        className="mb-8 space-y-4 rounded-xl border border-slate-200 bg-white p-5"
-      >
-        <label className="block">
-          <span className="mb-1 block text-sm font-medium text-slate-700">Qo&apos;shiq nomi</span>
-          <input name="title" required className="input" placeholder="Masalan: Romantik pianino" />
-        </label>
-
-        <label className="block">
-          <span className="mb-1 block text-sm font-medium text-slate-700">Mp3 fayl (maks. 10 MB)</span>
-          <input name="file" type="file" accept="audio/mpeg,audio/mp3,.mp3" required className="input" />
-        </label>
-
-        <button type="submit" className="btn inline-flex items-center gap-2">
-          <Upload className="h-4 w-4" />
-          Qo&apos;shish
-        </button>
-      </form>
+      <MusicUploadForm />
 
       {tracks.length === 0 && (
         <p className="rounded-lg border border-dashed border-slate-300 py-10 text-center text-sm text-slate-500">

@@ -120,7 +120,16 @@ export function InvitationList({
               </Link>
               <button
                 type="button"
-                onClick={() => onDelete(invitation.id)}
+                onClick={() => {
+                  // Taklifnoma bilan birga uning rasmlari ham Discord'dan butunlay o'chadi.
+                  if (
+                    confirm(
+                      `"${invitation.groom_name} & ${invitation.bride_name}" taklifnomasi va uning rasmlari butunlay o'chiriladi. Davom etasizmi?`,
+                    )
+                  ) {
+                    onDelete(invitation.id);
+                  }
+                }}
                 className="btn-secondary text-red-600"
                 title="O'chirish"
               >

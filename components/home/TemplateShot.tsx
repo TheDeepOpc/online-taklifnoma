@@ -22,7 +22,7 @@ export function TemplateShot({
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
-      src={`/template-shots/${themeId}.webp?v=2026-10-edition2`}
+      src={`/template-shots/${themeId}.webp?v=2026-10-26-corners`}
       alt={alt}
       width={860}
       height={1800}

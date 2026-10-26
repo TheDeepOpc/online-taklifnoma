@@ -3,47 +3,48 @@
 import { revalidatePath, updateTag } from "next/cache";
 import { MUSIC_TRACKS_TAG } from "@/lib/musicTracks";
 import { createAuthenticatedClient } from "@/lib/supabase/server";
-import { DISCORD_STORAGE_PREFIX, deleteFromDiscord, uploadToDiscord } from "@/lib/discordCdn";
+import { DISCORD_STORAGE_PREFIX, deleteFromDiscord, messageIdFromMediaUrl } from "@/lib/discordCdn";
 
 /** Discord'ga o'tishdan oldin yuklangan qo'shiqlar Supabase'dagi shu bucket'da qolgan. */
 const LEGACY_MUSIC_BUCKET = "music";
 
-export async function addMusicTrack(formData: FormData) {
-  const title = String(formData.get("title") ?? "").trim();
-  const file = formData.get("file");
+export type AddMusicTrackResult = { ok: true } | { ok: false; error: string };
 
-  if (!title) {
-    throw new Error("Qo'shiq nomini kiriting.");
+/**
+ * Mp3 brauzerdan Direct Upload bilan Discord'ga yuklangan (lib/mediaClient.ts) —
+ * bu yerga faqat `/api/media/<id>` havolasi keladi. storage_path'ga o'chirish
+ * uchun `discord:<messageId>` yoziladi.
+ */
+export async function addMusicTrack(title: string, mediaUrl: string): Promise<AddMusicTrackResult> {
+  const cleanTitle = title.trim();
+  if (!cleanTitle) {
+    return { ok: false, error: "Qo'shiq nomini kiriting." };
   }
-  if (!(file instanceof File) || file.size === 0) {
-    throw new Error("Mp3 fayl tanlanmagan.");
+  const messageId = messageIdFromMediaUrl(mediaUrl);
+  if (!messageId) {
+    return { ok: false, error: "Mp3 fayl yuklanmagan." };
   }
 
-  const supabase = await createAuthenticatedClient();
-
-  // Fayl Discord CDN'ga yuklanadi; bazaga doimiy `/api/media/<id>` manzili,
-  // storage_path'ga esa o'chirish uchun `discord:<messageId>` yoziladi.
-  let uploaded: { messageId: string; url: string };
   try {
-    uploaded = await uploadToDiscord(file);
+    const supabase = await createAuthenticatedClient();
+    const { error: insertError } = await supabase.from("music_tracks").insert({
+      title: cleanTitle,
+      file_url: mediaUrl,
+      storage_path: `${DISCORD_STORAGE_PREFIX}${messageId}`,
+      min_price_tier: "150000",
+    });
+
+    if (insertError) {
+      await deleteFromDiscord(messageId).catch(() => {});
+      return { ok: false, error: `Bazaga saqlashda xatolik: ${insertError.message}` };
+    }
   } catch (error) {
-    throw new Error(`Faylni yuklashda xatolik: ${(error as Error).message}`);
-  }
-
-  const { error: insertError } = await supabase.from("music_tracks").insert({
-    title,
-    file_url: uploaded.url,
-    storage_path: `${DISCORD_STORAGE_PREFIX}${uploaded.messageId}`,
-    min_price_tier: "150000",
-  });
-
-  if (insertError) {
-    await deleteFromDiscord(uploaded.messageId).catch(() => {});
-    throw new Error(`Bazaga saqlashda xatolik: ${insertError.message}`);
+    return { ok: false, error: (error as Error).message };
   }
 
   updateTag(MUSIC_TRACKS_TAG);
   revalidatePath("/admin/music");
+  return { ok: true };
 }
 
 export async function deleteMusicTrack(id: string) {

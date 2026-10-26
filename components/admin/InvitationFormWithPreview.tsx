@@ -1,9 +1,10 @@
 "use client";
 
-import { useDeferredValue, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useFormStatus } from "react-dom";
-import { X, Eye, EyeOff, Dices } from "lucide-react";
+import { X, Eye, EyeOff, Dices, Loader2 } from "lucide-react";
 import { randomWish } from "@/lib/wishTemplates";
+import { discardMedia, uploadToCdn } from "@/lib/mediaClient";
 import { InvitationLivePreview } from "./InvitationLivePreview";
 import { DEMO_INVITATION } from "@/lib/demoInvitation";
 import { ThemePicker } from "./ThemePicker";
@@ -76,6 +77,23 @@ async function compressImageFile(file: File): Promise<File> {
   }
 }
 
+interface Photo {
+  key: string;
+  /** Saqlanadigan havola (`/api/media/<id>` yoki eski Supabase havolasi); yuklanayotganda `null`. */
+  url: string | null;
+  /** Ko'rsatish uchun: yangi tanlanganda lokal blob, saqlanganida — `url`. */
+  preview: string;
+  error?: string;
+}
+
+function savedPhoto(url: string): Photo {
+  return { key: `saved:${url}`, url, preview: url };
+}
+
+function visiblePreview(photo: Photo | null): string | null {
+  return photo && !photo.error ? photo.preview : null;
+}
+
 export function InvitationFormWithPreview({
   invitation,
   musicTracks,
@@ -99,30 +117,24 @@ export function InvitationFormWithPreview({
   const [musicTrackId, setMusicTrackId] = useState(invitation?.music_track_id ?? "");
   const [customMessage, setCustomMessage] = useState(invitation?.custom_message ?? "");
   const [isPaid, setIsPaid] = useState(invitation?.is_paid ?? false);
-  const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(
-    invitation?.cover_photo_url ?? null,
+  const [cover, setCover] = useState<Photo | null>(
+    invitation?.cover_photo_url ? savedPhoto(invitation.cover_photo_url) : null,
   );
-  const [secondPhotoPreviewUrl, setSecondPhotoPreviewUrl] = useState<string | null>(
-    invitation?.second_photo_url ?? null,
+  const [secondPhoto, setSecondPhoto] = useState<Photo | null>(
+    invitation?.second_photo_url ? savedPhoto(invitation.second_photo_url) : null,
   );
   const [giftCardNumber, setGiftCardNumber] = useState(invitation?.gift_card_number ?? "");
   const [wishesTitle, setWishesTitle] = useState(invitation?.wishes_title ?? "");
   const [wishesText, setWishesText] = useState(invitation?.wishes_text ?? "");
-  // Galereya: mavjud (serverda saqlangan) rasmlar va bu sessiyada qo'shilgan
-  // yangi (hali yuklanmagan) rasmlar alohida kuzatiladi — shunda admin
-  // qo'shishda avvalgilarini yo'qotmaydi, va ikkalasidan ham o'chira oladi.
-  const [existingGalleryUrls, setExistingGalleryUrls] = useState<string[]>(
-    invitation?.gallery_photo_urls ?? [],
+  const [gallery, setGallery] = useState<Photo[]>(
+    (invitation?.gallery_photo_urls ?? []).map(savedPhoto),
   );
-  const [pendingGalleryFiles, setPendingGalleryFiles] = useState<File[]>([]);
-  const [pendingGalleryPreviews, setPendingGalleryPreviews] = useState<string[]>([]);
   const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>(
     invitation?.schedule_items ?? [],
   );
   const [useGuestName, setUseGuestName] = useState(Boolean(invitation?.guest_name));
   const [guestName, setGuestName] = useState(invitation?.guest_name ?? "");
   const [textSize, setTextSize] = useState<TextSize>(invitation?.text_size ?? "normal");
-  const galleryInputRef = useRef<HTMLInputElement>(null);
   const [showMobilePreview, setShowMobilePreview] = useState(true);
   const isDesktop = useSyncExternalStore(
     subscribeIsDesktop,
@@ -130,63 +142,112 @@ export function InvitationFormWithPreview({
     getIsDesktopServerSnapshot,
   );
 
-  async function handleCoverChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const input = e.target;
-    const file = input.files?.[0];
-    if (!file) return;
-    setCoverPreviewUrl(URL.createObjectURL(file));
+  // Rasmlar tanlanishi bilan Discord'ga yuklanadi (Direct Upload) — forma
+  // faqat tayyor havolalarni yuboradi. Shu sessiyada yuklangan, hali
+  // saqlanmagan rasm olib tashlansa, almashtirilsa yoki forma tashlab
+  // ketilsa — u Discord'dan o'chiriladi. Saqlangan rasmni esa server
+  // "Saqlash"da o'chiradi (admin tahrirni bekor qilsa, u joyida qoladi).
+  const freshUrlsRef = useRef(new Set<string>());
+  const activeKeysRef = useRef(new Set<string>());
+  const keyCounterRef = useRef(0);
 
-    const compressed = await compressImageFile(file);
-    const dt = new DataTransfer();
-    dt.items.add(compressed);
-    input.files = dt.files;
+  useEffect(() => {
+    const fresh = freshUrlsRef.current;
+    const flush = () => {
+      // Saqlab bo'lingan rasmlarni server o'chirmaydi (bazada ishlatilyapti) —
+      // shuning uchun muvaffaqiyatli saqlashdan keyingi chaqiruv zararsiz.
+      discardMedia([...fresh]);
+      fresh.clear();
+    };
+    const onPageHide = (event: PageTransitionEvent) => {
+      if (!event.persisted) flush();
+    };
+    window.addEventListener("pagehide", onPageHide);
+    return () => {
+      window.removeEventListener("pagehide", onPageHide);
+      flush();
+    };
+  }, []);
+
+  function nextPhotoKey() {
+    keyCounterRef.current += 1;
+    return `new:${keyCounterRef.current}`;
   }
 
-  async function handleSecondPhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const input = e.target;
-    const file = input.files?.[0];
-    if (!file) return;
-    setSecondPhotoPreviewUrl(URL.createObjectURL(file));
-
-    const compressed = await compressImageFile(file);
-    const dt = new DataTransfer();
-    dt.items.add(compressed);
-    input.files = dt.files;
+  /** Rasm formadan chiqarildi: yuklanayotgan bo'lsa — tugagach, yangi bo'lsa — darhol o'chadi. */
+  function releasePhoto(photo: Photo | null | undefined) {
+    if (!photo) return;
+    activeKeysRef.current.delete(photo.key);
+    if (photo.url && freshUrlsRef.current.delete(photo.url)) discardMedia([photo.url]);
   }
 
-  function syncGalleryInput(files: File[]) {
-    const input = galleryInputRef.current;
-    if (!input) return;
-    const dt = new DataTransfer();
-    files.forEach((file) => dt.items.add(file));
-    input.files = dt.files;
-  }
-
-  async function handleGalleryChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const input = e.target;
-    const remainingSlots = MAX_GALLERY_PHOTOS - existingGalleryUrls.length - pendingGalleryFiles.length;
-    const selected = Array.from(input.files ?? []).slice(0, Math.max(0, remainingSlots));
-    if (selected.length === 0) {
-      input.value = "";
-      return;
+  async function uploadPhoto(
+    file: File,
+    key: string,
+    update: (key: string, patch: Partial<Photo>) => void,
+  ) {
+    activeKeysRef.current.add(key);
+    try {
+      const url = await uploadToCdn(await compressImageFile(file), "image");
+      if (!activeKeysRef.current.has(key)) {
+        // Yuklanayotgan paytda olib tashlangan yoki almashtirilgan.
+        discardMedia([url]);
+        return;
+      }
+      freshUrlsRef.current.add(url);
+      update(key, { url });
+    } catch (error) {
+      update(key, { error: (error as Error).message });
     }
-
-    const compressed = await Promise.all(selected.map(compressImageFile));
-    const nextFiles = [...pendingGalleryFiles, ...compressed];
-    setPendingGalleryFiles(nextFiles);
-    setPendingGalleryPreviews((urls) => [...urls, ...compressed.map((f) => URL.createObjectURL(f))]);
-    syncGalleryInput(nextFiles);
   }
 
-  function removeExistingGalleryPhoto(index: number) {
-    setExistingGalleryUrls((urls) => urls.filter((_, i) => i !== index));
+  function handleSinglePhotoChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+    current: Photo | null,
+    setPhoto: React.Dispatch<React.SetStateAction<Photo | null>>,
+  ) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    releasePhoto(current);
+    const key = nextPhotoKey();
+    setPhoto({ key, url: null, preview: URL.createObjectURL(file) });
+    void uploadPhoto(file, key, (k, patch) =>
+      setPhoto((photo) => (photo?.key === k ? { ...photo, ...patch } : photo)),
+    );
   }
 
-  function removePendingGalleryPhoto(index: number) {
-    const nextFiles = pendingGalleryFiles.filter((_, i) => i !== index);
-    setPendingGalleryFiles(nextFiles);
-    setPendingGalleryPreviews((urls) => urls.filter((_, i) => i !== index));
-    syncGalleryInput(nextFiles);
+  function removeSinglePhoto(
+    current: Photo | null,
+    setPhoto: React.Dispatch<React.SetStateAction<Photo | null>>,
+  ) {
+    releasePhoto(current);
+    setPhoto(null);
+  }
+
+  function handleGalleryChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []).slice(
+      0,
+      Math.max(0, MAX_GALLERY_PHOTOS - gallery.length),
+    );
+    e.target.value = "";
+    if (files.length === 0) return;
+
+    const added = files.map((file) => ({
+      file,
+      photo: { key: nextPhotoKey(), url: null, preview: URL.createObjectURL(file) } as Photo,
+    }));
+    setGallery((list) => [...list, ...added.map((item) => item.photo)]);
+
+    const update = (key: string, patch: Partial<Photo>) =>
+      setGallery((list) => list.map((photo) => (photo.key === key ? { ...photo, ...patch } : photo)));
+    for (const { file, photo } of added) void uploadPhoto(file, photo.key, update);
+  }
+
+  function removeGalleryPhoto(photo: Photo) {
+    releasePhoto(photo);
+    setGallery((list) => list.filter((p) => p.key !== photo.key));
   }
 
   function addScheduleItem() {
@@ -213,11 +274,9 @@ export function InvitationFormWithPreview({
   const selectedMusicTrack = musicTracks.find((t) => t.id === musicTrackId) ?? null;
   const selectedTheme = getTheme(templateId);
   const showSecondPhoto = familySupportsSecondPhoto(selectedTheme.family);
-  const galleryPhotos = [
-    ...existingGalleryUrls.map((url) => ({ url, kind: "existing" as const })),
-    ...pendingGalleryPreviews.map((url) => ({ url, kind: "pending" as const })),
-  ];
-  const galleryFull = galleryPhotos.length >= MAX_GALLERY_PHOTOS;
+  const photosUploading = [cover, secondPhoto, ...gallery].some(
+    (photo) => photo !== null && photo.url === null && !photo.error,
+  );
 
   // Live preview loyihasi (framer-motion, scroll kuzatuvchilar, IntersectionObserver)
   // ancha og'ir — uni har bosilgan tugma bilan emas, faqat foydalanuvchi yozishni
@@ -237,9 +296,9 @@ export function InvitationFormWithPreview({
       template_id: templateId,
       music_track_id: musicTrackId || null,
       custom_message: customMessage || null,
-      cover_photo_url: coverPreviewUrl,
-      second_photo_url: secondPhotoPreviewUrl,
-      gallery_photo_urls: [...existingGalleryUrls, ...pendingGalleryPreviews],
+      cover_photo_url: visiblePreview(cover),
+      second_photo_url: visiblePreview(secondPhoto),
+      gallery_photo_urls: gallery.filter((photo) => !photo.error).map((photo) => photo.preview),
       schedule_items: scheduleItems.filter((item) => item.time || item.label),
       gift_card_number: giftCardNumber || null,
       wishes_title: wishesTitle || null,
@@ -264,10 +323,9 @@ export function InvitationFormWithPreview({
       templateId,
       musicTrackId,
       customMessage,
-      coverPreviewUrl,
-      secondPhotoPreviewUrl,
-      existingGalleryUrls,
-      pendingGalleryPreviews,
+      cover,
+      secondPhoto,
+      gallery,
       scheduleItems,
       giftCardNumber,
       wishesTitle,
@@ -397,26 +455,29 @@ export function InvitationFormWithPreview({
           </select>
         </Field>
 
-        <Field label="Muqova rasm (ixtiyoriy)">
-          <input
-            name="cover_photo"
-            type="file"
-            accept="image/*"
-            onChange={handleCoverChange}
-            className="input"
-          />
-        </Field>
+        {/* Rasmlar allaqachon Discord'da — forma faqat havolalarni yuboradi. */}
+        <input type="hidden" name="cover_photo_url" value={cover?.url ?? ""} />
+        <input type="hidden" name="second_photo_url" value={secondPhoto?.url ?? ""} />
+        <input
+          type="hidden"
+          name="gallery_photo_urls"
+          value={JSON.stringify(gallery.flatMap((photo) => (photo.url ? [photo.url] : [])))}
+        />
+
+        <PhotoField
+          label="Muqova rasm (ixtiyoriy)"
+          photo={cover}
+          onSelect={(e) => handleSinglePhotoChange(e, cover, setCover)}
+          onRemove={() => removeSinglePhoto(cover, setCover)}
+        />
 
         {showSecondPhoto ? (
-          <Field label="Ikkinchi rasm — kuyov (ixtiyoriy)">
-            <input
-              name="second_photo"
-              type="file"
-              accept="image/*"
-              onChange={handleSecondPhotoChange}
-              className="input"
-            />
-          </Field>
+          <PhotoField
+            label="Ikkinchi rasm — kuyov (ixtiyoriy)"
+            photo={secondPhoto}
+            onSelect={(e) => handleSinglePhotoChange(e, secondPhoto, setSecondPhoto)}
+            onRemove={() => removeSinglePhoto(secondPhoto, setSecondPhoto)}
+          />
         ) : (
           <Field label="Ikkinchi rasm — kuyov">
             <p className="text-xs text-slate-400">
@@ -425,73 +486,38 @@ export function InvitationFormWithPreview({
           </Field>
         )}
 
-        <Field label={`Xotira galereyasi — 1 dan ${MAX_GALLERY_PHOTOS} tagacha rasm (ixtiyoriy)`}>
-          <input
-            type="hidden"
-            name="existing_gallery_urls"
-            value={JSON.stringify(existingGalleryUrls)}
-          />
-          {galleryPhotos.length > 0 && (
-            <div className="mb-2 flex flex-wrap gap-2">
-              {galleryPhotos.map((photo, i) => {
-                const indexInKind =
-                  photo.kind === "existing"
-                    ? i
-                    : i - existingGalleryUrls.length;
-                return (
-                  <div key={photo.url + i} className="relative h-16 w-16 overflow-hidden rounded-lg border border-slate-200">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={photo.url} alt="" className="h-full w-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        photo.kind === "existing"
-                          ? removeExistingGalleryPhoto(indexInKind)
-                          : removePendingGalleryPhoto(indexInKind)
-                      }
-                      className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-black/60 text-white"
-                      aria-label="Rasmni olib tashlash"
-                    >
-                      <X className="h-2.5 w-2.5" />
-                    </button>
-                  </div>
-                );
-              })}
-              {!galleryFull && (
-                <label className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-lg border border-dashed border-slate-300 text-2xl leading-none text-slate-400 hover:border-slate-400 hover:text-slate-500">
-                  +
-                  <input
-                    ref={galleryInputRef}
-                    name="gallery_photos"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleGalleryChange}
-                    className="hidden"
-                  />
-                </label>
-              )}
-            </div>
-          )}
-          {galleryPhotos.length === 0 && (
-            <label className="input flex cursor-pointer items-center justify-center text-slate-400">
-              + Rasm qo&apos;shish
-              <input
-                ref={galleryInputRef}
-                name="gallery_photos"
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleGalleryChange}
-                className="hidden"
-              />
-            </label>
+        <FieldGroup label={`Xotira galereyasi — 1 dan ${MAX_GALLERY_PHOTOS} tagacha rasm (ixtiyoriy)`}>
+          <div className="flex flex-wrap gap-2">
+            {gallery.map((photo) => (
+              <PhotoThumb key={photo.key} photo={photo} onRemove={() => removeGalleryPhoto(photo)} />
+            ))}
+            {gallery.length < MAX_GALLERY_PHOTOS && (
+              <label
+                className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-lg border border-dashed border-slate-300 text-2xl leading-none text-slate-400 hover:border-slate-400 hover:text-slate-500"
+                aria-label="Rasm qo'shish"
+              >
+                +
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleGalleryChange}
+                  className="hidden"
+                />
+              </label>
+            )}
+          </div>
+          {gallery.some((photo) => photo.error) && (
+            <p className="mt-1 text-xs text-red-600">
+              {gallery.find((photo) => photo.error)?.error} Qizil ramkali rasmni olib tashlab, qayta
+              tanlang.
+            </p>
           )}
           <p className="mt-1 text-xs text-slate-400">
             Yuklanmasa, taklifnomada galereya bo&apos;limi umuman ko&apos;rinmaydi. &quot;+&quot;
-            bosib istalgan vaqt yana rasm qo&apos;shishingiz mumkin.
+            bosib istalgan vaqt yana rasm qo&apos;shishingiz mumkin, ✕ bilan o&apos;chirasiz.
           </p>
-        </Field>
+        </FieldGroup>
 
         <Field label="Kun dasturi (ixtiyoriy)">
           <input type="hidden" name="schedule_items" value={JSON.stringify(scheduleItems)} />
@@ -637,7 +663,7 @@ export function InvitationFormWithPreview({
           To&apos;lov qabul qilindi (taklifnoma jonli bo&apos;ladi)
         </label>
 
-        <SaveButton />
+        <SaveButton uploading={photosUploading} />
       </form>
 
       <div className="mt-6 lg:mt-0">
@@ -658,16 +684,87 @@ export function InvitationFormWithPreview({
   );
 }
 
-function SaveButton() {
+function SaveButton({ uploading }: { uploading: boolean }) {
   // useFormStatus faqat <form>ning o'z ichidagi komponentda ishlaydi — shuning
-  // uchun alohida komponent. Rasmlar (muqova/ikkinchi/galereya) yuklanayotganda
-  // bu bir necha soniya davom etishi mumkin; tugma shu payt "muzlab qolgandek"
-  // ko'rinmasligi uchun aniq holat ko'rsatamiz va qayta bosishni bloklaymiz.
+  // uchun alohida komponent. Rasm hali Discord'ga yuklanayotgan bo'lsa,
+  // saqlashni kutdiramiz — aks holda u taklifnomaga tushmay qolardi.
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={pending} className="btn disabled:cursor-not-allowed disabled:opacity-60">
-      {pending ? "Saqlanmoqda..." : "Saqlash"}
+    <button
+      type="submit"
+      disabled={pending || uploading}
+      className="btn disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      {pending ? "Saqlanmoqda..." : uploading ? "Rasmlar yuklanmoqda..." : "Saqlash"}
     </button>
+  );
+}
+
+/**
+ * `<label>` emas, `<div>`: ichida bir nechta tugma bor — label bosilganda
+ * brauzer birinchi tugmani (masalan, birinchi rasmning ✕) bosib yuborardi.
+ */
+function FieldGroup({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <span className="mb-1 block text-sm font-medium text-slate-700">{label}</span>
+      {children}
+    </div>
+  );
+}
+
+function PhotoThumb({ photo, onRemove }: { photo: Photo; onRemove: () => void }) {
+  const uploading = photo.url === null && !photo.error;
+  return (
+    <div
+      className={`relative h-16 w-16 overflow-hidden rounded-lg border ${photo.error ? "border-red-400" : "border-slate-200"}`}
+      title={photo.error}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={photo.preview}
+        alt=""
+        className={`h-full w-full object-cover ${uploading || photo.error ? "opacity-50" : ""}`}
+      />
+      {uploading && (
+        <span className="absolute inset-0 grid place-items-center" aria-label="Yuklanmoqda">
+          <Loader2 className="h-5 w-5 animate-spin text-slate-700" />
+        </span>
+      )}
+      <button
+        type="button"
+        onClick={onRemove}
+        className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-black/60 text-white"
+        aria-label="Rasmni o'chirish"
+      >
+        <X className="h-2.5 w-2.5" />
+      </button>
+    </div>
+  );
+}
+
+function PhotoField({
+  label,
+  photo,
+  onSelect,
+  onRemove,
+}: {
+  label: string;
+  photo: Photo | null;
+  onSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onRemove: () => void;
+}) {
+  return (
+    <FieldGroup label={label}>
+      <div className="flex items-center gap-3">
+        {photo && <PhotoThumb photo={photo} onRemove={onRemove} />}
+        <label className="btn-secondary cursor-pointer text-sm">
+          {photo ? "Almashtirish" : "Rasm tanlash"}
+          <input type="file" accept="image/*" onChange={onSelect} className="hidden" />
+        </label>
+      </div>
+      {photo?.error && <p className="mt-1 text-xs text-red-600">{photo.error}</p>}
+    </FieldGroup>
   );
 }
 

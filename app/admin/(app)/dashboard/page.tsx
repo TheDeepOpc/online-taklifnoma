@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { deleteInvitation } from "../invitations/actions";
 import { StatsCards } from "@/components/admin/StatsCards";
 import { InvitationList } from "@/components/admin/InvitationList";
+import { MediaCleanupButton } from "@/components/admin/MediaCleanupButton";
 import type { Invitation } from "@/lib/types";
 
 export default async function DashboardPage() {
@@ -35,6 +36,8 @@ export default async function DashboardPage() {
         unpaidCount={list.length - paidCount}
         revenue={revenue}
       />
+
+      <MediaCleanupButton />
 
       <InvitationList invitations={list} onDelete={deleteInvitation} />
     </div>
