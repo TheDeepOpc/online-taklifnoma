@@ -151,6 +151,8 @@ export function HomePageContent({ content }: { content: SiteContent }) {
           <video
             className={`h-full w-full object-cover ${reduce ? "" : "kenburns"}`}
             src="/video.mp4"
+            // Video (720p, ~1.4 MB) yuklanguncha birinchi kadr darhol ko'rinadi.
+            poster="/video-poster.webp"
             autoPlay
             muted
             loop
