@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { createContext, useContext, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDown, ArrowUpRight, Check, Heart, MapPin, Sparkles } from "lucide-react";
+import { ArrowUpRight, Check, Heart, MapPin, Sparkles } from "lucide-react";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { CopyGiftButton, formatCardNumber } from "@/components/templates/CopyGiftButton";
@@ -15,6 +15,12 @@ import type { InvitationLayout } from "@/lib/invitationArt";
 import type { ThemeDefinition } from "@/lib/themes";
 import type { Invitation, MusicTrack } from "@/lib/types";
 import { uzFullDate, uzMonthName } from "@/lib/uzDate";
+import { HeroComposition } from "../layouts/HeroCompositions";
+import { BodyComposition } from "../layouts/BodyComposition";
+import { SeasonalAtmosphere } from "../layouts/SeasonalAtmosphere";
+import { OrnamentalFrame } from "../layouts/OrnamentalFrame";
+import { templateDesign, premiumArtwork, type SectionId } from "@/lib/templateDesigns";
+import { sectionReveal } from "../layouts/sectionReveal";
 import styles from "./PremiumInvitation.module.css";
 
 export interface PremiumProps {
@@ -36,15 +42,13 @@ function Ornament({ className = "" }: { className?: string }) {
   );
 }
 
-function Particles({ variant }: { variant: Variant }) {
-  return <div className={`${styles.particles} ${styles[`${variant}Particles`]}`} aria-hidden="true">
-    {Array.from({ length: 18 }, (_, i) => <i key={i} style={{ "--i": i, "--left": `${(i * 37 + 11) % 100}%`, "--delay": `${-i * 1.7}s`, "--duration": `${12 + i % 7 * 2}s`, "--size": `${3 + i % 4 * 2}px` } as CSSProperties} />)}
-  </div>;
-}
+const DesignContext = createContext("cascade");
 
-function Reveal({ children, className = "", previewMode }: { children: ReactNode; className?: string; previewMode: boolean }) {
+function Reveal({ children, className = "", previewMode, sectionId }: { children: ReactNode; className?: string; previewMode: boolean; sectionId?: SectionId }) {
   const reduced = useMotionPreference();
-  return <motion.section className={className} initial={previewMode || reduced ? false : { opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.section>;
+  const design = useContext(DesignContext);
+  const initial = sectionReveal(design);
+  return <motion.section data-section={sectionId} className={className} initial={previewMode || reduced ? false : initial} whileInView={{ opacity: 1, x: 0, y: 0, scale: 1, rotate: 0, rotateX: 0, rotateY: 0, filter: "blur(0px)" }} viewport={{ once: true, amount: 0.08 }} transition={{ duration: reduced ? 0 : 1, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.section>;
 }
 
 function WeddingCalendar({ date }: { date: string }) {
@@ -61,14 +65,15 @@ function WeddingCalendar({ date }: { date: string }) {
   </div>;
 }
 
-export function PremiumInvitation({ invitation, musicTrack, theme, previewMode = false, variant, edition, title, subtitle, image, artworkSrc }: PremiumProps & { variant: Variant; edition: string; title: string; subtitle: string; image: string; artworkSrc?: string }) {
+export function PremiumInvitation({ invitation, musicTrack, theme, previewMode = false, variant, edition, title, subtitle }: PremiumProps & { variant: Variant; edition: string; title: string; subtitle: string }) {
   const [opened, setOpened] = useState(previewMode);
   const musicRef = useRef<MusicPlayerHandle>(null);
   const reduced = useMotionPreference();
   useScrollLock(!opened && !previewMode);
 
-  const imageSrc = artworkSrc || `/premium-assets/${image}.webp`;
-  const parallax = !previewMode && (theme.minPriceTier === "250000" || theme.collection === "signature");
+  const imageSrc = premiumArtwork(theme.id);
+  const design = templateDesign(theme.id);
+  const parallax = !previewMode;
   const secondPortrait = theme.family === "swan-noir" ? invitation.second_photo_url : null;
   const portraitSrc = invitation.cover_photo_url || secondPortrait;
   const [year, month, day] = invitation.wedding_date.split("-");
@@ -86,14 +91,15 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
     setOpened(true);
   }
 
-  return <div className={`${styles.root} ${styles[variant]} ${parallax ? styles.hasParallax : ""} ${previewMode ? styles.preview : ""}`} style={rootStyle} data-invitation-locked={!opened && !previewMode ? "true" : undefined} data-invitation-theme={theme.id} data-parallax-enabled={parallax ? "true" : "false"}>
+  return <DesignContext.Provider value={design.hero}><div className={`${styles.root} ${styles[variant]} ${parallax ? styles.hasParallax : ""} ${previewMode ? styles.preview : ""}`} style={rootStyle} data-invitation-locked={!opened && !previewMode ? "true" : undefined} data-design={design.hero} data-motion={design.motion} data-invitation-theme={theme.id} data-parallax-enabled={parallax ? "true" : "false"}>
+    <SeasonalAtmosphere effect={design.effect} previewMode={previewMode} />
     <AnimatePresence>
       {!opened && !previewMode && <motion.div key="invitation-cover" className={styles.gate} role="dialog" aria-modal="true" aria-labelledby={`gate-${theme.id}`} initial={false} exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 1.08, filter: "blur(12px)" }} transition={{ duration: reduced ? 0.15 : 0.9 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={imageSrc} className={styles.gateImage} alt="" fetchPriority="high" />
         <div className={styles.gateShade} />
         <div className={styles.gateFrame} aria-hidden="true" />
-        <Particles variant={variant} />
+        <OrnamentalFrame kind={design.ornament} design={design.hero} />
         <div className={styles.gateContent}>
           <span className={styles.gateEyebrow}>Siz uchun, qalbimizdan</span>
           <Ornament className={styles.gateOrnament} />
@@ -111,26 +117,10 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
     </AnimatePresence>
 
     <div inert={!opened && !previewMode ? true : undefined}>
-      <header className={styles.hero}>
-        <ParallaxScene src={imageSrc} className={styles.heroImageWrap} imageClassName={styles.heroImage} enabled={parallax} priority />
-        <div className={styles.heroShade} />
-        <div className={styles.heroBorder} aria-hidden="true" />
-        <Particles variant={variant} />
-        <div className={styles.heroTop}><span>{title}</span><span>Nikoh to‘yiga taklifnoma</span><span>{theme.collection === "signature" ? `${edition} / V` : "ÉDITION I"}</span></div>
-        <div className={styles.heroMonogram} aria-hidden="true"><span>{monogram}</span><i /><i /></div>
-        <motion.div className={styles.heroText} initial={false} animate={opened ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} transition={{ duration: reduced ? 0 : 1.2, delay: reduced ? 0 : 0.3 }}>
-          <span className={styles.eyebrow}>Bir kun. Bir va’da. Bir umr.</span>
-          <h1 className={styles.names}><span>{invitation.groom_name}</span><em>&</em><span>{invitation.bride_name}</span></h1>
-          <Ornament className={styles.heroOrnament} />
-          <div className={styles.heroDate}><span>{day}</span><i /><div>{uzMonthName(date)}<small>{year}</small></div></div>
-          <p className={styles.heroSubtitle}>{subtitle}</p>
-        </motion.div>
-        <a href="#premium-letter" className={styles.scrollCue} tabIndex={previewMode ? -1 : 0}><span>Hikoyamiz boshlanmoqda</span><ArrowDown size={15} /></a>
-        <span className={styles.verticalNote} aria-hidden="true">BIRGA · BUGUN VA ABADIY</span>
-      </header>
+      <HeroComposition invitation={invitation} design={design} src={imageSrc} title={title} subtitle={subtitle} previewMode={previewMode} opened={opened} />
 
-      <main className={styles.main}>
-        <Reveal className={styles.letter} previewMode={previewMode}>
+      <BodyComposition design={design} className={styles.main}>
+        <Reveal sectionId="letter" className={styles.letter} previewMode={previewMode}>
           <div id="premium-letter" className={styles.anchor} />
           <span className={styles.chapter}>01 — Qalbdan taklif</span>
           <Ornament className={styles.ornament} />
@@ -140,7 +130,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           <span className={styles.signature}>{invitation.groom_name} <Heart size={12} /> {invitation.bride_name}</span>
         </Reveal>
 
-        {portraitSrc && <Reveal className={styles.portraitSection} previewMode={previewMode}>
+        {portraitSrc && <Reveal sectionId="portrait" className={styles.portraitSection} previewMode={previewMode}>
           <span className={styles.photoCaption}>Bizning yangi bobimiz</span>
           <div className={`${styles.portraitFrame} ${invitation.cover_photo_url && secondPortrait ? styles.portraitPair : ""}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -154,7 +144,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           <p className={styles.photoNote}>Barcha yo‘llar bizni bir-birimizga olib keldi.</p>
         </Reveal>}
 
-        {parallax && <section className={styles.scenicQuote} aria-label="Muhabbat hikoyamiz">
+        {parallax && <section data-section="quote" className={styles.scenicQuote} aria-label="Muhabbat hikoyamiz">
           <ParallaxScene src={imageSrc} className={styles.scenicScene} enabled />
           <div className={styles.scenicShade} />
           <Reveal className={styles.scenicText} previewMode={previewMode}>
@@ -164,7 +154,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           </Reveal>
         </section>}
 
-        <Reveal className={styles.dateSection} previewMode={previewMode}>
+        <Reveal sectionId="date" className={styles.dateSection} previewMode={previewMode}>
           <span className={styles.chapter}>02 — Unutilmas sana</span>
           <h2 className={styles.sectionHeading}>O‘sha go‘zal <em>kun</em></h2>
           <div className={styles.dateStamp}><span>{day}</span><div>{uzMonthName(date)}<small>{year}</small></div></div>
@@ -174,7 +164,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           <CountdownTimer targetDate={targetDate} live={!previewMode} pad classes={{ root: styles.countdown, cell: styles.countdownCell, value: styles.countdownValue, label: styles.countdownLabel }} />
         </Reveal>
 
-        <Reveal className={styles.venueSection} previewMode={previewMode}>
+        <Reveal sectionId="venue" className={styles.venueSection} previewMode={previewMode}>
           <div className={styles.venueVisual}>
             <ParallaxScene src={imageSrc} className={styles.venueScene} enabled={parallax} />
             <div className={styles.venueVisualShade} />
@@ -190,28 +180,28 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           </div>
         </Reveal>
 
-        {invitation.schedule_items.length > 0 && <Reveal className={styles.scheduleSection} previewMode={previewMode}>
+        {invitation.schedule_items.length > 0 && <Reveal sectionId="schedule" className={styles.scheduleSection} previewMode={previewMode}>
           <span className={styles.chapter}>Har lahzasi qadrli</span>
           <h2 className={styles.sectionHeading}>Kun <em>dasturi</em></h2>
           <div className={styles.timeline}>{invitation.schedule_items.map((item, index) => <div key={index} className={styles.timelineItem}><span className={styles.timelineTime}>{item.time}</span><i aria-hidden="true" /><div><small>{String(index + 1).padStart(2, "0")}</small><p>{item.label}</p></div></div>)}</div>
         </Reveal>}
 
-        {invitation.gallery_photo_urls.length > 0 && <Reveal className={styles.gallerySection} previewMode={previewMode}>
+        {invitation.gallery_photo_urls.length > 0 && <Reveal sectionId="gallery" className={styles.gallerySection} previewMode={previewMode}>
           <span className={styles.chapter}>Bir hikoyaning lavhalari</span>
           <h2 className={styles.sectionHeading}>Bizning <em>lahzalar</em></h2>
           <PhotoGallery photos={invitation.gallery_photo_urls} className={styles.gallery} itemClassName={styles.galleryItem} />
         </Reveal>}
 
-        <WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} />
+        <div data-section="wishes"><WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} /></div>
 
-        {invitation.gift_card_number && <Reveal className={styles.giftSection} previewMode={previewMode}>
+        {invitation.gift_card_number && <Reveal sectionId="gift" className={styles.giftSection} previewMode={previewMode}>
           <Sparkles strokeWidth={1} size={25} />
           <h2 className={styles.sectionHeading}>Ezgu <em>niyatlar</em></h2>
           <p className={styles.bodyText}>Borligingiz — eng katta sovg‘a. To‘yona yo‘llashni istagan yaqinlarimiz uchun:</p>
           <div className={styles.giftCard}><span>Mehr bilan</span><p>{formatCardNumber(invitation.gift_card_number)}</p>{!previewMode && <CopyGiftButton text={invitation.gift_card_number} className={styles.copyButton} />}{previewMode && <Check size={16} />}</div>
         </Reveal>}
 
-        <footer className={styles.footer}>
+        <footer data-section="footer" className={styles.footer}>
           <Ornament className={styles.ornament} />
           <span className={styles.footerMonogram}>{monogram}</span>
           <p className={styles.script}>Baxtimizga sherik bo‘ling</p>
@@ -219,9 +209,9 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           <span className={styles.footerDate}>{day} . {month} . {year}</span>
           <span className={styles.footerBrand}>Oila-Uchun <i /> {title} collection</span>
         </footer>
-      </main>
+      </BodyComposition>
     </div>
 
     {musicTrack && !previewMode && <MusicPlayer ref={musicRef} src={musicTrack.file_url} hidden={!opened} buttonStyle={{ background: "var(--paper)", color: "var(--ink)", border: "1px solid var(--gold)", boxShadow: "0 4px 25px #0002" }} />}
-  </div>;
+  </div></DesignContext.Provider>;
 }

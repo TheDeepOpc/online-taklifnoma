@@ -1,4 +1,5 @@
 import type { ThemeDefinition } from "./themes";
+import { premiumArtwork } from "./templateDesigns";
 
 export type InvitationLayout = "winter" | "autumn" | "summer" | "gold" | "sky" | "estate" | "cinema" | "floral" | "editorial" | "royal" | "coastal" | "botanical";
 
@@ -35,7 +36,5 @@ export const INVITATION_ART: Record<string, InvitationArt> = {
 };
 
 export function invitationArtwork(theme: ThemeDefinition): string {
-  return theme.collection === "signature"
-    ? `/premium-assets/${theme.id.replace("premium-", "")}.webp`
-    : `/invitation-art/${theme.id}.webp`;
+  return premiumArtwork(theme.id);
 }

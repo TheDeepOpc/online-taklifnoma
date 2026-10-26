@@ -59,9 +59,7 @@ export function ThemePicker({
               <img src={invitationArtwork(theme)} alt="" loading="lazy" className="h-full w-full object-cover" />
             </span>
             <span className="text-xs font-medium leading-tight text-slate-700">{theme.name}</span>
-            {theme.collection === "signature" && (
-              <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[9px] font-semibold tracking-wider text-amber-800">SIGNATURE · PREMIUM</span>
-            )}
+            <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[9px] font-semibold tracking-wider text-amber-800">PREMIUM · {theme.collection === "signature" ? "SIGNATURE" : "ATELIER"}</span>
             {!unlocked && (
               <span className="flex items-center gap-1 text-[10px] text-slate-500">
                 <Lock className="h-3 w-3" />

@@ -1,0 +1,185 @@
+{
+  "tool": "image_gen (built-in)",
+  "assets": [
+    {
+      "id": "eternal-vow",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. EMERALD WATERFALL: a dramatic emerald forest waterfall and still black reflecting pool, two subtly intertwined sculptural gold rings in lower foreground among moss and white orchids; no architecture. Deep emerald and gold, cinematic black shadows. Framed naturally by asymmetrical fern branches, exceptionally lavish. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/eternal-vow.webp"
+    },
+    {
+      "id": "green-gold",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. OLIVE JOURNAL: intimate overhead still-life on antique ivory handmade paper, fresh olive branches, sculptural white calla lilies, a subtle antique gold botanical engraving plate and silk ribbon; sunlight casting diagonal window shadows, sage green and warm cream. Tactile fine-art wedding stationery photograph. No writing or lettering. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/green-gold.webp"
+    },
+    {
+      "id": "swan-noir-classic",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. SWAN REFLECTION: two elegant white swans and their reflections on a perfectly black still lake, an asymmetrical white orchid branch with delicate hanging pearls at upper left, a single silver moon reflection; extremely striking black-and-white fine-art photography, black velvet atmosphere. No buildings. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/swan-noir-classic.webp"
+    },
+    {
+      "id": "royal-champagne",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. CHAMPAGNE BALLROOM: a majestic gilded French ballroom seen from slightly above, luminous crystal chandelier cascading down center, rococo carved panels, cream roses, champagne silk drapery, polished parquet reflecting candlelight. Antique gold ornamental details across top and side edges. No outdoor arches. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/royal-champagne.webp"
+    },
+    {
+      "id": "navy-gazebo-blue",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. BLUE POSTCARD: an exquisite isolated blue-and-white porcelain gazebo on a tiny flower-covered island in a sapphire lake, misty mountain silhouettes, a blue hydrangea branch prominent at lower right. Oblique aerial editorial viewpoint, navy blue and white, naturally asymmetrical. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/navy-gazebo-blue.webp"
+    },
+    {
+      "id": "cocoa-blush",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. BLUSH COUTURE: luxury macro still life of flowing cocoa velvet and blush silk fabric, a beautiful cluster of nude pink garden roses and one antique gold brooch, dramatic diagonal folds, editorial fashion lighting. Rich tactile fabric textures, quiet warm blush negative space. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/cocoa-blush.webp"
+    },
+    {
+      "id": "milliy-anor",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. UZBEK ANOR TOY: a culturally authentic traditional Uzbek wedding courtyard with carved wooden ayvon columns, richly embroidered red-and-ivory suzani hanging at the left and right, a laden pomegranate tree, polished brass long Uzbek karnay trumpets and a wooden surnay carefully arranged in foreground; a festive Samarkand carved wooden door in background, warm lantern light. Burgundy, parchment, turquoise ornamental accents and antique brass. It must clearly celebrate Uzbek heritage, not a European palace. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/milliy-anor.webp"
+    },
+    {
+      "id": "garden-bloom",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. SECRET GARDEN LEDGER: a lush green botanical greenhouse filled with hanging vines and enormous soft pink peonies, a vintage wrought-iron garden chair and tiny moss-covered stone steps, sunlight dappled through glass; fresh sage greens and white flowers. Off-center composition, no arch and no lake. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/garden-bloom.webp"
+    },
+    {
+      "id": "sacred-peony-gold",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. PEONY JEWEL: an extravagant macro floral still-life of one enormous ivory peony with blush edges, intricate antique golden filigree and delicate seed pearls around the edges on warm parchment; luxury jewelry editorial lighting, extremely fine real petal texture. Quiet creamy upper center, no architecture. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/sacred-peony-gold.webp"
+    },
+    {
+      "id": "ivory-swan-arch",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. IVORY SILK LETTER: luminous ivory silk draping in sweeping asymmetrical curves with delicate pearl strands, an antique ivory oval picture frame with subtle swan relief at the side and a white feather, a tiny garden rose. Soft sculptural shadows and tactile romantic luxury; no landscape or generic arches. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/ivory-swan-arch.webp"
+    },
+    {
+      "id": "aurora-dream-night",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. AURORA ORBIT: a spectacular panoramic northern lights curtain flowing diagonally above a mirror-smooth glacial lake and midnight pine forest, one luminous icy mountain, tiny white stars; lavender, cyan and ink navy. Fine-art night photography, vast celestial scale. No pavilion and no arches. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/aurora-dream-night.webp"
+    },
+    {
+      "id": "amber-dawn-rose",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. AMBER HORIZON: three layers of Tuscan vineyards and cypress silhouettes glowing in amber morning fog, a branch of peach roses in the near foreground, a low sun and warm terracotta stone parapet at bottom. Painterly atmospheric fine-art landscape photograph, luxurious quiet beauty. No arch. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/amber-dawn-rose.webp"
+    },
+    {
+      "id": "bloom-pulse-rose",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. ROSE SCULPTURE: an extraordinary sculptural spiral bouquet of vibrant blush and raspberry roses suspended over dusty pink silk, pale cream magnolia petals and gold thread details; couture flower installation, pale pink studio backdrop, luxurious editorial still-life. No garden arch. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/bloom-pulse-rose.webp"
+    },
+    {
+      "id": "lux-gold-night",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. GOLDEN LIGHT CURTAIN: dramatic close view of hanging gold bead chains and antique crystal chandelier fragments glowing against an almost black olive background, distant candle bokeh, elegant slivers of reflected golden light. Jewelry-campaign photography with genuine optical texture. No palace corridor. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/lux-gold-night.webp"
+    },
+    {
+      "id": "imperial-noir-gold",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. IMPERIAL STAIRCASE: a monumental black marble staircase ascending in sharp diagonal perspective, ornate antique gold balustrade with acanthus carving, a dramatic white orchid arrangement at the lower corner, warm spot lighting and rich black shadow. Architectural editorial photograph; no arch. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/imperial-noir-gold.webp"
+    },
+    {
+      "id": "editorial-plate-ink",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. FASHION EDITORIAL: a stark black-and-white fashion photograph of sculptural white marble folded fabric and tall black calla lilies beside a narrow mirrored wall, sharply angled morning light, subtle analog film grain; highly graphic composition with plenty of clean ivory negative space. No typography. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/editorial-plate-ink.webp"
+    },
+    {
+      "id": "regal-navy-gold",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. ROYAL HERALDRY: a close-up of an exquisite antique navy velvet ceremonial book with detailed gold floral embossing, a golden laurel wreath and blue sapphire ornament, deep midnight silk and ivory roses around the edges. Real hand-crafted materials and luxury royal still-life, no text on book. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/regal-navy-gold.webp"
+    },
+    {
+      "id": "velvet-crown-noir",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. VELVET THEATRE: an opulent old theatre with deep burgundy velvet curtains partially parted, a small gilded royal crown on a velvet stool, warm candle footlights, rich dark cherry shadows and gold rococo trim. Dramatic stage perspective, cinematic and romantic. No people. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/velvet-crown-noir.webp"
+    },
+    {
+      "id": "premium-qish",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. CRYSTAL WINTER: a spectacular snowy alpine pine forest with a frozen waterfall, diamond-like ice branches and crystal snowflakes suspended near foreground, moonlit glacier in distance and a few warm candle lanterns in snow. Pearl white, ice silver and midnight blue. No arch, no generic palace. Exceptionally rich dimensional winter photography. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/premium-qish.webp"
+    },
+    {
+      "id": "premium-kuz",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. AUTUMN SCRAPBOOK: a luxurious close-up view of a lakeside autumn landscape through rich copper maple leaves, a vintage dark wooden garden swing with burgundy velvet cushion at lower left, golden leaves floating in air, antique copper light. Rust, wine and warm brown. Intimate analog editorial photography, no villa arch. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/premium-kuz.webp"
+    },
+    {
+      "id": "premium-yoz",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. RIVIERA SUMMER: an aerial oblique view of an exclusive Italian Riviera beach, turquoise sea meeting white limestone steps, vivid yellow parasol and pink bougainvillea in near foreground, striped cream-and-sage loungers, sparkling sunlight on water. A bright joyful couture travel editorial, no arch and no people. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/premium-yoz.webp"
+    },
+    {
+      "id": "premium-tilla-hayot",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. GOLDEN TREE OF LIFE: a living ancient olive tree with naturally twisting golden-lit trunk, emerald leaves and tiny white orchids, standing in a black-green reflecting pool under a luminous circular skylight, lavish antique-gold botanical filigree framing the sides. Sculptural museum installation, precious organic gold and emerald, no arches. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/premium-tilla-hayot.webp"
+    },
+    {
+      "id": "premium-moviy-osmon",
+      "prompt": "Use case: photorealistic-natural. Asset type: uniquely art-directed luxury wedding invitation hero background, vertical portrait, 1536x2304 if possible. CELESTIAL SKY: an extraordinary dreamy fine-art view of towering white cumulus clouds against pure luminous powder-blue sky, a few translucent silk-like cloud wisps floating diagonally and tiny distant white birds, a subtle silver celestial ornament at the far upper edge. Ethereal luxury, airy light, no marble architecture and no arches. Masterful fine-art photography, exquisite texture, beautifully controlled lighting, premium wedding campaign quality. One single continuous image. Compose for distinct mobile editorial layouts; avoid a central generic arch. No people, text, writing, logos, watermark, UI or collage.",
+      "transparent_background": false,
+      "file": "public/invitation-art/edition-2/premium-moviy-osmon.webp"
+    },
+    {
+      "id": "autumn-leaf",
+      "prompt": "One single exquisite realistic curled autumn maple leaf, rich copper orange and deep burgundy with golden veins, isolated on a completely transparent background, clean cutout, soft natural light, fully visible stem, no shadow, no extra objects. Portrait product photograph at 1024 square.",
+      "transparent_background": true,
+      "file": "public/invitation-art/effects/autumn-leaf.webp"
+    },
+    {
+      "id": "snow-crystal",
+      "prompt": "One single intricate delicate six-sided real snow crystal, luminous icy white with silver-blue transparent facets, completely isolated on transparent background. Extremely detailed crystalline branches, clean alpha edges, no dark background, no words, no shadow. Macro photograph, square composition.",
+      "transparent_background": true,
+      "file": "public/invitation-art/effects/snow-crystal.webp"
+    },
+    {
+      "id": "gold-filigree",
+      "prompt": "A lavish antique gold rococo acanthus filigree corner ornament in an elegant L-shaped composition, exquisitely engraved botanical curls and tiny pearl details. Isolated on genuinely transparent background, entire ornament visible, no frame enclosing a photo, no text. Fine antique jewelry product photography, square.",
+      "transparent_background": true,
+      "file": "public/invitation-art/effects/gold-filigree.webp"
+    },
+    {
+      "id": "uzbek-naqsh",
+      "prompt": "An authentic Uzbek islimiy floral corner ornament, intricate pomegranate flower and traditional blue turquoise and antique gold arabesque motifs in an L-shaped corner arrangement, beautifully embroidered silk texture. Fully isolated on transparent background, entire ornament visible, no text and no background. Museum-quality applied textile detail, square.",
+      "transparent_background": true,
+      "file": "public/invitation-art/effects/uzbek-naqsh.webp"
+    },
+    {
+      "id": "surnay",
+      "prompt": "One authentic Uzbek wooden surnay traditional double-reed wind instrument, polished dark apricot wood with traditional silver rings, the instrument angled diagonally from bottom left to upper right, entire instrument fully visible. Precise realistic product photograph, isolated on a truly transparent background, no other objects, no words, no shadow.",
+      "transparent_background": true,
+      "file": "public/invitation-art/effects/surnay.webp"
+    },
+    {
+      "id": "cloud-bank",
+      "prompt": "A single elongated bank of beautiful luminous white cumulus cloud with soft wispy edges, viewed from the side, delicate powder-blue shadow, naturally airy and realistic. Fully isolated on a genuinely transparent background, clean soft alpha, no sky or ground or text. Wide cloud shape inside a square image, fine-art cloud photography.",
+      "transparent_background": true,
+      "file": "public/invitation-art/effects/cloud-bank.webp"
+    },
+    {
+      "id": "celestial-star",
+      "prompt": "One luminous elegant eight-point celestial star with a bright silver-white center and soft powder-blue glow, tiny realistic diffraction rays, isolated on fully transparent background. Subtle luxury sparkle, not a cartoon, no text or other objects. Square composition.",
+      "transparent_background": true,
+      "file": "public/invitation-art/effects/celestial-star.webp"
+    }
+  ]
+}

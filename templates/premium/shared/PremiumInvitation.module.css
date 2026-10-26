@@ -11,7 +11,7 @@
 .gateShade { background: linear-gradient(180deg, #07152188, #0715213b 30%, #071521a8 70%, #071521d9); }
 .gateFrame { position: absolute; inset: 20px; border: 1px solid #f4ebd273; border-radius: 180px 180px 2px 2px; pointer-events: none; }
 .gateFrame::after { content: ""; position: absolute; inset: 7px; border: 1px solid #f4ebd22b; border-radius: inherit; }
-.gateContent { z-index: 2; position: relative; display: flex; align-items: center; flex-direction: column; padding: 60px 42px; width: min(100%, 540px); text-align: center; }
+.gateContent { z-index: 7; position: relative; display: flex; align-items: center; flex-direction: column; padding: 60px 42px; width: min(100%, 540px); text-align: center; }
 .gateEyebrow { font-size: 9px; text-transform: uppercase; letter-spacing: .32em; }
 .gateOrnament { width: 126px; color: #e5d5af; margin: 22px 0 25px; }
 .gateGuest { font-size: 12px; line-height: 1.8; width: 100%; margin-bottom: 24px !important; }

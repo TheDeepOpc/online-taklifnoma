@@ -14,5 +14,5 @@ export function CollectionInvitation(props: PremiumProps) {
       "theme-body-font": "var(--font-dm-sans)",
     },
   };
-  return <PremiumInvitation {...props} theme={theme} variant={art.layout} edition="I" title={art.title} subtitle={art.subtitle} image={props.theme.id} artworkSrc={`/invitation-art/${props.theme.id}.webp`} />;
+  return <PremiumInvitation {...props} theme={theme} variant={art.layout} edition="I" title={art.title} subtitle={art.subtitle} />;
 }

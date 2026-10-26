@@ -1,0 +1,25 @@
+.atmosphere { position: fixed; inset: 0; z-index: 130; pointer-events: none; overflow: hidden; contain: layout paint; }
+.particle { position: absolute; left: var(--left); top: -12%; width: var(--size); height: var(--size); opacity: 0; animation: snowFall var(--duration) var(--delay) linear infinite; }
+.particle img { width: 100%; height: 100%; object-fit: contain; }
+.snow .particle:nth-child(3n) { filter: blur(1px); }.snow .particle:nth-child(4n) { opacity: .35; }
+.leaves .particle { animation-name: leafFall; }.leaves .particle:nth-child(3n) img { filter: hue-rotate(-18deg); }.leaves .particle:nth-child(4n) { filter: blur(.8px); }
+.petals .particle { animation-name: petalSpiral; }.petals .particle:nth-child(2n) { animation-direction: reverse; }
+.pollen .particle { animation-name: pollenRise; opacity: .5; }
+.stars .particle, .clouds .particle { top: var(--top); animation: starlight calc(var(--duration) / 4) var(--delay) ease-in-out infinite; opacity: .5; }
+.clouds .particle { opacity: .45; }.stars .particle { filter: drop-shadow(0 0 3px #d5c1ff); }
+.gold .particle { top: var(--top); animation: goldFloat var(--duration) var(--delay) ease-in-out infinite; filter: sepia(1) saturate(1.8); }
+.pearls .particle { animation-name: pearlDrift; opacity: .2; }
+.heritage .particle { animation-name: heritageBloom; width: calc(var(--size) * 2); height: calc(var(--size) * 2); opacity: .17; }
+.cloudLayer { position: absolute; width: 110%; left: -15%; height: 230px; opacity: .23; }
+.cloudLayer img { width: 100%; height: 100%; object-fit: contain; animation: cloudGlide 45s ease-in-out infinite alternate; }
+.cloud0 { top: 8%; }.cloud1 { top: 45%; left: 15%; opacity: .32; width: 120%; }.cloud1 img { animation-delay: -20s; animation-duration: 61s; }.cloud2 { top: 72%; left: -25%; width: 140%; opacity: .3; }.cloud2 img { animation-delay: -12s; animation-duration: 70s; }
+@keyframes snowFall { 0% { transform: translate3d(0,-20px,0) rotate(var(--rotation)); opacity: 0; } 10% { opacity: .8; } 85% { opacity: .65; } 100% { transform: translate3d(var(--sway),115svh,0) rotate(calc(var(--rotation) + 200deg)); opacity: 0; } }
+@keyframes leafFall { 0% { transform: translate3d(0,-40px,0) rotateZ(var(--rotation)) rotateY(0); opacity: 0; } 12% { opacity: .9; } 45% { transform: translate3d(var(--sway),50svh,0) rotateZ(calc(var(--rotation) + 145deg)) rotateY(100deg); opacity: .85; } 100% { transform: translate3d(calc(var(--sway) * -.6),115svh,0) rotateZ(calc(var(--rotation) + 360deg)) rotateY(270deg); opacity: 0; } }
+@keyframes petalSpiral { 0% { transform: translate3d(0,0,0) rotate(0); opacity: 0; } 15% { opacity: .65; } 55% { transform: translate3d(var(--sway),60svh,0) rotate(170deg); } 100% { transform: translate3d(0,115svh,0) rotate(410deg); opacity: 0; } }
+@keyframes pollenRise { 0% { transform: translate3d(0,110svh,0) rotate(var(--rotation)); opacity: 0; } 20% { opacity: .55; } 100% { transform: translate3d(var(--sway),-10svh,0) rotate(270deg); opacity: 0; } }
+@keyframes starlight { 0%,100% { opacity: .12; transform: scale(.55); } 45% { opacity: .95; transform: scale(1.15) rotate(12deg); } 65% { opacity: .4; transform: scale(.8); } }
+@keyframes goldFloat { 0%,100% { transform: translateY(0) rotate(0); opacity: .2; } 50% { transform: translateY(-35px) rotate(30deg); opacity: .8; } }
+@keyframes pearlDrift { 0% { transform: translateY(0) translateX(0); opacity: 0; } 15% { opacity: .32; } 100% { transform: translateY(115svh) translateX(var(--sway)); opacity: 0; } }
+@keyframes heritageBloom { 0% { transform: translateY(110svh) rotate(0) scale(.7); opacity: 0; } 20% { opacity: .17; } 100% { transform: translateY(-10svh) rotate(120deg) scale(1); opacity: 0; } }
+@keyframes cloudGlide { from { transform: translateX(-15%) scale(1); } to { transform: translateX(24%) scale(1.07); } }
+@media(prefers-reduced-motion:reduce) { .atmosphere { display: none; } }

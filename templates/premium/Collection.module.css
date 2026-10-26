@@ -30,8 +30,8 @@
 .card { grid-column: span 2; }
 .card0, .card1 { grid-column: span 3; }
 .cardLink { display: block; }
-.cardImage { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #28332e; }
-.card0 .cardImage, .card1 .cardImage { aspect-ratio: 4/4.7; }
+.cardImage { position: relative; aspect-ratio: 43/90; overflow: hidden; background: #28332e; }
+.card0 .cardImage, .card1 .cardImage { aspect-ratio: 43/90; }
 .cardImage::after { content: ""; position: absolute; inset: 13px; border: 1px solid #fff4d84d; z-index: 1; pointer-events: none; }
 .cardImage img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.5s cubic-bezier(.22,1,.36,1); }
 .cardLink:hover img { transform: scale(1.055); }
@@ -72,7 +72,7 @@
   .collection { gap: 35px 20px; }
   .card { grid-column: span 3; }
   .card4 { grid-column: 2/6; }
-  .card0 .cardImage, .card1 .cardImage { aspect-ratio: 3/4; }
+  .card0 .cardImage, .card1 .cardImage { aspect-ratio: 43/90; }
   .cardTop { inset: 25px 25px auto; font-size: 6px; }
   .cardTitle, .card0 .cardTitle, .card1 .cardTitle { left: 27px; right: 25px; bottom: 32px; }
   .cardTitle h2 { font-size: 48px; }
@@ -93,7 +93,7 @@
   .desktopBreak { display: none; }
   .collection { grid-template-columns: 1fr; gap: 30px; padding-bottom: 50px; }
   .card, .card0, .card1, .card4 { grid-column: auto; }
-  .cardImage, .card0 .cardImage, .card1 .cardImage { aspect-ratio: 3/4; }
+  .cardImage, .card0 .cardImage, .card1 .cardImage { aspect-ratio: 43/90; }
   .cardTitle h2 { font-size: 65px; }
   .cardTitle p { font-size: 17px; max-width: 240px; }
   .cardTop { font-size: 7px; }
@@ -107,3 +107,8 @@
   .footer > span:nth-child(2) { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .page *, .page *::after { transition: none !important; } .cardLink:hover img { transform: none; } }
+
+.cardImage { max-width: 400px; margin-inline: auto; border: 1px solid #e0c99840; }
+.cardCaption, .cardMeta { max-width: 400px; margin-inline: auto; }
+.cardCaption { margin-top: 16px; }
+.cardMeta { color: #a89b82; font-size: 8px; line-height: 1.9; margin-top: 8px; }

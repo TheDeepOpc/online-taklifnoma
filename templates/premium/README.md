@@ -1,41 +1,50 @@
-# Signature premium taklifnomalar
+# Premium taklifnomalar — Edition II
 
 Ko‘rish: http://localhost:3000/templates
 
-Galereyada endi barcha 23 ta shablon mavjud: 5 ta Signature va 18 ta Atelier. Eski oilalarning komponent nomlari saqlangan, ularning ko‘rinishi `CollectionInvitation.tsx` va `lib/invitationArt.ts` orqali yangidan qurilgan. Har bir mavzuning alohida rasmi, palitrasi, kompozitsiyasi va tipografik yo‘nalishi bor.
+Barcha 23 ta dizayn premium sifatida ishlaydi. Har biri alohida surat, hero maketi, bo‘limlar tartibi, grid va animatsiyaga ega. Galereya kartalari haqiqiy ochilgan shablonlarning previewlarini ko‘rsatadi.
 
-| Mavzu | Komponent | Namuna |
-| --- | --- | --- |
-| Qish — Cristal | `Qish.tsx` | `/templates/premium-qish` |
-| Kuz — Amber | `Kuz.tsx` | `/templates/premium-kuz` |
-| Yoz — Riviera | `Yoz.tsx` | `/templates/premium-yoz` |
-| Tilla va Hayot — Éternité | `TillaHayot.tsx` | `/templates/premium-tilla-hayot` |
-| Moviy osmon — Céleste | `MoviyOsmon.tsx` | `/templates/premium-moviy-osmon` |
+## Manbalar
 
-Har bir mavzuning mustaqil kirish komponenti va kompozitsiyasi bor. Umumiy ma’lumotlarni chiqarish, kalendar, animatsiyali ochilish, vaqt sanog‘i va musiqa `shared/PremiumInvitation.tsx` ichida. Har bir kompozitsiyaning alohida CSS qoidalari `shared/PremiumInvitation.module.css` ichida.
+- `lib/templateDesigns.ts` — 23 ta maket, harakat, naqsh, mavzu effekti va bo‘limlar kompozitsiyasi.
+- `layouts/HeroCompositions.tsx` — 23 ta alohida hero daraxti: triptix, diptix, jurnal, kollaj, pochta kartasi, muzli mozaika, teatr va boshqa maketlar.
+- `layouts/BodyComposition.tsx` — bo‘limlarning har bir mavzuga xos tartibi va ustunlari. Admin to‘ldirmagan ixtiyoriy bo‘limlar avtomatik tushib qoladi.
+- `layouts/SeasonalAtmosphere.tsx` — real alpha rasmlar bilan qor, yaproq, bulut, yulduz, gulbarg va milliy bezak animatsiyalari.
+- `layouts/OrnamentalFrame.tsx` — oltin, kumush, islimiy, gulli va boshqa hoshiyalar.
+- `shared/PremiumInvitation.tsx` — admin ma’lumotlari, kirish tugmasi, kalendar, sanoq, xarita, musiqa va qolgan umumiy xatti-harakatlar.
 
-## Admin bilan ishlash
+## Mavzuga xos harakatlar
 
-Mavzular `lib/themes.ts` va `components/templates/TemplateRenderer.tsx` orqali mavjud tizimga ulangan. Admin yangi taklifnoma yaratishda 250 000 so‘mlik yuqori tarifni tanlaydi, so‘ng `SIGNATURE · PREMIUM` belgili mavzuni tanlaydi. Yangi tarif yoki baza ustuni talab qilinmaydi.
+- Qish: 46 ta turli tezlikdagi qor zarrasi, alohida kristall rasmi va muzli mozaika animatsiyasi.
+- Kuz: generatsiya qilingan haqiqiy zarang yaprog‘i; 20 ta yaproq aylanish va shamol siljishi bilan tushadi. Kollajning kirish harakati ham alohida.
+- Samo va Moviy osmon: miltillovchi yulduzlar; Moviy osmonda uchta real shaffof bulut qatlami turli tezlikda suzadi va scroll bilan parallax qiladi.
+- Anor bog‘i: suzani, islimiy naqshlar, anorlar, asl karnay rasmlari va alohida yaratilgan surnay. Milliy bezaklar saqlanadi.
+- Boshqa maketlar: gulbarglar, marvaridlar, oltin zarralar, yorug‘lik pardalari va boshqa mavzuga mos animatsiyalar.
 
-Ismlar, mehmon nomi, sana, vaqt, manzil, Google Maps havolasi, tilaklar, kun dasturi, muqova, galereya va to‘yona raqami mavjud admin formasi orqali kiritiladi. Bo‘sh ixtiyoriy bo‘limlar ko‘rsatilmaydi. `second_photo_url` ushbu beshta dizaynda ishlatilmaydi: asosiy juftlik surati va beshtagacha galereya rasmi qo‘llanadi.
+Barcha maketlarda parallax bor. `prefers-reduced-motion` yoqilganda parallax va dekorativ harakatlar to‘xtaydi. Adminning jonli previewida kirish va musiqa ishlamaydi, shuning uchun forma qulflanmaydi.
 
-Musiqa admin kutubxonasidagi `MusicTrack.file_url` orqali keladi. Mehmon «Taklifnomani ochish»ni bosganda mavjud `MusicPlayer` bevosita ishga tushadi. Musiqa tanlanmagan bo‘lsa, audio tugmasi chiqmaydi. Mijoz ma’lumot kiritmaydi; faqat ko‘radi, musiqani boshqaradi va manzilni ochadi.
+## Rasmlar
 
-Real taklifnoma faqat `is_paid = true` va `status = published` bo‘lganda `/t/[slug]` orqali ochiladi. Shaxsiy `?mehmon=...` havolalari mavjud umumiy mexanizm orqali ishlaydi.
+Built-in `image_gen` bilan ushbu tahrir uchun 30 ta yangi asset yaratildi:
 
-## Rasmlar va animatsiyalar
+- `public/invitation-art/edition-2/` — 23 ta bir-biridan farq qiladigan premium fon.
+- `public/invitation-art/effects/` — yaproq, qor kristalli, bulut, yulduz, oltin naqsh, islimiy naqsh va surnay uchun 7 ta shaffof asset.
+- `edition-2-image-prompts.json` — barcha promptlar va yakuniy fayllar manifesti.
 
-Beshta original fon built-in `image_gen` bilan yaratildi. Yakuniy fayllar `public/premium-assets/` ichida, promptlar esa `image-prompts.json` ichida saqlangan. Tashqi rasm manziliga bog‘liqlik yo‘q. Fonlar dekorativ: to‘yxonaning haqiqiy surati sifatida belgilanmagan.
+Fonlar dekorativ san’at rasmlari; to‘yxona haqida haqiqiy ma’lumot admin kiritgan nom va manzildan olinadi. Juftlik suratlari adminning muqova va galereya maydonlaridan keladi.
 
-Qish: qor va billur arka. Kuz: yaproq animatsiyasi va asimmetrik kompozitsiya. Yoz: gulbarglar va yorug‘ botanika. Tilla va Hayot: zumrad fon, oltin zarralar va qo‘sh arka. Moviy osmon: nurli yulduzchalar, oq arkalar va moviy bulutlar.
+## Ochilish va admin
 
-`prefers-reduced-motion` yoqilganda dekorativ animatsiyalar to‘xtaydi. Galereya previewlari haqiqiy shablonlarning WebP skrinshotlari; mavjud `npm run shots` bu beshta mavzuni ham qamrab oladi.
+Har bir shablonda `Taklifnomani ochish` tugmasi bor. Bosilguncha asosiy sahifa inert, scroll qulflangan va audio ijro qilinmaydi. Tugma bosilganda admin tanlagan musiqa bevosita shu hodisada boshlanadi, sahifa va scroll ochiladi.
 
-## Barcha shablonlarda kirish va parallax
+Ismlar, shaxsiy mehmon nomi, sana, vaqt, suratlar, kun dasturi, tilaklar, to‘yona va xarita mavjud admin formasidan keladi. Mehmon ma’lumot kiritmaydi. Haqiqiy taklifnoma `/t/[slug]` orqali ochiladi, shaxsiy `?mehmon=...` havolalari ham ishlaydi.
 
-23 ta shablonning har birida rasmli kirish sahifasi va `Taklifnomani ochish` tugmasi mavjud. Tugma bosilmaguncha sahifaning o‘zi ko‘rinmaydi va unga fokus berib bo‘lmaydi. Musiqa tugmasi yashirin, audio ijro etilmaydi; sahifa touch, wheel, klaviatura va programmatik scroll uchun qulflangan. Tugma bosilganda audio foydalanuvchi hodisasining o‘zida boshlanadi va scroll ochiladi.
+## Tekshirish
 
-250 minglik va Signature mavzularida uchta mustaqil rasm qatlami parallax bilan harakatlanadi: asosiy ekran, oraliq muhabbat sahnasi va manzil bo‘limi. `ParallaxScene` transform orqali ishlaydi. Operatsion tizimning animatsiyani kamaytirish sozlamasi jonli kuzatiladi va parallaxni o‘chiradi. Adminning kichik preview oynasida kirish ekrani, ovoz va parallax ishlamaydi; forma tahrirlash uchun ochiq qoladi.
+```sh
+npm run lint
+npm run build
+npm run shots
+```
 
-Atelier uchun 18 ta yangi original fon built-in `image_gen` bilan yaratildi: yakuniy fayllar `public/invitation-art/`, to‘liq promptlar `atelier-image-prompts.json` ichida. Signature rasmlari `public/premium-assets/` ichida. Admin yuklagan juftlik suratlari bu dekorativ fonlardan alohida chiqariladi. Oqqush mavzusida ikkinchi surat ham qo‘llanadi.
+`npm run shots` ochilish tugmasini bosib, shablonning haqiqiy ko‘rinishini `public/template-shots/` ichiga saqlaydi. Boshqa port uchun `BASE_URL=http://localhost:3456 npm run shots` ishlatiladi.
