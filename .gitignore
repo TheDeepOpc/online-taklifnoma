@@ -45,3 +45,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# shaxsiy arxitektura eslatmalari / ish jurnali — push qilinmaydi
+/README.md
+# Discord webhook tokeni bor sinov skripti va test rasmi — push qilinmasin
+/uplaod.py
+/test.jpg

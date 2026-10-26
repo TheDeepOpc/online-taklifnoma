@@ -26,7 +26,7 @@ export default async function MusicLibraryPage() {
         </label>
 
         <label className="block">
-          <span className="mb-1 block text-sm font-medium text-slate-700">Mp3 fayl</span>
+          <span className="mb-1 block text-sm font-medium text-slate-700">Mp3 fayl (maks. 10 MB)</span>
           <input name="file" type="file" accept="audio/mpeg,audio/mp3,.mp3" required className="input" />
         </label>
 
@@ -52,7 +52,7 @@ export default async function MusicLibraryPage() {
               <p className="mb-2 font-medium text-slate-900">{track.title}</p>
               <audio controls src={track.file_url} className="h-9 w-full max-w-xs" />
             </div>
-            <form action={deleteMusicTrack.bind(null, track.id, track.storage_path)}>
+            <form action={deleteMusicTrack.bind(null, track.id)}>
               <button type="submit" className="btn-secondary text-red-600" title="O'chirish">
                 <Trash2 className="h-4 w-4" />
               </button>

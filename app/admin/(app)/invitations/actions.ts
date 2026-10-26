@@ -2,36 +2,26 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { SupabaseClient } from "@supabase/supabase-js";
-import { createClient } from "@/lib/supabase/server";
+import { createAuthenticatedClient, createClient } from "@/lib/supabase/server";
+import { uploadToDiscord } from "@/lib/discordCdn";
 import { generateInvitationSlug } from "@/lib/slug";
 import { isThemeUnlocked, getUnlockedThemes } from "@/lib/themes";
 import type { PriceTier, ScheduleItem } from "@/lib/types";
 
-const COVERS_BUCKET = "covers";
-
+// Rasmlar Discord CDN'da saqlanadi; bazaga doimiy `/api/media/<id>` manzili yoziladi.
 async function uploadCoverPhoto(
-  supabase: SupabaseClient,
   formData: FormData,
   fieldName: string = "cover_photo",
 ): Promise<string | null> {
-  const file = formData.get(fieldName) as File | null;
-  if (!file || file.size === 0) return null;
+  const file = formData.get(fieldName);
+  if (!(file instanceof File) || file.size === 0) return null;
 
-  const path = `${crypto.randomUUID()}-${file.name}`;
-  const { error } = await supabase.storage
-    .from(COVERS_BUCKET)
-    .upload(path, file, { contentType: file.type || "image/jpeg" });
-
-  if (error) {
-    throw new Error(`Muqova rasmni yuklashda xatolik: ${error.message}`);
+  try {
+    const { url } = await uploadToDiscord(file);
+    return url;
+  } catch (error) {
+    throw new Error(`Muqova rasmni yuklashda xatolik: ${(error as Error).message}`);
   }
-
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from(COVERS_BUCKET).getPublicUrl(path);
-
-  return publicUrl;
 }
 
 const MAX_GALLERY_PHOTOS = 5;
@@ -49,10 +39,7 @@ function readExistingGalleryUrls(formData: FormData): string[] {
 // Admin oldin saqlagan rasmlarni (existing_gallery_urls) va bu safar qo'shgan
 // yangi fayllarni birlashtiradi — shunda "+" bosib qo'shish avvalgilarini
 // o'chirib yubormaydi, jami 5 tadan oshmaydi.
-async function uploadGalleryPhotos(
-  supabase: SupabaseClient,
-  formData: FormData,
-): Promise<string[]> {
+async function uploadGalleryPhotos(formData: FormData): Promise<string[]> {
   const existing = readExistingGalleryUrls(formData);
   const remainingSlots = Math.max(0, MAX_GALLERY_PHOTOS - existing.length);
   const files = formData
@@ -62,22 +49,16 @@ async function uploadGalleryPhotos(
 
   // Fayllarni ketma-ket emas, parallel yuklaymiz — 5 ta rasm ketma-ket
   // yuklansa administrator "Saqlash" tugmasini bosgandan keyin o'nlab
-  // soniya kutib, sahifa muzlab qolganday tuyulishi mumkin edi.
+  // soniya kutib, sahifa muzlab qolganday tuyulishi mumkin edi. Discord
+  // rate limit'iga (429) tushsa, uploadToDiscord o'zi kutib qayta uradi.
   const uploaded = await Promise.all(
     files.map(async (file) => {
-      const path = `gallery/${crypto.randomUUID()}-${file.name}`;
-      const { error } = await supabase.storage
-        .from(COVERS_BUCKET)
-        .upload(path, file, { contentType: file.type || "image/jpeg" });
-
-      if (error) {
-        throw new Error(`Galereya rasmini yuklashda xatolik: ${error.message}`);
+      try {
+        const { url } = await uploadToDiscord(file);
+        return url;
+      } catch (error) {
+        throw new Error(`Galereya rasmini yuklashda xatolik: ${(error as Error).message}`);
       }
-
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from(COVERS_BUCKET).getPublicUrl(path);
-      return publicUrl;
     }),
   );
 
@@ -151,13 +132,13 @@ function withoutOptionalColumns<T extends Record<string, unknown>>(row: T): T {
 }
 
 export async function createInvitation(formData: FormData) {
-  const supabase = await createClient();
+  const supabase = await createAuthenticatedClient();
   const data = readInvitationForm(formData);
   const slug = generateInvitationSlug(data.groom_name, data.bride_name);
   const [cover_photo_url, second_photo_url, gallery_photo_urls] = await Promise.all([
-    uploadCoverPhoto(supabase, formData, "cover_photo"),
-    uploadCoverPhoto(supabase, formData, "second_photo"),
-    uploadGalleryPhotos(supabase, formData),
+    uploadCoverPhoto(formData, "cover_photo"),
+    uploadCoverPhoto(formData, "second_photo"),
+    uploadGalleryPhotos(formData),
   ]);
 
   const row = { ...data, slug, cover_photo_url, second_photo_url, gallery_photo_urls };
@@ -175,12 +156,12 @@ export async function createInvitation(formData: FormData) {
 }
 
 export async function updateInvitation(id: string, formData: FormData) {
-  const supabase = await createClient();
+  const supabase = await createAuthenticatedClient();
   const data = readInvitationForm(formData);
   const [cover_photo_url, second_photo_url, gallery_photo_urls] = await Promise.all([
-    uploadCoverPhoto(supabase, formData, "cover_photo"),
-    uploadCoverPhoto(supabase, formData, "second_photo"),
-    uploadGalleryPhotos(supabase, formData),
+    uploadCoverPhoto(formData, "cover_photo"),
+    uploadCoverPhoto(formData, "second_photo"),
+    uploadGalleryPhotos(formData),
   ]);
 
   const row = {

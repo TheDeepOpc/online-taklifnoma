@@ -26,3 +26,18 @@ export async function createClient() {
     },
   );
 }
+
+/**
+ * Server action'lar uchun: Discord'ga fayl yuklash RLS bilan himoyalanmagan,
+ * shuning uchun foydalanuvchi kirganini action'ning o'zida tekshiramiz
+ * (action'ni proxy matcher'idan tashqaridagi istalgan sahifaga POST qilish mumkin).
+ */
+export async function createAuthenticatedClient() {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
+  if (!claims?.sub || claims.role === "anon") {
+    throw new Error("Avval admin sifatida kiring.");
+  }
+  return supabase;
+}
