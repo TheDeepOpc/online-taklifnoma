@@ -1,9 +1,15 @@
-.frame { position: absolute; inset: 5px; z-index: 6; pointer-events: none; overflow: hidden; container-type: inline-size; }
-.frame img { position: absolute; width: clamp(24px, 20cqw, 90px); height: auto; aspect-ratio: 1; max-height: 38%; object-fit: contain; opacity: .83; }
-.corner0 { left: 0; top: 0; }
-.corner1 { right: 0; top: 0; transform: scaleX(-1); }
-.corner2 { right: 0; bottom: 0; transform: scale(-1); }
-.corner3 { left: 0; bottom: 0; transform: scaleY(-1); }
+/* --native-x/-y: manba rasm qaysi burchakka chizilgani (1, 1 = yuqori-chap; -1 = teskari tomon).
+   Har bir burchak (--sx/--sy) rasmni shunga qarab o'z burchagiga aks ettiradi. */
+.frame { position: absolute; inset: 5px; z-index: 6; pointer-events: none; overflow: hidden; container-type: inline-size; --native-x: 1; --native-y: 1; }
+.frame img { position: absolute; width: clamp(24px, 20cqw, 90px); height: auto; aspect-ratio: 1; max-height: 38%; object-fit: contain; opacity: .83; transform: scale(calc(var(--sx) * var(--native-x)), calc(var(--sy) * var(--native-y))); }
+.corner0 { left: 0; top: 0; --sx: 1; --sy: 1; }
+.corner1 { right: 0; top: 0; --sx: -1; --sy: 1; }
+.corner2 { right: 0; bottom: 0; --sx: -1; --sy: -1; }
+.corner3 { left: 0; bottom: 0; --sx: 1; --sy: -1; }
+/* gold-filigree, uzbek-naqsh, bouquet-left — pastki-chap burchakka chizilgan */
+.gold, .silver, .uzbek, .floral { --native-y: -1; }
+/* corner-bouquet — yuqori-o'ng burchakka chizilgan */
+.botanical { --native-x: -1; }
 .silver img { filter: grayscale(1) brightness(1.35); opacity: .62; }
 .pearl img { width: clamp(22px, 15cqw, 65px); opacity: .9; }
 .floral img, .botanical img { width: clamp(26px, 24cqw, 100px); opacity: .8; }
