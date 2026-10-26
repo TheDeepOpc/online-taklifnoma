@@ -30,8 +30,7 @@ export function SiteHeader({
   ctaHref?: string;
   showCta?: boolean;
   dark?: boolean;
-  /** Hero video ustida to'liq shaffof overlay rejimi: video navbarning
-   * orqasidan ham davom etadi, navbar o'z foni yo'qolib videoni ochib beradi. */
+  /** Hero ustida shaffof sarlavha; surilganda o‘z foniga ega bo‘ladi. */
   overlay?: boolean;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -114,6 +113,7 @@ export function SiteHeader({
           {showCta && (
             <Link
               href={ctaHref}
+              style={{ color: dark ? "#16110b" : "#FDFBFB" }}
               className={`group relative hidden items-center gap-1.5 overflow-hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg md:inline-flex ${
                 dark
                   ? "bg-gradient-to-r from-[#e6c15a] to-[#d4af37] text-[#16110b] shadow-[0_10px_30px_-10px_rgba(212,175,55,0.8)] hover:shadow-[0_14px_40px_-10px_rgba(212,175,55,1)]"
@@ -172,6 +172,7 @@ export function SiteHeader({
               {showCta && (
                 <Link
                   href={ctaHref}
+                  style={{ color: dark ? "#16110b" : "#FDFBFB" }}
                   onClick={() => setMenuOpen(false)}
                   className={`mt-2 block w-full rounded-xl px-5 py-3.5 text-center text-sm font-semibold ${
                     dark

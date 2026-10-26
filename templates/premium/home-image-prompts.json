@@ -1,0 +1,16 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "id": "love-story",
+      "path": "public/home-art/love-story.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: vertical 1536x2304 high-end wedding brand website hero. An elegant fictional adult Uzbek bride and groom in their late twenties, candidly walking hand in hand through a sunlit old garden with climbing ivory roses and a pale stone staircase. Bride in a refined long-sleeve ivory wedding gown and soft flowing veil, groom in a sophisticated black tuxedo, warm natural smiles and believable hands. A beautiful intimate moment, no exaggerated posing. Rich editorial film photography, warm ivory, dark forest green and soft burgundy accents, dappled late-afternoon light, tactile fabric and realistic skin. Frame the couple in the central-right portion, some lush near-foreground roses for depth. Sophisticated expensive fine-art wedding campaign. No text, logos, watermark, graphic frame, or collage."
+    },
+    {
+      "id": "wedding-details",
+      "path": "public/home-art/wedding-details.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: landscape 1536x1024 premium wedding website editorial photograph. A poetic intimate close-up of a fictional adult bride and groom's hands gently holding each other, delicate gold wedding rings, ivory silk sleeve and black tuxedo cuff, velvety burgundy garden roses and softly lit cream fabric nearby. Believable anatomy, natural gesture, refined golden late-afternoon light, ultra-real tactile fabrics and petals, fine-art film photography, ivory and warm bronze palette. Elegant asymmetrical composition, intimate luxury with no kitsch. No lettering, logos, watermark or UI."
+    }
+  ],
+  "socialDerivative": "public/home-art/love-story-social.jpg"
+}

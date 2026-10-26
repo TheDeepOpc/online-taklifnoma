@@ -146,9 +146,9 @@ export const SITE_CONTENT_KEY = "home";
 export const DEFAULT_SITE_CONTENT: SiteContent = {
   hero: {
     badge: "Sevgi hikoyangizning raqamli davomi",
-    title1: "Sizning eng go‘zal",
-    title2: "kuningiz",
-    title3: "havolada:",
+    title1: "Eng go‘zal kun.",
+    title2: "Eng nafis",
+    title3: "taklif.",
     subtitle: "— bir nafis havola, millionlarga arzigulik his-tuyg‘u —",
     description:
       "Mehmonlaringiz chindan ham ochib ko‘radigan onlayn to‘y taklifnomasini yarating. O‘z musiqasi, sanoq taymeri va xotira galereyasi bilan — hammasi bitta havolada.",

@@ -123,8 +123,21 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  title: "Onlayn to'y taklifnomasi",
-  description: "To'y taklifnomangizni onlayn yarating va ulashing",
+  ...(process.env.NEXT_PUBLIC_SITE_URL ? { metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL) } : {}),
+  title: "Oila-Uchun — nafis onlayn to‘y taklifnomalari",
+  description: "Muhabbatingizga mos onlayn taklifnoma: alohida dizaynlar, sevimli musiqa, suratlar va har bir mehmonga shaxsiy havola. To‘yingiz uchun nafis boshlanish.",
+  openGraph: {
+    title: "Oila-Uchun — bir havola, bir umrga xotira",
+    description: "To‘yingizga mos nafis dizayn, musiqa va shaxsiy murojaat. Taklifnomalar kolleksiyasini jonli ko‘ring.",
+    siteName: "Oila-Uchun",
+    locale: "uz_UZ",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Oila-Uchun — nafis onlayn taklifnomalar",
+    description: "Bir havola. Bir umrga xotira. To‘yingizga mos taklifnomani tanlang.",
+  },
 };
 
 const FONT_VARIABLES = [
