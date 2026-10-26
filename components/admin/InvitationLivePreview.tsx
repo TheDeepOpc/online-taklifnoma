@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
-import { PREVIEW_READY, PREVIEW_RESTART, PREVIEW_UPDATE, type InvitationPreviewPayload } from "@/lib/invitationPreview";
+import { PREVIEW_READY, PREVIEW_RENDERED, PREVIEW_RESTART, PREVIEW_UPDATE, type InvitationPreviewPayload } from "@/lib/invitationPreview";
 
 /** A separate viewport gives fixed effects, scroll and audio their real behavior. */
 export function InvitationLivePreview({ invitation, musicTrack, src = "/admin/preview" }: InvitationPreviewPayload & { src?: string }) {
@@ -15,6 +15,7 @@ export function InvitationLivePreview({ invitation, musicTrack, src = "/admin/pr
   useEffect(() => {
     const receive = (event: MessageEvent) => {
       if (event.origin !== window.location.origin || event.source !== iframeRef.current?.contentWindow) return;
+      if (event.data?.type === PREVIEW_RENDERED) { setReady(true); return; }
       if (event.data?.type !== PREVIEW_READY) return;
       setReady(true);
       sendUpdate();
