@@ -87,11 +87,15 @@ function botConfig(): { token: string; channelId: string; userId: string | null 
  * Kanaldagi odamlar yozishmasi hech qachon o'chirilmaydi.
  */
 function isOwnUpload(message: DiscordMessage, anyWebhook: boolean): boolean {
-  if (!message.attachments?.length) return false;
+  // Muallif bo'yicha aniqlanadi, fayllar ro'yxati bo'yicha emas: botda
+  // "Message Content" intent bo'lmasa, webhook xabarlarida `attachments` bo'sh keladi.
+  // Bot va bizning webhook faqat fayl yuklaydi.
   const bot = botConfig();
   if (bot?.userId && message.author?.id === bot.userId) return true;
   if (!message.webhook_id) return false;
-  return anyWebhook || message.webhook_id === webhookId();
+  if (message.webhook_id === webhookId()) return true;
+  // Boshqa (masalan, almashtirilgan eski) webhook — faqat fayl xabari ekani ko'rinsa.
+  return anyWebhook && Boolean(message.attachments?.length);
 }
 
 export function isDiscordMessageId(value: string): boolean {
@@ -266,10 +270,17 @@ async function readMessage(messageId: string): Promise<DiscordMessage | null> {
   const bot = botConfig();
   if (bot && Date.now() > botUnavailableUntil) {
     const res = await botFetch(bot.token, `/channels/${bot.channelId}/messages/${messageId}`);
-    if (res.ok) return (await res.json()) as DiscordMessage;
-    if (res.status === 404) return null;
-    if (res.status === 401 || res.status === 403) botUnavailableUntil = Date.now() + BOT_RETRY_AFTER_MS;
-    // Bot o'qiy olmadi — webhook orqali o'qiymiz.
+    if (res.ok) {
+      const message = (await res.json()) as DiscordMessage;
+      // Botda "Message Content" intent bo'lmasa, boshqalar (webhook) yuborgan
+      // xabarlarda `attachments` bo'sh keladi — unda webhook orqali o'qiymiz.
+      if (message.attachments?.length) return message;
+    } else if (res.status === 404) {
+      return null;
+    } else if (res.status === 401 || res.status === 403) {
+      botUnavailableUntil = Date.now() + BOT_RETRY_AFTER_MS;
+    }
+    // Bot faylni ko'rsata olmadi — webhook orqali o'qiymiz.
   }
 
   const res = await webhookFetch(`/messages/${messageId}`);
@@ -383,11 +394,30 @@ async function fetchAttachmentUrl(messageId: string): Promise<string | null> {
   return message?.attachments?.[0]?.url ?? null;
 }
 
+const NOT_FOUND = "discord-media-not-found";
+
 // Har bir rasm/audio ochilishida Discord'ga so'rov ketmasligi uchun yangi
-// havola 6 soat keshlanadi (havola ~24 soat yaroqli).
-const getCachedAttachmentUrl = unstable_cache(fetchAttachmentUrl, ["discord-attachment-url"], {
-  revalidate: 6 * 60 * 60,
-});
+// havola 6 soat keshlanadi (havola ~24 soat yaroqli). "Topilmadi" natijasi
+// keshlanmaydi (throw) — aks holda vaqtinchalik xato rasmni soatlab yopib qo'yardi.
+// Kalit "v2": eski versiya noto'g'ri yozib qo'ygan `null` yozuvlari e'tiborga olinmasin.
+const cachedAttachmentUrl = unstable_cache(
+  async (messageId: string): Promise<string> => {
+    const url = await fetchAttachmentUrl(messageId);
+    if (!url) throw new Error(NOT_FOUND);
+    return url;
+  },
+  ["discord-attachment-url-v2"],
+  { revalidate: 6 * 60 * 60 },
+);
+
+async function getCachedAttachmentUrl(messageId: string): Promise<string | null> {
+  try {
+    return await cachedAttachmentUrl(messageId);
+  } catch (error) {
+    if ((error as Error).message === NOT_FOUND) return null;
+    throw error;
+  }
+}
 
 function expiresAt(url: string): number {
   const ex = new URL(url).searchParams.get("ex");
