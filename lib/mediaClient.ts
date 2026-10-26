@@ -28,16 +28,21 @@ export async function uploadToCdn(file: File, kind: "image" | "audio"): Promise<
   if (ticket.ok) {
     let put: Response | null = null;
     try {
-      put = await fetch(ticket.uploadUrl, { method: "PUT", body: file });
+      // Turi ko'rsatilmagan Blob: imzolangan havola Content-Type'siz yuklashni kutadi.
+      put = await fetch(ticket.uploadUrl, { method: "PUT", body: new Blob([file]) });
     } catch {
-      // Tarmoq/CORS xatosi — pastda kichik fayl uchun server orqali urinamiz.
+      // Discord (Google Storage) javobiga CORS sarlavhasi qo'ymaydi: brauzer
+      // javobni o'qiy olmaydi, lekin fayl to'liq yuklangan bo'ladi (5 MB bilan
+      // tekshirilgan). Shuning uchun xabar yaratishga o'tamiz — fayl yetib
+      // bormagan bo'lsa, Discord xato qaytaradi va pastdagi zaxira yo'l ishlaydi.
     }
-    if (put?.ok) {
+    if (!put || put.ok) {
       const result = await completeDirectUpload(kind, ticket.filename, ticket.uploadFilename);
-      if (!result.ok) throw new Error(result.error);
-      return result.url;
+      if (result.ok) return result.url;
+      relayReason = result.error;
+    } else {
+      relayReason = `Faylni Discord'ga to'g'ridan-to'g'ri yuklab bo'lmadi (${put.status}).`;
     }
-    relayReason = `Faylni Discord'ga to'g'ridan-to'g'ri yuklab bo'lmadi${put ? ` (${put.status})` : ""}.`;
   } else {
     if (!ticket.relay) throw new Error(ticket.error);
     relayReason = ticket.error;
