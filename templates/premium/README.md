@@ -48,7 +48,7 @@ npm run build
 npm run shots
 ```
 
-`npm run shots` ochilish tugmasini bosib, shablonning haqiqiy ko‘rinishini `public/template-shots/` ichiga saqlaydi. Boshqa port uchun `BASE_URL=http://localhost:3456 npm run shots` ishlatiladi.
+`npm run shots` avvalgi 23 shablonning ochilgan ko‘rinishini, yangi 7 Atelier shablonining esa kirish sahifasini `public/template-shots/` ichiga saqlaydi. Boshqa port uchun `BASE_URL=http://localhost:3456 npm run shots` ishlatiladi.
 
 ## Asosiy reklama sahifasi
 
