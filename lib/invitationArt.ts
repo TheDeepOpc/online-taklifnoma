@@ -36,5 +36,5 @@ export const INVITATION_ART: Record<string, InvitationArt> = {
 };
 
 export function invitationArtwork(theme: ThemeDefinition): string {
-  return premiumArtwork(theme.id);
+  return theme.family === "presidential" ? `/template-shots/${theme.id}.webp` : premiumArtwork(theme.id);
 }

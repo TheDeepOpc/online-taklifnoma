@@ -19,6 +19,7 @@ import styles from "./HomePageContent.module.css";
 const ICONS = { music: Music, timer: Timer, images: Images, map: MapPin, heart: Heart, globe: Globe, users: Users, gift: Gift, phone: Phone, sparkles: Sparkles } satisfies Record<FeatureIconKey, typeof Music>;
 const PICKS = ["premium-bardoviy-atirgul", "milliy-anor", "premium-moviy-osmon", "premium-kuz", "royal-champagne", "garden-bloom"];
 const FILTERS = [
+  { id: "presidential", label: "PRIZIDENTISKIY · 2", ids: THEME_PRESETS.filter(theme => theme.family === "presidential").map(theme => theme.id) },
   { id: "atelier", label: "Yangi · Atelier 7", ids: THEME_PRESETS.filter(theme => theme.family === "atelier").map(theme => theme.id) },
   { id: "selected", label: "Tanlanganlar", ids: PICKS },
   { id: "all", label: `Barchasi · ${THEME_PRESETS.length}`, ids: THEME_PRESETS.map(theme => theme.id) },
@@ -131,7 +132,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
       <div className={styles.designGrid}>
         {selectedIds.map((id, index) => {
           const theme = getTheme(id);
-          return <motion.article key={id} initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4, delay: (index % 3) * .04 }} className={styles.designCard}>
+          return <motion.article key={id} initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4, delay: (index % 3) * .04 }} className={styles.designCard} data-formal={theme.family === "presidential" ? "true" : undefined}>
             <Link href={`/templates/${id}`}>
               <div className={styles.designImage}><TemplateShot themeId={id} alt={`${theme.name} — onlayn to‘y taklifnomasi dizayni namunasi`} /><span className={styles.cardAction}>Jonli ko‘rish<ArrowUpRight size={15} /></span></div>
               <div className={styles.designCaption}><h3>{theme.name}</h3><span>{PRICE_TIER_LABELS[theme.minPriceTier]}</span></div>

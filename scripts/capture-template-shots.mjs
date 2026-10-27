@@ -21,7 +21,8 @@ const { readFile } = await import("node:fs/promises");
 const themesSrc = await readFile("lib/themes.ts", "utf8");
 const premiumSrc = await readFile("templates/premium/presets.ts", "utf8");
 const atelierSrc = await readFile("templates/premium/atelierPresets.ts", "utf8");
-const allIds = [...`${themesSrc}\n${premiumSrc}\n${atelierSrc}`.matchAll(/\bid: "([a-z0-9-]+)",/g)].map((m) => m[1]);
+const presidentialSrc = await readFile("templates/premium/presidential/presets.ts", "utf8");
+const allIds = [...`${themesSrc}\n${premiumSrc}\n${atelierSrc}\n${presidentialSrc}`.matchAll(/\bid: "([a-z0-9-]+)",/g)].map((m) => m[1]);
 // Masalan: TEMPLATE_IDS=premium-bardoviy-atirgul,premium-kuz npm run shots
 const requestedIds = process.env.TEMPLATE_IDS?.split(",").filter(Boolean);
 const IDS_LIST = requestedIds ? allIds.filter((id) => requestedIds.includes(id)) : allIds;
@@ -97,9 +98,9 @@ for (const themeId of IDS_LIST) {
   for (let i = 0; i < 90 && !loaded; i++) await sleep(100);
   // shrift + rasm + animatsiyalar joyiga tushishi uchun
   await sleep(2600);
-  // Atelier sahnalari kartada dastlabki hashamatli cover bilan ko'rinadi.
+  // Atelier va PRIZIDENTISKIY kartalari kirish sahifasini ko‘rsatadi.
   const button = await send("Runtime.evaluate", {
-    expression: `(() => { if (document.querySelector('[data-luxury-gate]')) return null; const b = document.querySelector('[data-invitation-open]'); if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; })()`,
+    expression: `(() => { if (document.querySelector('[data-luxury-gate], [data-presidential-cover]')) return null; const b = document.querySelector('[data-invitation-open]'); if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; })()`,
     returnByValue: true,
   }, sessionId);
   const point = button.result.value;

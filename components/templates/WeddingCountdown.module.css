@@ -11,3 +11,5 @@
 @keyframes tick { from { opacity:.25; translate:0 5px; } to { opacity:1; translate:0 0; } }
 @container(max-width:225px) { .grid { gap:4px; }.cell { padding-inline:1px; }.label { font-size:6px; letter-spacing:0; }.value { font-size:clamp(20px,11cqw,28px); }.value[data-digits="4"] { font-size:17px; }.value:is([data-digits="5"],[data-digits="6"],[data-digits="7"]) { font-size:12px; } }
 @media(prefers-reduced-motion:reduce) { .digit { animation:none; } }
+/* The two formal editions use a quiet typographic timer. */
+.minimal { border:0; border-block:1px solid var(--line); padding:22px 0 8px; background:transparent; box-shadow:none; }.minimal .emblem,.minimal .waiting { display:none; }.minimal .heading { font:400 11px/1.5 var(--theme-body-font),sans-serif; letter-spacing:.04em; margin-bottom:20px; }.minimal .cell { border:0; background:transparent; padding:0 3px 15px; }.minimal .cell + .cell { border-left:1px solid var(--line); }.minimal .digit { animation:none; }.minimal .label { font-size:7px; letter-spacing:.03em; }.minimal .complete { margin-top:8px; }

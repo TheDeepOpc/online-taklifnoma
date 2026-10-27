@@ -22,7 +22,7 @@ export function TemplateShot({
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
-      src={`/template-shots/${themeId}.webp?v=${themeId.startsWith("atelier-") ? "2026-10-atelier-responsive" : "2026-10-atelier-luxury"}`}
+      src={`/template-shots/${themeId}.webp?v=${themeId.startsWith("prizidentiskiy-") ? "2026-10-presidential" : themeId.startsWith("atelier-") ? "2026-10-atelier-responsive" : "2026-10-atelier-luxury"}`}
       alt={alt}
       width={430}
       height={900}

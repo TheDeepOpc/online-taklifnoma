@@ -1,8 +1,10 @@
 import type { PriceTier } from "./types";
+import { PRESIDENTIAL_THEMES } from "@/templates/premium/presidential/presets";
 import { ATELIER_THEMES } from "@/templates/premium/atelierPresets";
 import { PREMIUM_THEMES } from "@/templates/premium/presets";
 
 export type ThemeFamily =
+  | "presidential"
   | "atelier"
   | "panel-parallax"
   | "video-hero"
@@ -464,6 +466,7 @@ export const THEME_PRESETS: ThemeDefinition[] = [
   },
   ...PREMIUM_THEMES,
   ...ATELIER_THEMES,
+  ...PRESIDENTIAL_THEMES,
 ];
 
 export function getTheme(id: string): ThemeDefinition {

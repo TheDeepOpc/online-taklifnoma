@@ -3,6 +3,7 @@ import { musicPlaybackUrl } from "@/lib/musicPlayback";
 import { PhoneFrame } from "./PhoneFrame";
 import { FitNames } from "./FitNames";
 import { getTheme, type ThemeFamily } from "@/lib/themes";
+import { PresidentialInvitation } from "@/templates/premium/presidential/PresidentialInvitation";
 import { AtelierInvitation } from "@/templates/premium/AtelierInvitation";
 import { CollectionInvitation } from "@/templates/premium/CollectionInvitation";
 import { BardoviyAtirgul } from "@/templates/premium/BardoviyAtirgul";
@@ -13,6 +14,7 @@ import { MoviyOsmon } from "@/templates/premium/MoviyOsmon";
 
 const FAMILY_COMPONENTS: Record<ThemeFamily, typeof CollectionInvitation> = {
   atelier: AtelierInvitation,
+  presidential: PresidentialInvitation,
   "premium-bardoviy-atirgul": BardoviyAtirgul,
   "premium-kuz": Kuz,
   "premium-yoz": Yoz,

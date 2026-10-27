@@ -55,3 +55,5 @@
 .promiseStrip { background:#f8eae5; border-color:#bd8d8240; }.promiseStrip > span { color:#764451; }.priceGrid .fullCollection > p { color:#e0c5bb; }.fullCollection li { color:#f1ddd0; }.fullCollection .priceTop > span:first-child { color:#d9b28e; }
 .contact { background:linear-gradient(125deg,#35091c,#59152f); }.contact > div > p { color:#e1c4c0; }.contactSignature { color:#bd949e; }.contactSignature > span { color:#e7c48e; }.whatsapp { color:#f0d6c9 !important; }.contactCard > p { color:#cfadb0 !important; }
 @media(max-width:760px) { .mobileBar { background:#35091cf5; border-top-color:#ddba8240; color:#fff0de; }.mobileBar > a { border-color:#ddba8255; color:#f4e1c5; }.mobileBar > button { background:#dcbc86; color:#35091c; border-color:#dcbc86; } }
+
+.designCard[data-formal] .designCaption h3 { font:500 11px/1.6 var(--font-dm-sans),sans-serif; letter-spacing:.055em; max-width:100%; }

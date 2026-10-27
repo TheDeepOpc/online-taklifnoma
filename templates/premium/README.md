@@ -2,7 +2,7 @@
 
 Ko‘rish: http://localhost:3000/templates
 
-Avvalgi 23 ta dizayn o‘z holatida saqlanadi. Qo‘shimcha 7 ta Atelier shabloni bilan jami 30 ta dizayn bor. Har biri alohida surat, hero maketi, bo‘limlar tartibi, grid va animatsiyaga ega. Galereya kartalari avvalgi 23 shablonning ochilgan ko‘rinishini, Atelier kolleksiyasining esa kirish sahifasini ko‘rsatadi.
+Avvalgi 23 ta dizayn o‘z holatida saqlanadi. Qo‘shimcha 7 ta Atelier va 2 ta PRIZIDENTISKIY shabloni bilan jami 32 ta dizayn bor. Har biri alohida surat, hero maketi, bo‘limlar tartibi, grid va animatsiyaga ega. Galereya kartalari avvalgi 23 shablonning ochilgan ko‘rinishini, Atelier kolleksiyasining esa kirish sahifasini ko‘rsatadi.
 
 ## Manbalar
 
@@ -48,7 +48,7 @@ npm run build
 npm run shots
 ```
 
-`npm run shots` avvalgi 23 shablonning ochilgan ko‘rinishini, yangi 7 Atelier shablonining esa kirish sahifasini `public/template-shots/` ichiga saqlaydi. Boshqa port uchun `BASE_URL=http://localhost:3456 npm run shots` ishlatiladi.
+`npm run shots` avvalgi 23 shablonning ochilgan ko‘rinishini, Atelier hamda PRIZIDENTISKIY shablonlarining esa kirish sahifasini `public/template-shots/` ichiga saqlaydi. Boshqa port uchun `BASE_URL=http://localhost:3456 npm run shots` ishlatiladi.
 
 ## Asosiy reklama sahifasi
 
@@ -89,3 +89,13 @@ Atelier matnlari ekran kengligi va yuklangan shrift bo‘yicha qayta o‘lchanad
 - `public/audio/manifest.json` — mavjud kutubxonaning tez ochiladigan, 96 kbit/s AAC nusxalari. Ularni `node scripts/optimize-music.mjs` bilan qayta yaratish mumkin (ffmpeg kerak). Manba o‘zgarsa, avtomatik asl audio ishlatiladi. Yangi yuklamalar avvalgi Discord saqlash oqimidan foydalanadi.
 - Taklifnoma yaratish/tahrirlash formasidan audio yuklash yoki mavjud qo‘shiqni tanlash mumkin. Yuklangan audio kutubxonaga saqlanadi va avtomatik tanlanadi; yuklash tugaguncha taklifnomani saqlash tugmasi faol bo‘lmaydi.
 - `public/brand/logo.png` — foydalanuvchi bergan asl logotip. Sayt header/footerida ishlatiladi; barcha taklifnoma footerlarida 26 px logo va kichik Oila-Uchun havolasi bor.
+
+
+## PRIZIDENTISKIY — 2 ta jiddiy va kamtarin variant
+
+Jami 32 ta shablon. Avvalgi 30 ta dizayn saqlanadi.
+
+- `/templates/prizidentiskiy-ivory` — PRIZIDENTISKIY · I: iliq oq qog‘oz, qora yozuvlar, markaziy rasmiy kompozitsiya.
+- `/templates/prizidentiskiy-navy` — PRIZIDENTISKIY · II: to‘q ko‘k, yon tomondagi sana ustuni va tartibli bo‘limlar.
+
+Kod: `presidential/PresidentialInvitation.tsx` va `presidential/presets.ts`. Ikkalasi 250 000 so‘mlik kolleksiyada, admin tanlovida va bosh sahifadagi PRIZIDENTISKIY filtrida ko‘rinadi. Mijoz ma’lumot kiritmaydi: ismlar, sana, musiqa, manzil, suratlar va qo‘shimcha matnlar admin ma’lumotlaridan keladi. Kirish tugmasi, sodda taymer va kichik brend yozuvi mavjud. Dekorativ animatsiya va avtomatik fon suratlari qo‘llanmaydi.
