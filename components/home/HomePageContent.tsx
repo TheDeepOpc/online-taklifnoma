@@ -18,6 +18,7 @@ import styles from "./HomePageContent.module.css";
 const ICONS = { music: Music, timer: Timer, images: Images, map: MapPin, heart: Heart, globe: Globe, users: Users, gift: Gift, phone: Phone, sparkles: Sparkles } satisfies Record<FeatureIconKey, typeof Music>;
 const PICKS = ["premium-bardoviy-atirgul", "milliy-anor", "premium-moviy-osmon", "premium-kuz", "royal-champagne", "garden-bloom"];
 const FILTERS = [
+  { id: "atelier", label: "Yangi · Atelier 7", ids: THEME_PRESETS.filter(theme => theme.family === "atelier").map(theme => theme.id) },
   { id: "selected", label: "Tanlanganlar", ids: PICKS },
   { id: "all", label: `Barchasi · ${THEME_PRESETS.length}`, ids: THEME_PRESETS.map(theme => theme.id) },
   { id: "national", label: "Milliy", ids: ["milliy-anor", "regal-navy-gold", "royal-champagne"] },

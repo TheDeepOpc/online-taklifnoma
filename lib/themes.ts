@@ -1,7 +1,9 @@
 import type { PriceTier } from "./types";
+import { ATELIER_THEMES } from "@/templates/premium/atelierPresets";
 import { PREMIUM_THEMES } from "@/templates/premium/presets";
 
 export type ThemeFamily =
+  | "atelier"
   | "panel-parallax"
   | "video-hero"
   | "swan-noir"
@@ -461,6 +463,7 @@ export const THEME_PRESETS: ThemeDefinition[] = [
     },
   },
   ...PREMIUM_THEMES,
+  ...ATELIER_THEMES,
 ];
 
 export function getTheme(id: string): ThemeDefinition {

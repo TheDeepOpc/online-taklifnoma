@@ -20,8 +20,9 @@ const { readFile } = await import("node:fs/promises");
 // Asosiy va premium kolleksiyalarning mavzu ID'larini o'qiymiz.
 const themesSrc = await readFile("lib/themes.ts", "utf8");
 const premiumSrc = await readFile("templates/premium/presets.ts", "utf8");
-const allIds = [...`${themesSrc}\n${premiumSrc}`.matchAll(/^\s{4}id: "([a-z0-9-]+)",/gm)].map((m) => m[1]);
-// Masalan: TEMPLATE_IDS=premium-qish,premium-kuz npm run shots
+const atelierSrc = await readFile("templates/premium/atelierPresets.ts", "utf8");
+const allIds = [...`${themesSrc}\n${premiumSrc}\n${atelierSrc}`.matchAll(/\bid: "([a-z0-9-]+)",/g)].map((m) => m[1]);
+// Masalan: TEMPLATE_IDS=premium-bardoviy-atirgul,premium-kuz npm run shots
 const requestedIds = process.env.TEMPLATE_IDS?.split(",").filter(Boolean);
 const IDS_LIST = requestedIds ? allIds.filter((id) => requestedIds.includes(id)) : allIds;
 if (IDS_LIST.length === 0) throw new Error("lib/themes.ts dan mavzu ID'lari topilmadi");
@@ -96,16 +97,16 @@ for (const themeId of IDS_LIST) {
   for (let i = 0; i < 90 && !loaded; i++) await sleep(100);
   // shrift + rasm + animatsiyalar joyiga tushishi uchun
   await sleep(2600);
-  // Kartada yopiq kirish qopqog'i emas, ochilgan dizayn ko'rinsin.
+  // Atelier sahnalari kartada dastlabki hashamatli cover bilan ko'rinadi.
   const button = await send("Runtime.evaluate", {
-    expression: `(() => { const b = document.querySelector('[data-invitation-open]'); if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; })()`,
+    expression: `(() => { if (document.querySelector('[data-luxury-gate]')) return null; const b = document.querySelector('[data-invitation-open]'); if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; })()`,
     returnByValue: true,
   }, sessionId);
   const point = button.result.value;
   if (point) {
     await send("Input.dispatchMouseEvent", { type: "mousePressed", button: "left", clickCount: 1, ...point }, sessionId);
     await send("Input.dispatchMouseEvent", { type: "mouseReleased", button: "left", clickCount: 1, ...point }, sessionId);
-    await sleep(1400);
+    await sleep(2200);
   }
   const { data } = await send("Page.captureScreenshot", { format: "webp", quality: 80, captureBeyondViewport: false }, sessionId);
   await writeFile(`${OUT}/${themeId}.webp`, Buffer.from(data, "base64"));

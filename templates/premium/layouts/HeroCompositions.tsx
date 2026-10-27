@@ -4,6 +4,7 @@
 import type { ReactNode } from "react";
 import { ArrowDown } from "lucide-react";
 import { ParallaxScene } from "@/components/templates/ParallaxScene";
+import { AtelierHero } from "./AtelierHero";
 import { OrnamentalFrame } from "./OrnamentalFrame";
 import type { Invitation } from "@/lib/types";
 import type { TemplateDesign } from "@/lib/templateDesigns";
@@ -70,6 +71,7 @@ export function HeritageInstruments() {
 }
 
 export function HeroComposition(p: HeroProps) {
+  if (p.design.hero.startsWith("atelier-")) return <AtelierHero p={p} />;
   const render = compositions[p.design.hero];
   return <header className={`${styles.hero} ${styles[p.design.hero]} ${p.previewMode ? styles.preview : ""} ${p.opened ? styles.opened : ""}`} data-hero-composition={p.design.hero} data-hero-animation={p.design.motion}>
     <div className={styles.edition}><span>{p.title}</span><span>PREMIUM WEDDING INVITATION</span></div>

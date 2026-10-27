@@ -2,6 +2,7 @@ import type { Invitation, MusicTrack } from "@/lib/types";
 import { PhoneFrame } from "./PhoneFrame";
 import { FitNames } from "./FitNames";
 import { getTheme, type ThemeFamily } from "@/lib/themes";
+import { AtelierInvitation } from "@/templates/premium/AtelierInvitation";
 import { CollectionInvitation } from "@/templates/premium/CollectionInvitation";
 import { BardoviyAtirgul } from "@/templates/premium/BardoviyAtirgul";
 import { Kuz } from "@/templates/premium/Kuz";
@@ -10,6 +11,7 @@ import { TillaHayot } from "@/templates/premium/TillaHayot";
 import { MoviyOsmon } from "@/templates/premium/MoviyOsmon";
 
 const FAMILY_COMPONENTS: Record<ThemeFamily, typeof CollectionInvitation> = {
+  atelier: AtelierInvitation,
   "premium-bardoviy-atirgul": BardoviyAtirgul,
   "premium-kuz": Kuz,
   "premium-yoz": Yoz,

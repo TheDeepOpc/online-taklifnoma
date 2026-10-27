@@ -39,3 +39,10 @@
 .sky-panorama .group:nth-child(4) { align-items: center; }
 @media(max-width:360px) { .group[data-paired] > * { padding-inline: 12px !important; } .group[data-paired] [data-section="schedule"] > div > div { grid-template-columns: 1fr; gap: 0; } .group[data-paired] [data-section="schedule"] > div > div > i { display: none; } }
 @media(prefers-reduced-motion:reduce) { .body * { scroll-behavior: auto; } }
+.atelier-opera .group:nth-child(2) { margin:30px 24px; border:1px solid var(--gold); background:var(--paper); }.atelier-opera .group:nth-child(4) { gap:12px; padding:15px; }
+.atelier-palace .group { margin:20px 15px; border-inline:1px solid var(--gold); }.atelier-palace .group:nth-child(2) { border:3px double var(--gold); margin:30px 20px; }
+.atelier-crystal .group:nth-child(1) { border-radius:190px 190px 0 0; overflow:hidden; margin-inline:20px; }.atelier-crystal .group:nth-child(3) { background:color-mix(in srgb,var(--paper) 75%,transparent); }
+.atelier-letter .group:nth-child(1) { margin:35px 20px; outline:1px solid var(--gold); outline-offset:5px; box-shadow:0 12px 35px #87683b12; }.atelier-letter .group:nth-child(3) { border-block:1px solid var(--gold); }
+.atelier-conservatory .group:nth-child(2) { margin:30px 15px; background:var(--paper); border:1px solid var(--gold); }.atelier-conservatory .group:nth-child(5) { gap:15px; padding:10px; }
+.atelier-album .group:nth-child(1) { padding:30px 8px; border-bottom:3px double var(--gold); }.atelier-album .group:nth-child(2) { margin:25px 15px; border:1px solid var(--gold); }.atelier-album .group:nth-child(4) { background:var(--paper); }
+.atelier-treasury .group:nth-child(2) { margin:25px 20px; border:3px double var(--gold); }.atelier-treasury .group:nth-child(4) { background:var(--paper); border-block:1px solid var(--gold); }

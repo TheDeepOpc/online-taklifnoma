@@ -1,0 +1,126 @@
+{
+  "tool": "built-in image_gen",
+  "description": "Seven additional Atelier themes: open-scene backgrounds and separate mechanical foreground pieces.",
+  "assets": [
+    {
+      "id": "opera-rubis",
+      "kind": "scene",
+      "path": "public/invitation-art/atelier-scenes/opera-rubis.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: vertical 9:16 luxury wedding invitation background, very high-end editorial photography. The supplied image is a reference for materials and visual continuity. Create a related NEW OPEN scene: An opened royal opera wedding stage matching the reference's oxblood velvet and antique-gold craftsmanship: curtains fully gathered at far left and right, a magnificent warm candlelit wedding altar with ivory and burgundy roses, gilded proscenium, polished reflective floor. Camera straight-on, quiet softly lit central scene for overlaid ivory names. Rich photographic spatial depth. No closed curtains. Fine real textures, exquisite expensive craftsmanship, cinematic light, no flat illustration or generic picture frame. No text, letters, numbers, monograms, logos, watermark, interface, people or collage.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/opera-rubis.webp",
+      "transparent": false
+    },
+    {
+      "id": "samarqand-palace",
+      "kind": "scene",
+      "path": "public/invitation-art/atelier-scenes/samarqand-palace.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: vertical 9:16 luxury wedding invitation background, very high-end editorial photography. The supplied image is a reference for materials and visual continuity. Create a related NEW OPEN scene: A magnificent open historic Uzbek palace doorway matching the reference's walnut, lapis, mother of pearl and gold: both doors fully swung open at sides, view into a graceful sunlit carved-column courtyard with ivory roses, pomegranates and a fountain. No text or blank white card. Center softly lit warm ivory space and authentic fine materials. Fine real textures, exquisite expensive craftsmanship, cinematic light, no flat illustration or generic picture frame. No text, letters, numbers, monograms, logos, watermark, interface, people or collage.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/samarqand-palace.webp",
+      "transparent": false
+    },
+    {
+      "id": "celestial-crystal",
+      "kind": "scene",
+      "path": "public/invitation-art/atelier-scenes/celestial-crystal.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: vertical 9:16 luxury wedding invitation background, very high-end editorial photography. The supplied image is a reference for materials and visual continuity. Create a related NEW OPEN scene: An open celestial crystal wedding hall matching the reference's polished silver, clear faceted crystal, pearls and deep sapphire sky: glass portal wings at far sides, luminous soft clouds and moonlit crystal stairs lead through its center to a beautiful distant glowing wedding pavilion. Central open dark-blue sky calm and readable. Extraordinary realistic refractions and spatial depth. Fine real textures, exquisite expensive craftsmanship, cinematic light, no flat illustration or generic picture frame. No text, letters, numbers, monograms, logos, watermark, interface, people or collage.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/celestial-crystal.webp",
+      "transparent": false
+    },
+    {
+      "id": "royal-correspondence",
+      "kind": "scene",
+      "path": "public/invitation-art/atelier-scenes/royal-correspondence.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: vertical 9:16 luxury wedding invitation background, very high-end editorial photography. The supplied image is a reference for materials and visual continuity. Create a related NEW OPEN scene: A photorealistic overhead couture wedding stationery still life matching the reference's champagne silk, gold-embossed ivory envelope, roses and pearls. The envelope is now OPEN with its triangular flap folded back toward top; a long absolutely BLANK ivory wedding letter partly drawn out above it. Rich tactile paper, gold edge, dimensional silk, letter occupies central 65% of width and center height, no writing. Fine real textures, exquisite expensive craftsmanship, cinematic light, no flat illustration or generic picture frame. No text, letters, numbers, monograms, logos, watermark, interface, people or collage.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/royal-correspondence.webp",
+      "transparent": false
+    },
+    {
+      "id": "jardin-de-verre",
+      "kind": "scene",
+      "path": "public/invitation-art/atelier-scenes/jardin-de-verre.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: vertical 9:16 luxury wedding invitation background, very high-end editorial photography. The supplied image is a reference for materials and visual continuity. Create a related NEW OPEN scene: A lavish French-style wedding conservatory interior matching the reference's bronze glasshouse, ivory roses, orchids, blush peonies and lush greenery. Glass entrance doors completely open at far edges, an elegant bright aisle and pale stone fountain framed by huge sculptural flower arrangements. Soft golden light, immersive real wedding scenography, quiet cream center. No paper card. Fine real textures, exquisite expensive craftsmanship, cinematic light, no flat illustration or generic picture frame. No text, letters, numbers, monograms, logos, watermark, interface, people or collage.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/jardin-de-verre.webp",
+      "transparent": false
+    },
+    {
+      "id": "amber-heirloom",
+      "kind": "scene",
+      "path": "public/invitation-art/atelier-scenes/amber-heirloom.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: vertical 9:16 luxury wedding invitation background, very high-end editorial photography. The supplied image is a reference for materials and visual continuity. Create a related NEW OPEN scene: An extraordinary handcrafted wedding heirloom album now OPEN on amber velvet and bronze silk matching reference craftsmanship. Straight overhead view, two broad absolutely BLANK warm ivory pages with restrained thin gilded edges and visible binding crease, antique copper and cognac leather cover edges, pearl and dried botanical corner arrangements. Exquisitely realistic paper and soft shadows. No writing or lettering. Fine real textures, exquisite expensive craftsmanship, cinematic light, no flat illustration or generic picture frame. No text, letters, numbers, monograms, logos, watermark, interface, people or collage.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/amber-heirloom.webp",
+      "transparent": false
+    },
+    {
+      "id": "emerald-treasury",
+      "kind": "scene",
+      "path": "public/invitation-art/atelier-scenes/emerald-treasury.webp",
+      "prompt": "Use case: photorealistic-natural. Asset: vertical 9:16 luxury wedding invitation background, very high-end editorial photography. The supplied image is a reference for materials and visual continuity. Create a related NEW OPEN scene: A luxurious emerald velvet wedding keepsake casket now OPEN, matching the reference's intricate tree-of-life goldwork, emerald cabochons and pearls. Direct overhead view: lid tipped back out at top, inside a beautifully cushioned deep forest velvet compartment holding an absolutely blank warm ivory folded invitation, with a refined gold border and two small gold wedding bands at a far corner. Natural high jewelry photography, dimensional velvet, quiet center. No lettering. Fine real textures, exquisite expensive craftsmanship, cinematic light, no flat illustration or generic picture frame. No text, letters, numbers, monograms, logos, watermark, interface, people or collage.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/emerald-treasury.webp",
+      "transparent": false
+    },
+    {
+      "id": "opera-cloth",
+      "kind": "layer",
+      "path": "public/invitation-art/gates/atelier/parts/opera-cloth.webp",
+      "prompt": "Use case: product-mockup. Asset: a single realistic isolated foreground layer for a luxury wedding invitation animation, vertical view straight-on. TRUE TRANSPARENT background, isolated clean alpha edge, no background, no shadow cast onto a background, no text, letters, numbers, monogram, logo, watermark, UI or people. Material realism and craftsmanship must be outstanding. One broad hanging oxblood burgundy velvet curtain PANEL, rectangular portrait silhouette, straight top attached to an invisible curtain rail, full-length plush dense velvet with rich natural vertical folds. Elaborate but refined antique gold botanical embroidered border along the RIGHT vertical edge and a narrow gold fringe hem at bottom. Top edge horizontal, no valance or architecture, no tassel tiebacks, not tied or gathered to the side; mostly closed spread fabric width for future simulated draping. Fine soft theatrical highlights. Entire cloth visible, image tightly fitted to the panel with minimal transparent outer padding.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/opera-rubis.webp",
+      "transparent": true
+    },
+    {
+      "id": "palace-doors",
+      "kind": "layer",
+      "path": "public/invitation-art/gates/atelier/parts/palace-doors.webp",
+      "prompt": "Use case: product-mockup. Asset: a single realistic isolated foreground layer for a luxury wedding invitation animation, vertical view straight-on. TRUE TRANSPARENT background, isolated clean alpha edge, no background, no shadow cast onto a background, no text, letters, numbers, monogram, logo, watermark, UI or people. Material realism and craftsmanship must be outstanding. A pair of CLOSED tall historic Uzbek walnut double doors matching the reference's lapis, gold and mother of pearl inlay, their center seam exactly at 50% width. Only the two wooden door leaves, NO stone surround, columns, floor, walls or architectural frame. Top silhouette of both leaves together forms an ornate shallow pointed arch. Front elevation perfectly straight-on, richly carved floral pomegranate inlay at edges and calm dark walnut panels at middle. Complete door leaves visible with minimal transparent margin, transparent everywhere outside doors.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/samarqand-palace.webp",
+      "transparent": true
+    },
+    {
+      "id": "crystal-doors",
+      "kind": "layer",
+      "path": "public/invitation-art/gates/atelier/parts/crystal-doors.webp",
+      "prompt": "Use case: product-mockup. Asset: a single realistic isolated foreground layer for a luxury wedding invitation animation, vertical view straight-on. TRUE TRANSPARENT background, isolated clean alpha edge, no background, no shadow cast onto a background, no text, letters, numbers, monogram, logo, watermark, UI or people. Material realism and craftsmanship must be outstanding. A pair of exquisite CLOSED crystal glass door leaves for a celestial wedding portal. Very tall narrow portrait double doors with meeting seam at exact horizontal center. Polished silver botanical edging, clear faint sapphire glass panels with real transparent glass and subtle reflected light, tiny hanging crystal prisms and pearls along OUTER edges only. Two door leaves ONLY, no doorway surround, pillars, floor, clouds, walls or scenery. Perfect front elevation, both complete leaves visible, transparent beyond the door silhouette and delicately translucent through glass centers.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/celestial-crystal.webp",
+      "transparent": true
+    },
+    {
+      "id": "garden-doors",
+      "kind": "layer",
+      "path": "public/invitation-art/gates/atelier/parts/garden-doors.webp",
+      "prompt": "Use case: product-mockup. Asset: a single realistic isolated foreground layer for a luxury wedding invitation animation, vertical view straight-on. TRUE TRANSPARENT background, isolated clean alpha edge, no background, no shadow cast onto a background, no text, letters, numbers, monogram, logo, watermark, UI or people. Material realism and craftsmanship must be outstanding. Two CLOSED tall narrow antique-bronze conservatory glass door leaves, exact central seam, thin elegant bronze mullions with clear translucent glass, a tasteful few ivory roses and small white orchids attached along the OUTER vertical margins only. High-end real glass refractions. Door leaves only, no walls, arch, surrounding flowers, garden or floor. Straight-on front elevation, clean rectangular top and bottom, complete visible doors fitted tightly in portrait frame, transparent beyond silhouettes and transparent through glass.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/jardin-de-verre.webp",
+      "transparent": true
+    },
+    {
+      "id": "royal-envelope-base",
+      "kind": "layer",
+      "path": "public/invitation-art/gates/atelier/parts/royal-envelope-base.webp",
+      "prompt": "Use case: product-mockup. Asset: a single realistic isolated foreground layer for a luxury wedding invitation animation, vertical view straight-on. TRUE TRANSPARENT background, isolated clean alpha edge, no background, no shadow cast onto a background, no text, letters, numbers, monogram, logo, watermark, UI or people. Material realism and craftsmanship must be outstanding. A magnificent open IVORY wedding envelope body viewed straight from above on transparency, no silk or flowers. Heavy cotton paper with delicate three dimensional embossed gold vines along side margins and warm gold-edged bottom corners. OPEN top slot, no flap, no wax seal, no letter sticking out; the plain inner back lining is visible at top, two angular side-folds and bottom pocket constructed realistically. Wide landscape envelope proportions within transparent portrait canvas, complete object at center, entirely visible, excellent tactile paper realism.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/royal-correspondence.webp",
+      "transparent": true
+    },
+    {
+      "id": "royal-envelope-flap",
+      "kind": "layer",
+      "path": "public/invitation-art/gates/atelier/parts/royal-envelope-flap.webp",
+      "prompt": "Use case: product-mockup. Asset: a single realistic isolated foreground layer for a luxury wedding invitation animation, vertical view straight-on. TRUE TRANSPARENT background, isolated clean alpha edge, no background, no shadow cast onto a background, no text, letters, numbers, monogram, logo, watermark, UI or people. Material realism and craftsmanship must be outstanding. A single triangular IVORY cotton-paper envelope flap viewed straight from above, broad horizontal hinge edge across top and a centered triangular point facing down. Exquisite delicate embossed gold botanical vines confined along the two diagonal margins. Single flat separate flap only, no envelope body, letter, wax, flowers or props. Realistic thick paper texture and fine gold leaf edges. Tightly fitted triangle in the canvas with transparent space outside triangular silhouette.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/royal-correspondence.webp",
+      "transparent": true
+    },
+    {
+      "id": "heirloom-cover",
+      "kind": "layer",
+      "path": "public/invitation-art/gates/atelier/parts/heirloom-cover.webp",
+      "prompt": "Use case: product-mockup. Asset: a single realistic isolated foreground layer for a luxury wedding invitation animation, vertical view straight-on. TRUE TRANSPARENT background, isolated clean alpha edge, no background, no shadow cast onto a background, no text, letters, numbers, monogram, logo, watermark, UI or people. Material realism and craftsmanship must be outstanding. The single front COVER of a closed handcrafted heirloom wedding album only, straight-on front view: tall cognac leather book cover with intricate gold tooled botanical edges, gilded metal corners, one small blank antique copper oval medallion near the upper quarter, large quiet leather central field, finely stitched vertical spine along left side and believable thickness along right and bottom edges. No open pages, velvet backdrop, flowers or props. Entire book cover visible with minimal transparent padding.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/amber-heirloom.webp",
+      "transparent": true
+    },
+    {
+      "id": "treasury-lid",
+      "kind": "layer",
+      "path": "public/invitation-art/gates/atelier/parts/treasury-lid.webp",
+      "prompt": "Use case: product-mockup. Asset: a single realistic isolated foreground layer for a luxury wedding invitation animation, vertical view straight-on. TRUE TRANSPARENT background, isolated clean alpha edge, no background, no shadow cast onto a background, no text, letters, numbers, monogram, logo, watermark, UI or people. Material realism and craftsmanship must be outstanding. Only the rectangular LID of a magnificent emerald velvet keepsake casket, straight overhead: deep forest velvet middle, three-dimensional gold tree-of-life filigree around edges, emerald cabochons and pearls, a small jewel clasp at bottom center, and a fine hinge edge at top. Object lid only, no box body, silk background, props or separate jewelry. Flat front-facing complete lid isolated with minimal transparent padding, stunning realistic metalwork and tactile velvet.",
+      "reference": "/home/deepopc/toy/public/invitation-art/gates/atelier/emerald-treasury.webp",
+      "transparent": true
+    }
+  ]
+}

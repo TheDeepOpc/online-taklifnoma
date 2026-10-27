@@ -2,12 +2,12 @@
 
 Ko‘rish: http://localhost:3000/templates
 
-Barcha 23 ta dizayn premium sifatida ishlaydi. Har biri alohida surat, hero maketi, bo‘limlar tartibi, grid va animatsiyaga ega. Galereya kartalari haqiqiy ochilgan shablonlarning previewlarini ko‘rsatadi.
+Avvalgi 23 ta dizayn o‘z holatida saqlanadi. Qo‘shimcha 7 ta Atelier shabloni bilan jami 30 ta dizayn bor. Har biri alohida surat, hero maketi, bo‘limlar tartibi, grid va animatsiyaga ega. Galereya kartalari haqiqiy ochilgan shablonlarning previewlarini ko‘rsatadi.
 
 ## Manbalar
 
-- `lib/templateDesigns.ts` — 23 ta maket, harakat, naqsh, mavzu effekti va bo‘limlar kompozitsiyasi.
-- `layouts/HeroCompositions.tsx` — 23 ta alohida hero daraxti: triptix, diptix, jurnal, kollaj, pochta kartasi, atirgulli albom, teatr va boshqa maketlar.
+- `lib/templateDesigns.ts` — 30 ta maket, harakat, naqsh, mavzu effekti va bo‘limlar kompozitsiyasi.
+- `layouts/HeroCompositions.tsx` — avvalgi 23 ta hero daraxti; yangi yettita kompozitsiya `AtelierHero.tsx` ichida: triptix, diptix, jurnal, kollaj, pochta kartasi, atirgulli albom, teatr va boshqa maketlar.
 - `layouts/BodyComposition.tsx` — bo‘limlarning har bir mavzuga xos tartibi va ustunlari. Admin to‘ldirmagan ixtiyoriy bo‘limlar avtomatik tushib qoladi.
 - `layouts/SeasonalAtmosphere.tsx` — real alpha rasmlar bilan yaproq, bulut, yulduz, gulbarg va milliy bezak animatsiyalari.
 - `layouts/OrnamentalFrame.tsx` — oltin, kumush, islimiy, gulli va boshqa hoshiyalar.
@@ -55,9 +55,24 @@ Video fon o‘rniga built-in `image_gen` bilan tayyorlangan beshta to‘y va muh
 
 Barcha demo taklifnomalarda Sardor va Soliha ismlari ishlatiladi. Naqsh va ramkalar surat yoki aniq kartochka ichiga biriktirilgan.
 
-## Taklifnoma ochilish sahnalari
+## Qo‘shimcha Atelier kolleksiyasi — 7 ta yangi shablon
 
-Etti mavjud mavzuda tugma bosilganda harakatlanadigan alohida generatsiya qilingan cover-rasm bor: bardoviy atirgul ko‘zgusi, Anor bog‘i suzani arkasi, moviy osmon kumush oynasi, Qirollik shampan romi, Bog‘ gulzori shisha guli, kuzgi pergament va Éternité hayot daraxti. Har bir sahnada mehmon matni o‘qiladigan bo‘sh joy qoldirilgan; cover rasm ochilishida faqat rasmga animatsiya beriladi, tugma va matn joyida turadi. Tugma bosilguncha cover qimirlamaydi; tanlangan musiqa bevosita bosilganda ishga tushadi.
+Avvalgi 23 ta ID, tasvir, ranglar, maket va ochilish sahifalari saqlanadi. Yangi shablonlar alohida `atelier-*` ID bilan ro‘yxatdan o‘tgan va 250 000 so‘mlik kolleksiyaga kiradi. Galereyada “Yangi · Atelier 7” bo‘limi mavjud.
 
-- Scene mapping va harakat uslublari: `lib/templateDesigns.ts` va `templates/premium/shared/PremiumInvitation.module.css`.
-- Rasmlar va promptlar: `public/invitation-art/gates/` va `gate-image-prompts.json`.
+- `/templates/atelier-opera-rubis` — to‘rli mato modelida buklanadigan va yonlarga yig‘iladigan baxmal parda; opera sahnasi.
+- `/templates/atelier-samarqand-palace` — sharnirlaridan ochiladigan o‘ymakor ikki eshik; Samarqand saroyi va hovlisi.
+- `/templates/atelier-cristal-celeste` — alohida billur eshiklar, marvarid va bulutlar; osmon saroyi.
+- `/templates/atelier-lettre-royale` — alohida konvert qopqog‘i, cho‘ntagi va ko‘tariladigan maktub.
+- `/templates/atelier-jardin-de-verre` — alohida suriladigan bronza va shisha eshiklar; gulli oranjereya.
+- `/templates/atelier-album-heritage` — o‘z o‘qidan ochiladigan charm muqova, old va ichki yuza; ochilgan albom sahifalari.
+- `/templates/atelier-tresor-eternel` — sharniridan ko‘tariladigan zargarlik qutisi qopqog‘i; zumrad baxmal xazina.
+
+Har bir shablonda alohida hero kompozitsiyasi, bo‘limlar tartibi, grid va ranglar bor. Rasmlar bitta butun qatlam sifatida surilmaydi: fon joyida turadi, alohida material qismlari harakatlanadi. Parda WebGL to‘rida buklamalar, tebranish va mato yig‘ilishi bilan chiziladi; WebGL mavjud bo‘lmasa canvas varianti ishlaydi. Ochilish tugmasi bosilguncha scroll qulflanadi; musiqa bosish hodisasida boshlanadi. Harakat kamaytirilgan rejimda darhol ochiladi.
+
+Manbalar: `atelierPresets.ts`, `AtelierInvitation.tsx`, `layouts/AtelierHero.tsx`, `layouts/LuxuryInvitationGate.tsx`, `layouts/MechanicalOpeningScene.tsx`, `layouts/FabricCurtain.tsx`.
+
+Rasmlar built-in `image_gen` bilan yaratilgan:
+
+- `public/invitation-art/gates/atelier/` — yopiq sahna rasmlari va `parts/` ichida 8 ta shaffof material qismi.
+- `public/invitation-art/atelier-scenes/` — yangi yettita shablonning ochilgan sahna rasmlari.
+- `atelier-gate-image-prompts.json` va `atelier-mechanical-assets.json` — promptlar va barcha fayllar manifestlari.

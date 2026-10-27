@@ -4,6 +4,7 @@ import { Lock, Check } from "lucide-react";
 import { THEME_PRESETS, isThemeUnlocked, type ThemeDefinition } from "@/lib/themes";
 import { PRICE_TIER_LABELS, type PriceTier } from "@/lib/types";
 import { invitationArtwork } from "@/lib/invitationArt";
+import { invitationGateArtwork } from "@/lib/templateDesigns";
 
 function getSwatchColors(theme: ThemeDefinition) {
   const base =
@@ -56,7 +57,7 @@ export function ThemePicker({
               style={{ background: `linear-gradient(135deg, ${base}, ${accent})` }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={invitationArtwork(theme)} alt="" loading="lazy" className="h-full w-full object-cover" />
+              <img src={invitationGateArtwork(theme.id) || invitationArtwork(theme)} alt="" loading="lazy" className="h-full w-full object-cover" />
             </span>
             <span className="text-xs font-medium leading-tight text-slate-700">{theme.name}</span>
             <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[9px] font-semibold tracking-wider text-amber-800">PREMIUM · {theme.collection === "signature" ? "SIGNATURE" : "ATELIER"}</span>
