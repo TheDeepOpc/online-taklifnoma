@@ -1,15 +1,32 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
 import { GUEST_PARAM, sanitizeGuestName } from "@/lib/guestLink";
 import { getPublishedInvitation } from "@/lib/invitationData";
+import { invitationShareMeta } from "@/lib/invitationShare";
 
-export default async function PublicInvitationPage({
-  params,
-  searchParams,
-}: {
+type PageProps = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ bare?: string; [GUEST_PARAM]?: string | string[] }>;
-}) {
+};
+
+/** Havola ulashilganda: kelin-kuyov ismlari, sana va ularning surati bilan katta rasm. */
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const published = await getPublishedInvitation(slug);
+  if (!published) return {};
+
+  const guest = sanitizeGuestName((await searchParams)[GUEST_PARAM]);
+  const { title, description, image } = invitationShareMeta(published.invitation, guest);
+  return {
+    title,
+    description,
+    openGraph: { type: "website", siteName: "Oila-Uchun", locale: "uz_UZ", title, description, images: [image] },
+    twitter: { card: "summary_large_image", title, description, images: [image] },
+  };
+}
+
+export default async function PublicInvitationPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
   const query = await searchParams;
   const published = await getPublishedInvitation(slug);
