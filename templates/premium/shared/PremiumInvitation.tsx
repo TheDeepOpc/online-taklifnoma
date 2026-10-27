@@ -19,7 +19,7 @@ import { HeroComposition } from "../layouts/HeroCompositions";
 import { BodyComposition } from "../layouts/BodyComposition";
 import { SeasonalAtmosphere } from "../layouts/SeasonalAtmosphere";
 import { OrnamentalFrame } from "../layouts/OrnamentalFrame";
-import { templateDesign, premiumArtwork, type SectionId } from "@/lib/templateDesigns";
+import { templateDesign, premiumArtwork, type GateScene, type SectionId } from "@/lib/templateDesigns";
 import { sectionReveal } from "../layouts/sectionReveal";
 import styles from "./PremiumInvitation.module.css";
 
@@ -43,6 +43,16 @@ function Ornament({ className = "" }: { className?: string }) {
 }
 
 const DesignContext = createContext("cascade");
+
+const GATE_SCENES: Record<GateScene, { image: string; ink: string; accent: string }> = {
+  mirror: { image: "rose-mirror", ink: "#51212a", accent: "#874353" },
+  suzani: { image: "suzani-arch", ink: "#552820", accent: "#9a302b" },
+  sky: { image: "celeste-silver", ink: "#344f72", accent: "#6287ad" },
+  royal: { image: "champagne-rococo", ink: "#493824", accent: "#99743e" },
+  garden: { image: "garden-glass", ink: "#2c4936", accent: "#617f5c" },
+  autumn: { image: "amber-pressed", ink: "#503322", accent: "#9a6844" },
+  eternity: { image: "eternite-tree", ink: "#f4ead3", accent: "#e1c581" },
+};
 
 function Reveal({ children, className = "", previewMode, sectionId }: { children: ReactNode; className?: string; previewMode: boolean; sectionId?: SectionId }) {
   const reduced = useMotionPreference();
@@ -73,6 +83,9 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
 
   const imageSrc = premiumArtwork(theme.id);
   const design = templateDesign(theme.id);
+  const gateScene = design.gate ? { type: design.gate, ...GATE_SCENES[design.gate] } : undefined;
+  const gateImageSrc = gateScene ? `/invitation-art/gates/${gateScene.image}.webp` : imageSrc;
+  const [gateAnimating, setGateAnimating] = useState(false);
   const parallax = !previewMode;
   const secondPortrait = theme.family === "swan-noir" ? invitation.second_photo_url : null;
   const portraitSrc = invitation.cover_photo_url || secondPortrait;
@@ -88,25 +101,35 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
   function openInvitation() {
     // play() bevosita mehmon bosgan hodisada chaqiriladi — mobil autoplay uchun.
     musicRef.current?.play();
-    setOpened(true);
+    if (gateScene && !reduced) setGateAnimating(true);
+    else setOpened(true);
   }
 
   return <DesignContext.Provider value={design.hero}><div className={`${styles.root} ${styles[variant]} ${parallax ? styles.hasParallax : ""} ${previewMode ? styles.preview : ""}`} style={rootStyle} data-invitation-locked={!opened && !previewMode ? "true" : undefined} data-design={design.hero} data-motion={design.motion} data-invitation-theme={theme.id} data-parallax-enabled={parallax ? "true" : "false"}>
-    <SeasonalAtmosphere effect={design.effect} previewMode={previewMode} />
+    <SeasonalAtmosphere effect={design.effect} previewMode={previewMode || (!!gateScene && !opened)} />
     <AnimatePresence>
-      {!opened && !previewMode && <motion.div key="invitation-cover" className={styles.gate} role="dialog" aria-modal="true" aria-labelledby={`gate-${theme.id}`} initial={false} exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 1.08, filter: "blur(12px)" }} transition={{ duration: reduced ? 0.15 : 0.9 }}>
+      {!opened && !previewMode && <motion.div key="invitation-cover" className={`${styles.gate} ${gateScene ? styles.gateHasScene : ""}`} style={gateScene ? { "--gate-ink": gateScene.ink, "--gate-accent": gateScene.accent, "--gate-art": `url(${gateImageSrc})` } as CSSProperties : undefined} role="dialog" aria-modal="true" aria-labelledby={`gate-${theme.id}`} initial={false} exit={gateScene ? { opacity: 0 } : reduced ? { opacity: 0 } : { opacity: 0, scale: 1.08, filter: "blur(12px)" }} transition={{ duration: gateScene || reduced ? 0 : 0.9 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imageSrc} className={styles.gateImage} alt="" fetchPriority="high" />
-        <div className={styles.gateShade} />
-        <div className={styles.gateFrame} aria-hidden="true" />
-        <OrnamentalFrame kind={design.ornament} design={design.hero} />
+        <img
+          src={gateImageSrc}
+          data-opening={gateAnimating ? "true" : undefined}
+          className={`${styles.gateImage} ${gateScene ? `${styles.gateArt} ${styles[`gateArt-${gateScene.type}`]} ${gateAnimating ? styles[`gateArtOpening-${gateScene.type}`] : ""}` : ""}`}
+          alt=""
+          fetchPriority="high"
+          onAnimationEnd={event => {
+            if (event.target === event.currentTarget && gateAnimating) setOpened(true);
+          }}
+        />
+        {!gateScene && <div className={styles.gateShade} />}
+        {!gateScene && <div className={styles.gateFrame} aria-hidden="true" />}
+        {!gateScene && <OrnamentalFrame kind={design.ornament} design={design.hero} />}
         <div className={styles.gateContent}>
           <span className={styles.gateEyebrow}>Siz uchun, qalbimizdan</span>
           <Ornament className={styles.gateOrnament} />
           {invitation.guest_name && <p className={styles.gateGuest}>Hurmatli <strong>{invitation.guest_name}</strong></p>}
           <h2 id={`gate-${theme.id}`} className={styles.gateNames}><span>{invitation.groom_name}</span><em>&</em><span>{invitation.bride_name}</span></h2>
           <p className={styles.gateDate}>{day} · {month} · {year}</p>
-          <button type="button" onClick={openInvitation} className={styles.openButton} data-invitation-open>
+          <button type="button" onClick={openInvitation} disabled={gateAnimating} className={styles.openButton} data-invitation-open>
             <span className={styles.seal} aria-hidden="true">{monogram}</span>
             <span>Taklifnomani ochish <ArrowUpRight size={14} /></span>
           </button>

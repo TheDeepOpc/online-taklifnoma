@@ -54,3 +54,10 @@ npm run shots
 Video fon o‘rniga built-in `image_gen` bilan tayyorlangan beshta to‘y va muhabbat surati ishlatiladi: `public/home-art/love-story.webp` va `public/home-art/wedding-details.webp`, shuningdek `rose-ceremony.webp`, `uzbek-garden.webp`, `love-letter.webp`. `home-image-prompts.json` promptlar va fayllarni saqlaydi. Ijtimoiy tarmoqlardagi havola uchun `app/opengraph-image.tsx` va `app/twitter-image.tsx` rasmli kartochka yaratadi; ishlab chiqarish domeni `NEXT_PUBLIC_SITE_URL` orqali beriladi.
 
 Barcha demo taklifnomalarda Sardor va Soliha ismlari ishlatiladi. Naqsh va ramkalar surat yoki aniq kartochka ichiga biriktirilgan.
+
+## Taklifnoma ochilish sahnalari
+
+Etti mavjud mavzuda tugma bosilganda harakatlanadigan alohida generatsiya qilingan cover-rasm bor: bardoviy atirgul ko‘zgusi, Anor bog‘i suzani arkasi, moviy osmon kumush oynasi, Qirollik shampan romi, Bog‘ gulzori shisha guli, kuzgi pergament va Éternité hayot daraxti. Har bir sahnada mehmon matni o‘qiladigan bo‘sh joy qoldirilgan; cover rasm ochilishida faqat rasmga animatsiya beriladi, tugma va matn joyida turadi. Tugma bosilguncha cover qimirlamaydi; tanlangan musiqa bevosita bosilganda ishga tushadi.
+
+- Scene mapping va harakat uslublari: `lib/templateDesigns.ts` va `templates/premium/shared/PremiumInvitation.module.css`.
+- Rasmlar va promptlar: `public/invitation-art/gates/` va `gate-image-prompts.json`.

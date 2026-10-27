@@ -1,0 +1,49 @@
+{
+  "tool": "built-in image_gen",
+  "images": [
+    {
+      "id": "rose-mirror",
+      "file": "public/invitation-art/gates/rose-mirror.webp",
+      "prompt": "Use case: stylized-concept. Asset: portrait full-screen 2:3 luxury Uzbek wedding invitation opening screen, original fine-art digital image. Design a tall antique oval cheval mirror with a delicate burgundy-red rose and champagne-gold filigree frame, one graceful asymmetrical rose cluster at the upper left and a smaller sprig at lower right; in the mirror, a softly illuminated warm ivory blank glass/paper field with very subtle pearl reflection and quiet burgundy shadows. Refined museum-quality carved gilt and tactile enamel, exquisite romantic mood, rose-gold and deep wine palette, composition readable behind overlaid centered invitation names. Central 60 percent of image must remain plain, quiet and light enough for dark text. The decorative frame itself must stay well within the canvas, no cropping. No people, letters, numbers, typography, logos, watermark, interface, phone, external border or collage."
+    },
+    {
+      "id": "suzani-arch",
+      "file": "public/invitation-art/gates/suzani-arch.webp",
+      "prompt": "Use case: stylized-concept. Asset: portrait full-screen 2:3 premium Uzbek national wedding invitation opening art. A beautifully carved historic Samarkand-style arched portal framed by fine embroidered suzani vines, pomegranates and small cream blossoms in rich ruby, lapis, antique gold and jade. Within the arch is a serene warm ivory plaster panel with subtle handmade texture, wide and absolutely blank for centered names, names can be overlaid. Sophisticated real hand embroidery and wood carving, heritage artisan detail, balanced symmetrical elegance, soft courtyard light, no people. The complete arch border is visible and inset safely from canvas edges. No lettering, Arabic or Latin calligraphy, characters, logo, watermark, UI, phone or collage."
+    },
+    {
+      "id": "celeste-silver",
+      "file": "public/invitation-art/gates/celeste-silver.webp",
+      "prompt": "Use case: stylized-concept. Asset: portrait full-screen 2:3 romantic sky-blue wedding invitation art. A refined antique oval silver mirror frame with small blue forget-me-not blossoms and pearlescent botanical engraving, the mirror reflecting a luminous high-altitude sky with pale clouds and tiny realistic silver starlight. Mirror center remains spacious, low contrast, light powder-blue and uncluttered so dark-blue names overlay legibly. Whisper-soft cloud reflections, elegant engraved silverwork, magical but believable luxury stationery photography, soft daylight, no people. Frame complete within canvas with breathing room. No text, letters, watermark, logo, interface, phone or collage."
+    },
+    {
+      "id": "champagne-rococo",
+      "file": "public/invitation-art/gates/champagne-rococo.webp",
+      "prompt": "Use case: stylized-concept. Asset: portrait full-screen 2:3 high-end royal champagne wedding invitation art. A graceful ornate rectangular Rococo gilded frame with sophisticated carved floral relief, ivory roses and champagne silk folded at the corners; inside the frame is generous warm ivory handmade paper with delicate fabric grain, absolutely blank and calm for centered dark wedding text. Fine gold leaf, restrained pale blush details, refined old-world luxury stationery, gentle side light. Entire frame visible and safely inset, not cropped, central blank area occupies at least 60 percent of width. No people, no type or fake writing, logo, watermark, interface, phone or collage."
+    },
+    {
+      "id": "garden-glass",
+      "file": "public/invitation-art/gates/garden-glass.webp",
+      "prompt": "Use case: stylized-concept. Asset: portrait full-screen 2:3 romantic garden invitation artwork. A tall clear beveled glass window panel with an airy graceful botanical border of pressed cream blossoms, pale blush petals, fine green leaves and tiny gold stems, a living-garden bokeh glow just behind the glass. Leave broad clean soft sage-and-ivory translucent glass at center for text, low-detail neutral area and strong readability. Intricate realistic pressed-flower glass ornament at edges only, fresh diffused morning light, expensive editorial floral stationery, complete frame inset from all edges, no people, no letters, logo, watermark, UI, phone or collage."
+    },
+    {
+      "id": "amber-pressed",
+      "file": "public/invitation-art/gates/amber-pressed.webp",
+      "prompt": "Use case: stylized-concept. Asset: portrait full-screen 2:3 autumn wedding invitation cover image. A beautiful antique ivory parchment frame set on warm amber velvet, artful dried maple leaves and small pressed russet blossoms arranged asymmetrically at the upper right and lower left with subtle brushed antique-copper accents. Keep the central parchment panel wide, almost blank, softly cream with light grain for dark text overlay. Fine botanical relief, warm late-afternoon glow, elegant restrained autumn luxury, distinct gentle leaf silhouettes, complete frame visible with outer margin. No people, writing, letters, logo, watermark, interface, phone or collage."
+    },
+    {
+      "id": "eternite-tree",
+      "file": "public/invitation-art/gates/eternite-tree.webp",
+      "prompt": "Use case: stylized-concept. Asset: portrait full-screen 2:3 emerald-and-gold wedding invitation opening artwork. An elegant sculptural tree-of-life filigree woven into a tall antique gold mirror frame, fine botanical branches, tiny pearl leaves and two small deep-emerald floral jewels at the base; inside the symmetrical frame is an expansive calm dark emerald velvet panel, subtly illuminated, low-detail and empty for overlaid ivory names. Dramatic luminous gilded craftsmanship, deep forest green and antique gold, luxurious refined ceremonial mood, complete frame inset with safe margins. No people, no symbols that resemble letters, no text, no watermark, logo, UI, phone or collage."
+    }
+  ],
+  "motionVariants": [
+    "mirror",
+    "suzani",
+    "sky",
+    "royal",
+    "garden",
+    "autumn",
+    "eternity"
+  ]
+}
