@@ -85,7 +85,9 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle, { src: string; buttonSt
   }
   const label = state === "playing" ? "Musiqani to‘xtatish" : state === "loading" ? "Musiqa yuklanmoqda — to‘xtatish" : state === "error" ? "Musiqani qayta yuklash" : "Musiqani yoqish";
   return <div className="fixed bottom-4 right-4 z-[60]" style={hidden ? { visibility: "hidden", pointerEvents: "none" } : undefined} aria-hidden={hidden || undefined} data-music-state={state}>
-    <audio ref={audioRef} src={src} loop preload="auto" />
+    {/* Faqat sarlavha (metadata) oldindan olinadi: fayl "faststart" AAC, mehmon
+        bosganda ~0.25 s da boshlanadi — ochmaydigan mehmon 3–4 MB yuklamaydi. */}
+    <audio ref={audioRef} src={src} loop preload="metadata" />
     <button ref={buttonRef} type="button" onClick={toggle} style={{ ...DEFAULT_BUTTON_STYLE, ...buttonStyle }} className="flex h-11 w-11 items-center justify-center rounded-full shadow-lg transition hover:scale-105" aria-label={label} title={label} aria-pressed={state === "playing" || state === "loading"} tabIndex={hidden ? -1 : 0} data-music-toggle>
       {state === "loading" ? <LoaderCircle className="h-5 w-5 animate-spin motion-reduce:animate-none" /> : state === "error" ? <RotateCcw className="h-5 w-5" /> : state === "playing" ? <MusicNoteIcon className="h-5 w-5" /> : <MusicMuteIcon className="h-5 w-5" />}
     </button>

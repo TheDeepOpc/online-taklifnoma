@@ -91,7 +91,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
   const reveal = { initial: reduce ? false as const : { opacity: 0, y: 22 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: .12 }, transition: { duration: .65 } };
 
   return <div className={styles.page}>
-    <SiteHeader overlay ctaLabel="Dizayn tanlash" ctaHref="#designs" />
+    <SiteHeader dark overlay ctaLabel="Dizayn tanlash" ctaHref="#designs" />
 
     <section ref={heroRef} className={styles.hero}>
       <div className={styles.heroCopy}>

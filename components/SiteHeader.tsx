@@ -44,12 +44,13 @@ export function SiteHeader({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const fg = dark ? "#F7F2E9" : "#2E2A27";
+  const fg = dark ? "#fff0dd" : "#45142a";
 
   const containerOn = scrolled || !overlay;
 
   return (
     <motion.header
+      style={{ color: fg }}
       initial={{ y: -70, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -61,17 +62,17 @@ export function SiteHeader({
         className={`mx-auto flex max-w-6xl items-center justify-between rounded-2xl border px-4 py-2.5 transition-all duration-500 sm:px-5 ${
           containerOn
             ? dark
-              ? "border-[#D4AF37]/25 bg-[#14100b]/85 shadow-[0_18px_50px_-18px_rgba(0,0,0,0.85)] backdrop-blur-xl"
+              ? "border-[#D4AF37]/25 bg-[#35091c]/95 shadow-[0_18px_50px_-18px_rgba(0,0,0,0.85)] backdrop-blur-xl"
               : "border-[#2E2A27]/10 bg-white/90 shadow-[0_18px_50px_-24px_rgba(46,42,39,0.55)] backdrop-blur-xl"
             : "border-transparent bg-transparent shadow-none backdrop-blur-none"
         }`}
       >
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2.5">
-          <BrandLogo size={44} preload alt="" className="h-10 w-10 rounded-xl sm:h-11 sm:w-11" />
+          <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#ddba82]/50 bg-[#270713] shadow-[0_0_22px_#d6ad651a] sm:h-14 sm:w-14"><BrandLogo size={68} preload alt="" className="h-full w-full scale-[1.22]" /></span>
           <span className="flex flex-col leading-none">
-            <span className="font-display text-lg tracking-tight sm:text-xl" style={{ color: fg }}>
-              Oila<span style={{ color: "#D4AF37" }}>-</span>Uchun
+            <span className="font-display text-xl tracking-tight sm:text-2xl" style={{ color: fg }}>
+              Oila<span style={{ color: "#e7c18a" }}>-</span>Uchun
             </span>
             <span
               className={`mt-0.5 hidden text-[9px] uppercase tracking-[0.32em] sm:block ${
@@ -106,7 +107,7 @@ export function SiteHeader({
               style={{ color: dark ? "#16110b" : "#FDFBFB" }}
               className={`group relative hidden items-center gap-1.5 overflow-hidden rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg md:inline-flex ${
                 dark
-                  ? "bg-gradient-to-r from-[#e6c15a] to-[#d4af37] text-[#16110b] shadow-[0_10px_30px_-10px_rgba(212,175,55,0.8)] hover:shadow-[0_14px_40px_-10px_rgba(212,175,55,1)]"
+                  ? "bg-gradient-to-r from-[#e9c997] to-[#cfa566] text-[#16110b] shadow-[0_10px_30px_-10px_rgba(212,175,55,0.8)] hover:shadow-[0_14px_40px_-10px_rgba(212,175,55,1)]"
                   : "bg-[#2E2A27] text-[#FDFBFB] shadow-[0_10px_30px_-12px_rgba(46,42,39,0.7)] hover:shadow-[0_14px_40px_-12px_rgba(46,42,39,0.9)]"
               }`}
             >
@@ -140,7 +141,7 @@ export function SiteHeader({
             className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-2xl border px-3 pb-3 md:hidden"
             style={{
               borderColor: dark ? "rgba(212,175,55,0.25)" : "rgba(46,42,39,0.1)",
-              background: dark ? "rgba(20,16,11,0.96)" : "rgba(255,255,255,0.96)",
+              background: dark ? "rgba(53,9,28,0.97)" : "rgba(255,255,255,0.96)",
               backdropFilter: "blur(20px)",
             }}
           >
@@ -166,7 +167,7 @@ export function SiteHeader({
                   onClick={() => setMenuOpen(false)}
                   className={`mt-2 block w-full rounded-xl px-5 py-3.5 text-center text-sm font-semibold ${
                     dark
-                      ? "bg-gradient-to-r from-[#e6c15a] to-[#d4af37] text-[#16110b]"
+                      ? "bg-gradient-to-r from-[#e9c997] to-[#cfa566] text-[#16110b]"
                       : "bg-[#2E2A27] text-[#FDFBFB]"
                   }`}
                 >

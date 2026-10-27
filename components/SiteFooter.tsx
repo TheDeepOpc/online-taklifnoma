@@ -10,7 +10,7 @@ export function SiteFooter({ footer = DEFAULT_SITE_CONTENT.footer, contact = DEF
     <div className={styles.inner}>
       <div className={styles.masthead}>
         <Link href="/" className={styles.brand} aria-label={`${footer.brand}${footer.brandAccent}${footer.brandSuffix} — bosh sahifa`}>
-          <BrandLogo size={54} alt="" className={styles.brandLogo} />
+          <span className={styles.logoMark}><BrandLogo size={72} alt="" className={styles.brandLogo} /></span>
           <span>{footer.brand}<em>{footer.brandAccent}</em>{footer.brandSuffix}</span>
         </Link>
         <a href="#" className={styles.backTop} aria-label="Sahifa boshiga qaytish"><ArrowUp size={19} strokeWidth={1.3} /></a>
