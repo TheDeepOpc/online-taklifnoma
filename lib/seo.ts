@@ -96,7 +96,7 @@ export function homeJsonLd(contact: SiteContent["contact"]) {
         name: SITE_NAME,
         alternateName: "Oila Uchun",
         url: SITE_URL,
-        logo: { "@type": "ImageObject", url: `${SITE_URL}/apple-icon.png`, width: 180, height: 180 },
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/icon.png`, width: 192, height: 192 },
         image: `${SITE_URL}/opengraph-image`,
         description: HOME_DESCRIPTION,
         areaServed: AREA_SERVED,
