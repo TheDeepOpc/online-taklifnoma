@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { deleteMusicTrack } from "./actions";
 import { MusicUploadForm } from "@/components/admin/MusicUploadForm";
 import type { MusicTrack } from "@/lib/types";
+import { musicPlaybackUrl } from "@/lib/musicPlayback";
 
 export default async function MusicLibraryPage() {
   const supabase = await createClient();
@@ -33,7 +34,7 @@ export default async function MusicLibraryPage() {
           >
             <div className="min-w-0 flex-1">
               <p className="mb-2 font-medium text-slate-900">{track.title}</p>
-              <audio controls src={track.file_url} className="h-9 w-full max-w-xs" />
+              <audio controls preload="metadata" src={musicPlaybackUrl(track)} className="h-9 w-full max-w-xs" />
             </div>
             <form action={deleteMusicTrack.bind(null, track.id)}>
               <button type="submit" className="btn-secondary text-red-600" title="O'chirish">

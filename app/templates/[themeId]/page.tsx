@@ -6,6 +6,7 @@ import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
 import { SITE_NAME, SITE_SHARE_IMAGE } from "@/lib/seo";
 import { THEME_PRESETS, resolveThemeId } from "@/lib/themes";
 import { createDemoInvitation } from "@/lib/demoInvitation";
+import { getDemoMusicTrack } from "@/lib/demoMusic";
 import { COPYRIGHT_MARKER } from "@/components/CopyrightNotice";
 
 // Statik sahifa: har bir shablon oldindan tayyorlanadi va CDN'dan darhol
@@ -51,7 +52,8 @@ export default async function TemplateDemoPage({
     notFound();
   }
 
-  const invitation = { ...createDemoInvitation(), template_id: theme.id };
+  const musicTrack = await getDemoMusicTrack();
+  const invitation = { ...createDemoInvitation(), template_id: theme.id, music_track_id: musicTrack?.id ?? null };
 
   return (
     <div className="min-h-screen bg-[#FDFBFB]">
@@ -71,7 +73,7 @@ export default async function TemplateDemoPage({
       </Link>
       <TemplateRenderer
         invitation={invitation}
-        musicTrack={null}
+        musicTrack={musicTrack}
         frameSrc={`/templates/${themeId}/bare`}
         frameTitle={`${theme.name} — namuna`}
       />

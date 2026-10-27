@@ -10,7 +10,7 @@ interface Remaining {
 }
 
 function getRemaining(target: number): Remaining {
-  const diff = Math.max(0, target - Date.now());
+  const diff = Number.isFinite(target) ? Math.max(0, target - Date.now()) : 0;
   return {
     days: Math.floor(diff / 86400000),
     hours: Math.floor((diff / 3600000) % 24),
@@ -24,6 +24,7 @@ export interface CountdownClasses {
   cell?: string;
   value?: string;
   label?: string;
+  digit?: string;
 }
 
 export function CountdownTimer({
@@ -56,27 +57,29 @@ export function CountdownTimer({
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setRemaining(getRemaining(target));
-    if (!live) return;
-    const id = setInterval(() => setRemaining(getRemaining(target)), 1000);
+    if (!live || !Number.isFinite(target) || target <= Date.now()) return;
+    const id = setInterval(() => {
+      setRemaining(getRemaining(target));
+      if (target <= Date.now()) clearInterval(id);
+    }, 1000);
     return () => clearInterval(id);
   }, [target, live]);
 
-  if (!remaining) return null;
-
   if (classes) {
+    const value = remaining ?? { days: 0, hours: 0, minutes: 0, seconds: 0 };
     const [lDay, lHour, lMin, lSec] = labels ?? ["Kun", "Soat", "Daqiqa", "Soniya"];
     const cells = [
-      { label: lDay, value: remaining.days },
-      { label: lHour, value: remaining.hours },
-      { label: lMin, value: remaining.minutes },
-      { label: lSec, value: remaining.seconds },
+      { label: lDay, value: value.days },
+      { label: lHour, value: value.hours },
+      { label: lMin, value: value.minutes },
+      { label: lSec, value: value.seconds },
     ];
     return (
-      <div className={classes.root} role="timer" aria-live="polite">
+      <div className={classes.root} role="timer" aria-live="off" aria-label="To‘y sanasigacha qolgan vaqt" data-target-date={targetDate} data-countdown-state={!Number.isFinite(target) ? "invalid" : !remaining ? "loading" : Object.values(remaining).every(n => n === 0) ? "complete" : "running"}>
         {cells.map((c) => (
           <div key={c.label} className={classes.cell}>
-            <span className={classes.value}>
-              {pad ? String(c.value).padStart(2, "0") : c.value}
+            <span className={classes.value} data-digits={String(c.value).length}>
+              <span key={c.value} className={classes.digit}>{!remaining || !Number.isFinite(target) ? "—" : pad ? String(c.value).padStart(2, "0") : c.value}</span>
             </span>
             <small className={classes.label}>{c.label}</small>
           </div>
@@ -84,6 +87,8 @@ export function CountdownTimer({
       </div>
     );
   }
+
+  if (!remaining) return null;
 
   if (variant === "divided") {
     const units = [

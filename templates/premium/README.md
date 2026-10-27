@@ -80,3 +80,12 @@ Rasmlar built-in `image_gen` bilan yaratilgan:
 
 
 Atelier matnlari ekran kengligi va yuklangan shrift bo‘yicha qayta o‘lchanadi. Uzun ism-familiya so‘z o‘rtasidan bo‘linmaydi; iframe kengligi o‘zgarsa ham shrift qayta moslanadi. Hero matni faqat tugma bosilgach, materiallar ochilishi ichida ketma-ket ko‘rinadi. Ochilish davomida holat va progress ko‘rinadi, fon bilan sahifa orasida bo‘sh kadr yo‘q. Ochilgan sahifada sana va manzilga o‘tish tugmalari mavjud.
+
+
+## Taymer, musiqa va brend
+
+- Barcha 30 shablonda `WeddingCountdown` bor: mavzuga mos sakkiz xil ko‘rinish, animatsiyali sonlar, kun/soat/daqiqa/soniya. Vaqt admin sanasi va soatidan `+05:00` bo‘yicha hisoblanadi; tugaganda noldan pastga tushmaydi. `previewMode` kartalarida takroriy hisoblash o‘chiriladi, adminning jonli iframe ko‘rinishida ishlaydi.
+- Namunalar mavjud admin musiqa kutubxonasidan qo‘shiq oladi. Haqiqiy taklifnoma admin tanlagan qo‘shiqni ijro etadi. Musiqa ochish tugmasining bosish hodisasida boshlanadi; buferlanish va qayta urinish holatlari ko‘rinadi, to‘xtatish tanlovi saqlanadi.
+- `public/audio/manifest.json` — mavjud kutubxonaning tez ochiladigan, 96 kbit/s AAC nusxalari. Ularni `node scripts/optimize-music.mjs` bilan qayta yaratish mumkin (ffmpeg kerak). Manba o‘zgarsa, avtomatik asl audio ishlatiladi. Yangi yuklamalar avvalgi Discord saqlash oqimidan foydalanadi.
+- Taklifnoma yaratish/tahrirlash formasidan audio yuklash yoki mavjud qo‘shiqni tanlash mumkin. Yuklangan audio kutubxonaga saqlanadi va avtomatik tanlanadi; yuklash tugaguncha taklifnomani saqlash tugmasi faol bo‘lmaydi.
+- `public/brand/logo.png` — foydalanuvchi bergan asl logotip. Sayt header/footerida ishlatiladi; barcha taklifnoma footerlarida 26 px logo va kichik Oila-Uchun havolasi bor.

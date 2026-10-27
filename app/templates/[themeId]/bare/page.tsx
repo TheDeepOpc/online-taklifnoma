@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
 import { THEME_PRESETS } from "@/lib/themes";
 import { createDemoInvitation } from "@/lib/demoInvitation";
+import { getDemoMusicTrack } from "@/lib/demoMusic";
 
 /**
  * Ramkasiz ko'rinish: desktop'dagi telefon ramkasi (iframe) shu sahifani
@@ -29,6 +30,7 @@ export default async function BareTemplatePage({
     notFound();
   }
 
-  const invitation = { ...createDemoInvitation(), template_id: theme.id };
-  return <TemplateRenderer invitation={invitation} musicTrack={null} frame={false} />;
+  const musicTrack = await getDemoMusicTrack();
+  const invitation = { ...createDemoInvitation(), template_id: theme.id, music_track_id: musicTrack?.id ?? null };
+  return <TemplateRenderer invitation={invitation} musicTrack={musicTrack} frame={false} />;
 }

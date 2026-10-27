@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { BrandLogo } from "@/components/BrandLogo";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 
@@ -67,18 +68,7 @@ export function SiteHeader({
       >
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2.5">
-          <span
-            className={`flex h-9 w-9 items-center justify-center rounded-xl transition-all duration-500 group-hover:rotate-[10deg] group-hover:scale-105 sm:h-10 sm:w-10 ${
-              dark
-                ? "bg-gradient-to-br from-[#e6c15a] to-[#b8860b] text-[#16110b] shadow-[0_8px_24px_-8px_rgba(212,175,55,0.9)]"
-                : "bg-gradient-to-br from-[#c9a227] to-[#8a6c1f] text-[#FDFBFB] shadow-[0_8px_24px_-8px_rgba(184,146,63,0.8)]"
-            }`}
-          >
-            <svg viewBox="0 0 120 80" className="h-5 w-6 fill-none sm:h-6 sm:w-7" aria-hidden>
-              <ellipse cx="42" cy="45" rx="28" ry="18" stroke="currentColor" strokeWidth="9" transform="rotate(-12 42 45)" />
-              <ellipse cx="78" cy="45" rx="28" ry="18" stroke="currentColor" strokeWidth="9" transform="rotate(12 78 45)" />
-            </svg>
-          </span>
+          <BrandLogo size={44} preload alt="" className="h-10 w-10 rounded-xl sm:h-11 sm:w-11" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-lg tracking-tight sm:text-xl" style={{ color: fg }}>
               Oila<span style={{ color: "#D4AF37" }}>-</span>Uchun

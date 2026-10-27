@@ -13,3 +13,6 @@
 @media(max-width:380px) { .inner { padding-inline:20px; }.brand > span { font-size:39px; }.brand svg { width:39px; }.connect { min-width:100%; }.footer .phone { justify-content:flex-start; gap:18px; } }
 @media(prefers-reduced-motion:reduce) { .footer a { transition:none; } }
 @media(min-width:381px) and (max-width:600px) { .footer .phone { font-size:22px; letter-spacing:-.02em; white-space:nowrap; } }
+
+.brandLogo { width:54px; height:54px; border-radius:14px; }
+@media(max-width:600px) { .brandLogo { width:44px; height:44px; border-radius:11px; } }

@@ -3,7 +3,8 @@
 import { createContext, useContext, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Check, Heart, MapPin, Sparkles } from "lucide-react";
-import { CountdownTimer } from "@/components/CountdownTimer";
+import { WeddingCountdown } from "@/components/templates/WeddingCountdown";
+import { InvitationCredit } from "@/components/templates/InvitationCredit";
 import { MusicPlayer, type MusicPlayerHandle } from "@/components/MusicPlayer";
 import { CopyGiftButton, formatCardNumber } from "@/components/templates/CopyGiftButton";
 import { PhotoGallery } from "@/components/templates/PhotoGallery";
@@ -81,8 +82,6 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
   const date = new Date(Number(year), Number(month) - 1, Number(day));
   const monogram = `${invitation.groom_name.charAt(0)}${invitation.bride_name.charAt(0)}`;
   const time = invitation.wedding_time.slice(0, 5);
-  // To'y O'zbekistonda: chet eldagi mehmon ham ayni bir lahzaga sanoq ko'radi.
-  const targetDate = `${invitation.wedding_date}T${invitation.wedding_time || "18:00"}+05:00`;
   const rootStyle = Object.fromEntries([...Object.entries(theme.colors), ...Object.entries(theme.fonts)].map(([key, value]) => [`--${key}`, value])) as CSSProperties;
   const paragraphs = (invitation.custom_message || "Hayotimizning eng go‘zal sahifasi ochilmoqda. Sizni nikoh to‘yimizga taklif etamiz.\nUshbu unutilmas kunning quvonchini biz bilan baham ko‘rishingizdan baxtiyormiz.").split("\n").filter(line => line.trim());
 
@@ -98,7 +97,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
     <AnimatePresence>
       {!design.gate && !opened && !previewMode && <motion.div key="invitation-cover" className={styles.gate} role="dialog" aria-modal="true" aria-labelledby={`gate-${theme.id}`} initial={false} exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 1.08, filter: "blur(12px)" }} transition={{ duration: reduced ? 0.15 : 0.9 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imageSrc} className={styles.gateImage} alt="" fetchPriority="high" />
+        <img src={imageSrc} className={styles.gateImage} alt={`${theme.name} — onlayn to‘y taklifnomasi dizayni`} fetchPriority="high" />
         <div className={styles.gateShade} />
         <div className={styles.gateFrame} aria-hidden="true" />
         <OrnamentalFrame kind={design.ornament} design={design.hero} />
@@ -162,8 +161,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           <div className={styles.dateStamp}><span>{day}</span><div>{uzMonthName(date)}<small>{year}</small></div></div>
           <WeddingCalendar date={invitation.wedding_date} />
           <div className={styles.timePill}><span>Boshlanish vaqti</span><strong>{time}</strong></div>
-          <p className={styles.smallLabel}>Uchrashuvimizgacha</p>
-          <CountdownTimer targetDate={targetDate} live={!previewMode} pad classes={{ root: styles.countdown, cell: styles.countdownCell, value: styles.countdownValue, label: styles.countdownLabel }} />
+          <WeddingCountdown date={invitation.wedding_date} time={invitation.wedding_time} themeId={theme.id} previewMode={previewMode} />
         </Reveal>
 
         <Reveal sectionId="venue" className={styles.venueSection} previewMode={previewMode}>
@@ -191,7 +189,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
         {invitation.gallery_photo_urls.length > 0 && <Reveal sectionId="gallery" className={styles.gallerySection} previewMode={previewMode}>
           <span className={styles.chapter}>Bir hikoyaning lavhalari</span>
           <h2 className={styles.sectionHeading}>Bizning <em>lahzalar</em></h2>
-          <PhotoGallery photos={invitation.gallery_photo_urls} className={styles.gallery} itemClassName={styles.galleryItem} />
+          <PhotoGallery photos={invitation.gallery_photo_urls} alt={`${invitation.groom_name} va ${invitation.bride_name}`} className={styles.gallery} itemClassName={styles.galleryItem} />
         </Reveal>}
 
         <div data-section="wishes"><WishesSection invitation={invitation} previewMode={previewMode} className={styles.wishes} /></div>
@@ -209,7 +207,7 @@ export function PremiumInvitation({ invitation, musicTrack, theme, previewMode =
           <p className={styles.script}>Baxtimizga sherik bo‘ling</p>
           <p className={styles.footerNames}>{invitation.groom_name} & {invitation.bride_name}</p>
           <span className={styles.footerDate}>{day} . {month} . {year}</span>
-          <span className={styles.footerBrand}>Oila-Uchun <i /> {title} collection</span>
+          <InvitationCredit edition={title} />
         </footer>
       </BodyComposition>
     </div>

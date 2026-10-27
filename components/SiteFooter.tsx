@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/BrandLogo";
 import { ArrowUp, ArrowUpRight, Heart, MessageCircle, Send } from "lucide-react";
 import { DEFAULT_SITE_CONTENT } from "@/lib/siteContent";
 import styles from "./SiteFooter.module.css";
@@ -9,7 +10,7 @@ export function SiteFooter({ footer = DEFAULT_SITE_CONTENT.footer, contact = DEF
     <div className={styles.inner}>
       <div className={styles.masthead}>
         <Link href="/" className={styles.brand} aria-label={`${footer.brand}${footer.brandAccent}${footer.brandSuffix} — bosh sahifa`}>
-          <svg viewBox="0 0 120 80" fill="none" aria-hidden="true"><ellipse cx="42" cy="45" rx="28" ry="18" stroke="currentColor" strokeWidth="2" transform="rotate(-12 42 45)" /><ellipse cx="78" cy="45" rx="28" ry="18" stroke="currentColor" strokeWidth="2" transform="rotate(12 78 45)" /></svg>
+          <BrandLogo size={54} alt="" className={styles.brandLogo} />
           <span>{footer.brand}<em>{footer.brandAccent}</em>{footer.brandSuffix}</span>
         </Link>
         <a href="#" className={styles.backTop} aria-label="Sahifa boshiga qaytish"><ArrowUp size={19} strokeWidth={1.3} /></a>

@@ -18,7 +18,7 @@ export function AtelierHero({ p }: { p: HeroProps }) {
   const kind = p.design.hero.replace("atelier-", "");
   const monogram = p.invitation.groom_name[0] + p.invitation.bride_name[0];
   return <header className={`${styles.hero} ${styles[kind]}`} data-hero-composition={p.design.hero} data-hero-animation={p.design.motion} data-open={p.opened || p.previewMode}>
-    <ParallaxScene src={p.src} className={styles.background} enabled={!p.previewMode} priority />
+    <ParallaxScene src={p.src} label={`${p.title} — onlayn to‘y taklifnomasi dizayni`} className={styles.background} enabled={!p.previewMode} priority />
     <div className={styles.shade} />
     <div className={styles.edition}><span>{p.title}</span><small>THE WEDDING EDITION · III</small></div>
     {kind === "opera" && <>

@@ -1,0 +1,26 @@
+{
+  "f5de9daf-efbb-4675-8363-bc18a1cbe547": {
+    "source": "https://dfnkbvakahqqezwckwjx.supabase.co/storage/v1/object/public/music/a3cf58d6-5c0a-477f-9587-4bdb3b9772b4-billie_ldr.mp3",
+    "path": "/audio/f5de9daf-efbb-4675-8363-bc18a1cbe547-e1f19457bb04.m4a",
+    "originalBytes": 4843592,
+    "bytes": 3674555
+  },
+  "92a12776-2332-479b-be5d-13bbe2cc1748": {
+    "source": "https://dfnkbvakahqqezwckwjx.supabase.co/storage/v1/object/public/music/81c799a7-c1c4-429f-b93f-7ec55bc882f1-cinnamon_girl.mp3",
+    "path": "/audio/92a12776-2332-479b-be5d-13bbe2cc1748-ad94378cf49c.m4a",
+    "originalBytes": 3127850,
+    "bytes": 2326380
+  },
+  "69aed603-736c-4d4d-aef0-56c5376d3aff": {
+    "source": "https://dfnkbvakahqqezwckwjx.supabase.co/storage/v1/object/public/music/f03d0c5a-9092-493a-8598-af611b1ba1dd-Iwannabeyours.mp3",
+    "path": "/audio/69aed603-736c-4d4d-aef0-56c5376d3aff-8b32442512c2.m4a",
+    "originalBytes": 3591982,
+    "bytes": 2733815
+  },
+  "be14cf1d-9dd9-4227-8e86-4b3391922ac8": {
+    "source": "https://dfnkbvakahqqezwckwjx.supabase.co/storage/v1/object/public/music/0c63babe-5ae2-4716-a89f-22496d186b93-LRD_Arabic.mp3",
+    "path": "/audio/be14cf1d-9dd9-4227-8e86-4b3391922ac8-ab19d295f527.m4a",
+    "originalBytes": 5344383,
+    "bytes": 4026440
+  }
+}

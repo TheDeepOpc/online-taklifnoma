@@ -113,7 +113,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
           <div className={styles.photoCaption}><span>THE BEGINNING OF FOREVER</span><p>Bir havola.<br /><em>Bir umrga xotira.</em></p></div>
         </motion.div>
         <motion.div className={styles.heroPhone} style={reduce || lite ? undefined : { y: phoneY }}>
-          <Link href="/templates/premium-bardoviy-atirgul" aria-label="Bardoviy atirgul taklifnomasini jonli ochish"><PhoneShot themeId="premium-bardoviy-atirgul" alt="Sardor va Solihaning bardoviy atirgulli taklifnomasi" eager frameClassName={styles.phoneWidth} /></Link>
+          <Link href="/templates/premium-bardoviy-atirgul" aria-label="Bardoviy atirgul taklifnomasini jonli ochish"><PhoneShot themeId="premium-bardoviy-atirgul" alt="Bardoviy atirgul dizaynidagi onlayn to‘y taklifnomasi telefon ekranida" eager frameClassName={styles.phoneWidth} /></Link>
           <span className={styles.phoneHint}><Play size={9} fill="currentColor" />NAMUNANI OCHISH</span>
         </motion.div>
         <div className={styles.artLabel}><span>{THEME_PRESETS.length}</span><div>ALOHIDA MAKET<br />BITTA UNUTILMAS KUN</div><Sparkles strokeWidth={1} size={24} /></div>
@@ -133,7 +133,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
           const theme = getTheme(id);
           return <motion.article key={id} initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4, delay: (index % 3) * .04 }} className={styles.designCard}>
             <Link href={`/templates/${id}`}>
-              <div className={styles.designImage}><TemplateShot themeId={id} alt={`${theme.name} — Sardor va Soliha uchun namuna`} /><span className={styles.cardAction}>Jonli ko‘rish<ArrowUpRight size={15} /></span></div>
+              <div className={styles.designImage}><TemplateShot themeId={id} alt={`${theme.name} — onlayn to‘y taklifnomasi dizayni namunasi`} /><span className={styles.cardAction}>Jonli ko‘rish<ArrowUpRight size={15} /></span></div>
               <div className={styles.designCaption}><h3>{theme.name}</h3><span>{PRICE_TIER_LABELS[theme.minPriceTier]}</span></div>
             </Link>
           </motion.article>;

@@ -1,4 +1,5 @@
 import type { Invitation, MusicTrack } from "@/lib/types";
+import { musicPlaybackUrl } from "@/lib/musicPlayback";
 import { PhoneFrame } from "./PhoneFrame";
 import { FitNames } from "./FitNames";
 import { getTheme, type ThemeFamily } from "@/lib/themes";
@@ -59,6 +60,7 @@ export function TemplateRenderer({
 }) {
   const theme = getTheme(invitation.template_id);
   const Family = FAMILY_COMPONENTS[theme.family];
+  const playbackTrack = musicTrack ? { ...musicTrack, file_url: musicPlaybackUrl(musicTrack) } : null;
 
   // "Kichikroq" matn o'lchami: har bir shablonning o'z CSS faylini o'zgartirish
   // o'rniga, bu yerda bitta joyda `zoom` bilan butun render'ni kichraytiramiz —
@@ -67,7 +69,7 @@ export function TemplateRenderer({
   const content = (
     <div style={invitation.text_size === "compact" ? ({ zoom: 0.85 } as React.CSSProperties) : undefined}>
       <FitNames names={[invitation.groom_name, invitation.bride_name, invitation.guest_name ?? ""]}>
-        <Family invitation={invitation} musicTrack={musicTrack} theme={theme} previewMode={previewMode} />
+        <Family invitation={invitation} musicTrack={playbackTrack} theme={theme} previewMode={previewMode} />
       </FitNames>
     </div>
   );

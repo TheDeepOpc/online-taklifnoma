@@ -6,6 +6,7 @@ import { X, Eye, EyeOff, Dices, Loader2 } from "lucide-react";
 import { randomWish } from "@/lib/wishTemplates";
 import { discardMedia, uploadToCdn } from "@/lib/mediaClient";
 import { InvitationLivePreview } from "./InvitationLivePreview";
+import { InvitationMusicField } from "./InvitationMusicField";
 import { DEMO_INVITATION } from "@/lib/demoInvitation";
 import { ThemePicker } from "./ThemePicker";
 import {
@@ -115,6 +116,9 @@ export function InvitationFormWithPreview({
     getTheme(invitation?.template_id ?? getUnlockedThemes(invitation?.price_tier ?? "150000")[0].id).id,
   );
   const [musicTrackId, setMusicTrackId] = useState(invitation?.music_track_id ?? "");
+  const [uploadedMusicTracks, setUploadedMusicTracks] = useState<MusicTrack[]>([]);
+  const [musicUploading, setMusicUploading] = useState(false);
+  const availableMusicTracks = useMemo(() => [...new Map([...musicTracks, ...uploadedMusicTracks].map(track => [track.id, track])).values()], [musicTracks, uploadedMusicTracks]);
   const [customMessage, setCustomMessage] = useState(invitation?.custom_message ?? "");
   const [isPaid, setIsPaid] = useState(invitation?.is_paid ?? false);
   const [cover, setCover] = useState<Photo | null>(
@@ -271,7 +275,7 @@ export function InvitationFormWithPreview({
     }
   }
 
-  const selectedMusicTrack = musicTracks.find((t) => t.id === musicTrackId) ?? null;
+  const selectedMusicTrack = availableMusicTracks.find((t) => t.id === musicTrackId) ?? null;
   const selectedTheme = getTheme(templateId);
   const showSecondPhoto = familySupportsSecondPhoto(selectedTheme.family);
   const photosUploading = [cover, secondPhoto, ...gallery].some(
@@ -439,21 +443,7 @@ export function InvitationFormWithPreview({
           <ThemePicker priceTier={priceTier} value={templateId} onChange={setTemplateId} />
         </Field>
 
-        <Field label="Fon musiqasi">
-          <select
-            name="music_track_id"
-            value={musicTrackId}
-            onChange={(e) => setMusicTrackId(e.target.value)}
-            className="input"
-          >
-            <option value="">Musiqasiz</option>
-            {musicTracks.map((track) => (
-              <option key={track.id} value={track.id}>
-                {track.title}
-              </option>
-            ))}
-          </select>
-        </Field>
+        <InvitationMusicField tracks={availableMusicTracks} value={musicTrackId} onChange={setMusicTrackId} onBusyChange={setMusicUploading} onUploaded={track => { setUploadedMusicTracks(current => [...current, track]); setMusicTrackId(track.id); }} />
 
         {/* Rasmlar allaqachon Discord'da — forma faqat havolalarni yuboradi. */}
         <input type="hidden" name="cover_photo_url" value={cover?.url ?? ""} />
@@ -663,7 +653,7 @@ export function InvitationFormWithPreview({
           To&apos;lov qabul qilindi (taklifnoma jonli bo&apos;ladi)
         </label>
 
-        <SaveButton uploading={photosUploading} />
+        <SaveButton uploading={photosUploading || musicUploading} />
       </form>
 
       <div className="mt-6 lg:mt-0">
@@ -695,7 +685,7 @@ function SaveButton({ uploading }: { uploading: boolean }) {
       disabled={pending || uploading}
       className="btn disabled:cursor-not-allowed disabled:opacity-60"
     >
-      {pending ? "Saqlanmoqda..." : uploading ? "Rasmlar yuklanmoqda..." : "Saqlash"}
+      {pending ? "Saqlanmoqda..." : uploading ? "Fayllar yuklanmoqda..." : "Saqlash"}
     </button>
   );
 }
