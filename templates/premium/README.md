@@ -2,13 +2,14 @@
 
 Ko‘rish: http://localhost:3000/templates
 
-Avvalgi 23 ta dizayn o‘z holatida saqlanadi. Qo‘shimcha 7 ta Atelier shabloni bilan jami 30 ta dizayn bor. Har biri alohida surat, hero maketi, bo‘limlar tartibi, grid va animatsiyaga ega. Galereya kartalari haqiqiy ochilgan shablonlarning previewlarini ko‘rsatadi.
+Avvalgi 23 ta dizayn o‘z holatida saqlanadi. Qo‘shimcha 7 ta Atelier shabloni bilan jami 30 ta dizayn bor. Har biri alohida surat, hero maketi, bo‘limlar tartibi, grid va animatsiyaga ega. Galereya kartalari avvalgi 23 shablonning ochilgan ko‘rinishini, Atelier kolleksiyasining esa kirish sahifasini ko‘rsatadi.
 
 ## Manbalar
 
 - `lib/templateDesigns.ts` — 30 ta maket, harakat, naqsh, mavzu effekti va bo‘limlar kompozitsiyasi.
 - `layouts/HeroCompositions.tsx` — avvalgi 23 ta hero daraxti; yangi yettita kompozitsiya `AtelierHero.tsx` ichida: triptix, diptix, jurnal, kollaj, pochta kartasi, atirgulli albom, teatr va boshqa maketlar.
-- `layouts/BodyComposition.tsx` — bo‘limlarning har bir mavzuga xos tartibi va ustunlari. Admin to‘ldirmagan ixtiyoriy bo‘limlar avtomatik tushib qoladi.
+- `layouts/BodyComposition.tsx` — avvalgi 23 shablon bo‘limlari tartibi va ustunlari.
+- `AtelierInvitation.tsx`, `layouts/AtelierDetails.tsx` — yangi yettita shablonning mustaqil taklifnoma maketlari: opera dasturi/chipta, saroy peshtoqi/mozaika, osmon orbitasi/billur kartochka, shaxsiy maktub/pochta kartasi, botanika hikoyasi/oranjereya, albom/jurnal, zargarlik sertifikati/zumrad lavha. Ular `PremiumInvitation` yoki eski `BodyComposition` orqali render qilinmaydi. Admin to‘ldirmagan ixtiyoriy bo‘limlar avtomatik tushib qoladi.
 - `layouts/SeasonalAtmosphere.tsx` — real alpha rasmlar bilan yaproq, bulut, yulduz, gulbarg va milliy bezak animatsiyalari.
 - `layouts/OrnamentalFrame.tsx` — oltin, kumush, islimiy, gulli va boshqa hoshiyalar.
 - `shared/PremiumInvitation.tsx` — admin ma’lumotlari, kirish tugmasi, kalendar, sanoq, xarita, musiqa va qolgan umumiy xatti-harakatlar.
@@ -76,3 +77,6 @@ Rasmlar built-in `image_gen` bilan yaratilgan:
 - `public/invitation-art/gates/atelier/` — yopiq sahna rasmlari va `parts/` ichida 8 ta shaffof material qismi.
 - `public/invitation-art/atelier-scenes/` — yangi yettita shablonning ochilgan sahna rasmlari.
 - `atelier-gate-image-prompts.json` va `atelier-mechanical-assets.json` — promptlar va barcha fayllar manifestlari.
+
+
+Atelier matnlari ekran kengligi va yuklangan shrift bo‘yicha qayta o‘lchanadi. Uzun ism-familiya so‘z o‘rtasidan bo‘linmaydi; iframe kengligi o‘zgarsa ham shrift qayta moslanadi. Hero matni faqat tugma bosilgach, materiallar ochilishi ichida ketma-ket ko‘rinadi. Ochilish davomida holat va progress ko‘rinadi, fon bilan sahifa orasida bo‘sh kadr yo‘q. Ochilgan sahifada sana va manzilga o‘tish tugmalari mavjud.

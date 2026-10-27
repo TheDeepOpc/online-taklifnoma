@@ -11,7 +11,6 @@ import { useEffect, useRef } from "react";
  * ismning eng uzun so'zi mavjud kenglikka sig'maguncha shriftni kichraytiradi.
  * CSS'dagi asl o'lcham "eng katta" bo'lib qoladi — qisqa ismlarga tegilmaydi.
  */
-const MIN_SCALE = 0.45;
 const FIT_ATTR = "data-fit-base";
 
 function nameWords(names: string[]): string[] {
@@ -37,7 +36,10 @@ function availableWidth(el: HTMLElement): number {
   if (!cs.display.startsWith("inline")) {
     const parentDisplay = getComputedStyle(parent).display;
     if (!/flex|grid/.test(parentDisplay)) avail = Math.min(avail, contentWidth(el));
-    const maxWidth = parseFloat(cs.maxWidth);
+    // Computed max-width may still be a percentage (100% is not 100px).
+    const maxWidth = cs.maxWidth.endsWith("%")
+      ? contentWidth(parent) * parseFloat(cs.maxWidth) / 100
+      : parseFloat(cs.maxWidth);
     if (Number.isFinite(maxWidth)) {
       avail = Math.min(avail, maxWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
     }
@@ -70,26 +72,35 @@ function measureWord(el: HTMLElement, word: string, fontSize: number): number {
 }
 
 function fitAll(root: HTMLElement, words: string[]) {
-  if (words.length === 0) return;
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-  const targets = new Set<HTMLElement>();
+  const targets = new Set<HTMLElement>(root.querySelectorAll(`[${FIT_ATTR}]`));
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
     const text = node.textContent ?? "";
     const parent = node.parentElement;
     if (!parent || parent.closest("svg, button, [data-fit-skip]")) continue;
     const lower = text.toLowerCase();
-    if (words.some((w) => lower.includes(w.toLowerCase()))) targets.add(parent);
+    if (parent.hasAttribute("data-fit-name") || words.some((w) => lower.includes(w.toLowerCase()))) targets.add(parent);
   }
 
+  // Restore responsive CSS before measuring, including after an iframe resize.
+  for (const el of targets) {
+    if (el.hasAttribute(FIT_ATTR)) {
+      el.style.fontSize = "";
+      el.removeAttribute(FIT_ATTR);
+    }
+  }
   for (const el of targets) {
     const cs = getComputedStyle(el);
     // Oddiy matn (paragraf ichida ism) — faqat katta sarlavhalar bilan ishlaymiz.
     const base = Number(el.getAttribute(FIT_ATTR)) || parseFloat(cs.fontSize);
-    if (base < 22) continue;
+    if (base < 22 && !el.hasAttribute("data-fit-name")) continue;
     const avail = availableWidth(el);
     if (avail <= 0) continue;
     const text = (el.textContent ?? "").toLowerCase();
-    const longest = words
+    const tokens = el.hasAttribute("data-fit-name")
+      ? cs.whiteSpace === "nowrap" ? [el.textContent ?? ""] : (el.textContent ?? "").split(/\s+/)
+      : words;
+    const longest = tokens
       .filter((w) => text.includes(w.toLowerCase()))
       .reduce((max, w) => Math.max(max, measureWord(el, w, base)), 0);
     if (longest <= avail) {
@@ -99,7 +110,7 @@ function fitAll(root: HTMLElement, words: string[]) {
       }
       continue;
     }
-    const scale = Math.max(MIN_SCALE, (avail / longest) * 0.97);
+    const scale = (avail / longest) * 0.96;
     el.setAttribute(FIT_ATTR, String(base));
     el.style.fontSize = `${Math.floor(base * scale)}px`;
   }
@@ -122,6 +133,8 @@ export function FitNames({ names, children }: { names: string[]; children: React
     schedule();
     document.fonts?.ready.then(schedule).catch(() => {});
     window.addEventListener("resize", schedule);
+    const resizeObserver = new ResizeObserver(schedule);
+    resizeObserver.observe(root);
     // Gate ochilganda/kalligrafiya mount bo'lganda yangi elementlar paydo bo'ladi.
     const observer = new MutationObserver((mutations) => {
       // Countdown har soniyada matn tugunini almashtiradi — faqat yangi element
@@ -136,6 +149,7 @@ export function FitNames({ names, children }: { names: string[]; children: React
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", schedule);
       observer.disconnect();
+      resizeObserver.disconnect();
     };
   }, [key]);
 

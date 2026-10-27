@@ -5,10 +5,28 @@ import { PRICE_TIER_LABELS, type PriceTier } from "@/lib/types";
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://oila-uchun.uz").replace(/\/$/, "");
 export const SITE_NAME = "Oila-Uchun";
 
-/** Asosiy kalit so'z sarlavha boshida; 59 belgi — Google qisqartirmaydi. */
-export const HOME_TITLE = "Onlayn to‘y taklifnomasi — elektron taklifnoma | Oila-Uchun";
-/** ~157 belgi: qidiruv so'zlari tabiiy holda, oxirida harakatga chaqiruv. */
-export const HOME_DESCRIPTION = `Onlayn to‘y taklifnomasi yarating: ${THEME_PRESETS.length} ta zamonaviy dizayn, musiqa, suratlar, xarita va har bir mehmonga shaxsiy havola. Telegram va WhatsApp orqali yuboring.`;
+/** Asosiy kalit so'z boshida, joy (O‘zbekiston) bilan; 60 belgi — Google qisqartirmaydi. */
+export const HOME_TITLE = "Onlayn to‘y taklifnomasi O‘zbekistonda — elektron taklifnoma";
+/** ~157 belgi: qidiruv so'zlari va joy nomlari tabiiy holda. */
+export const HOME_DESCRIPTION = `Onlayn to‘y taklifnomasi O‘zbekiston bo‘ylab: ${THEME_PRESETS.length} ta zamonaviy dizayn, musiqa, suratlar va xarita. Toshkent va viloyatlardagi to‘yingizga elektron taklifnoma.`;
+
+/** Local SEO: xizmat ko'rsatiladigan hududlar (matnda ham, JSON-LD'da ham). */
+export const REGIONS = [
+  "Toshkent",
+  "Toshkent viloyati",
+  "Samarqand",
+  "Buxoro",
+  "Andijon",
+  "Farg‘ona",
+  "Namangan",
+  "Qashqadaryo",
+  "Surxondaryo",
+  "Xorazm",
+  "Navoiy",
+  "Jizzax",
+  "Sirdaryo",
+  "Qoraqalpog‘iston",
+];
 
 /**
  * Saytning umumiy ulashish rasmi (`app/opengraph-image.tsx`). Sahifa o'z
@@ -33,6 +51,8 @@ export const KEYWORDS = [
   "to‘yga taklifnoma yozish",
   "taklifnoma qilish",
   "online taklifnoma",
+  "o‘zbekistonda onlayn taklifnoma",
+  "toshkentda to‘y taklifnomasi",
 ];
 
 const PRICE_TIERS: { tier: PriceTier; name: string }[] = [
@@ -50,6 +70,7 @@ export const HOME_FAQ: [question: string, answer: string][] = [
   ["To‘yga taklifnoma matnini qanday yozish mumkin?", "Taklif so‘zlarini o‘zingiz yozishingiz yoki tayyor nafis matnlardan foydalanishingiz mumkin. Taklifnomaga to‘y dasturi va mehmonlarga tilaklar ham qo‘shiladi."],
   ["Har bir mehmon uchun alohida murojaat bo‘ladimi?", "Ha. Bitta taklifnomani har bir mehmoningizning ismi yozilgan shaxsiy havola bilan yuborish mumkin."],
   ["Elektron taklifnoma narxi qancha?", `Uchta tarif bor: ${PRICE_TIERS.map(({ tier }) => PRICE_TIER_LABELS[tier].replace(" so'm", "")).join(", ").replace(/, (?=[^,]*$)/, " va ")} so‘m. Tarif qancha yuqori bo‘lsa, shuncha ko‘p dizayn ochiladi.`],
+  ["Taklifnoma Toshkent va viloyatlarda ham ishlaydimi?", `Ha. Onlayn taklifnoma butun O‘zbekiston bo‘ylab ishlaydi: ${REGIONS.join(", ")}. Havola internet bor har qanday joyda ochiladi — chet eldagi qarindoshlaringiz ham ko‘ra oladi.`],
   ["Musiqa qachon boshlanadi?", "Mehmon «Taklifnomani ochish» tugmasini bosganda siz tanlagan musiqa boshlanadi. Uni to‘xtatish va qayta yoqish tugmasi ham bor."],
 ];
 
@@ -57,6 +78,11 @@ export const HOME_FAQ: [question: string, answer: string][] = [
  * Bosh sahifa uchun Schema.org: tashkilot, sayt, xizmat (narxlari bilan) va
  * savol-javoblar. Kontakt ma'lumotlari admin tahrirlaydigan matnlardan olinadi.
  */
+const AREA_SERVED = [
+  { "@type": "Country", name: "O‘zbekiston" },
+  ...REGIONS.map((name) => ({ "@type": "AdministrativeArea", name })),
+];
+
 export function homeJsonLd(contact: SiteContent["contact"]) {
   const organizationId = `${SITE_URL}/#organization`;
   const telephone = contact.phoneHref.replace(/^tel:/, "");
@@ -73,7 +99,7 @@ export function homeJsonLd(contact: SiteContent["contact"]) {
         logo: { "@type": "ImageObject", url: `${SITE_URL}/apple-icon.png`, width: 180, height: 180 },
         image: `${SITE_URL}/opengraph-image`,
         description: HOME_DESCRIPTION,
-        areaServed: { "@type": "Country", name: "O‘zbekiston" },
+        areaServed: AREA_SERVED,
         ...(telephone
           ? { contactPoint: { "@type": "ContactPoint", telephone, contactType: "customer service", availableLanguage: "uz" } }
           : {}),
@@ -95,7 +121,7 @@ export function homeJsonLd(contact: SiteContent["contact"]) {
         description: HOME_DESCRIPTION,
         url: SITE_URL,
         provider: { "@id": organizationId },
-        areaServed: { "@type": "Country", name: "O‘zbekiston" },
+        areaServed: AREA_SERVED,
         offers: PRICE_TIERS.map(({ tier, name }) => ({
           "@type": "Offer",
           name,

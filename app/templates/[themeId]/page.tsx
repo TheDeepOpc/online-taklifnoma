@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ themeId: 
   const title = `${theme.name} — onlayn to‘y taklifnomasi dizayni | ${SITE_NAME}`;
   const description =
     theme.description ??
-    `«${theme.name}» — jonli elektron to‘y taklifnomasi namunasi: musiqa, sanoq taymeri, xarita va suratlar. Dizaynni tanlang, havolani mehmonlarga yuboring.`;
+    `«${theme.name}» — elektron to‘y taklifnomasi namunasi: musiqa, sanoq taymeri, xarita va suratlar. Toshkent va butun O‘zbekiston bo‘ylab to‘yingiz uchun.`;
   const url = `/templates/${theme.id}`;
   return {
     title,

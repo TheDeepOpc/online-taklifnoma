@@ -51,8 +51,8 @@ export function LuxuryInvitationGate({ scene, invitation, hasMusic, onActivate, 
     // Keeps the invitation reachable if a browser cancels a decorative transition.
     fallbackRef.current = setTimeout(finish, 4300);
   }
-  const guest = invitation.guest_name ? <p className={styles.guest}>Hurmatli <strong>{invitation.guest_name}</strong></p> : null;
-  const names = (className = "") => <h2 id={namesId} className={`${styles.names} ${className}`}><span>{invitation.groom_name}</span><em>&</em><span>{invitation.bride_name}</span></h2>;
+  const guest = invitation.guest_name ? <p className={styles.guest}>Hurmatli <strong data-fit-name>{invitation.guest_name}</strong></p> : null;
+  const names = (className = "") => <h2 id={namesId} className={`${styles.names} ${className}`}><span data-fit-name>{invitation.groom_name}</span><em>&</em><span data-fit-name>{invitation.bride_name}</span></h2>;
   const date = <p className={styles.date}><span>{day}</span> {monthLabel} <span>{year}</span></p>;
   const button = (className = "", label = "Taklifnomani ochish") => <button type="button" className={`${styles.openButton} ${className}`} onClick={begin} disabled={opening} aria-busy={opening} data-invitation-open><span className={styles.buttonEmblem} aria-hidden="true">{monogram}<ArrowUpRight size={16} /></span><span className={styles.buttonLabel}>{label}</span></button>;
   let content: ReactNode;
@@ -68,6 +68,7 @@ export function LuxuryInvitationGate({ scene, invitation, hasMusic, onActivate, 
   return <div className={`${styles.gate} ${styles[scene]} ${invitation.guest_name ? styles.withGuest : ""}`} style={{ "--gate-ink": config.ink, "--gate-accent": config.accent } as CSSProperties} role="dialog" aria-modal="true" aria-labelledby={namesId} data-luxury-gate={scene} data-gate-phase={opening ? "opening" : "closed"}>
     <MechanicalOpeningScene scene={scene} opening={opening} onComplete={finish} />
     <div className={styles.composition} style={{ opacity: opening ? 0 : 1, transition: "opacity .3s ease" }}>{content}</div>
-    <div className={styles.bottomLine}><span>{config.title}</span>{hasMusic ? <span><Music2 size={10} />MUSIQA BILAN OCHILADI</span> : <ArrowDown size={12} />}</div>
+    {opening && <div className={styles.openingStatus} role="status"><span>Taklifnomangiz ochilmoqda</span><i /><small>{hasMusic ? "Musiqa bilan, siz uchun" : "Eng go‘zal kunimizga xush kelibsiz"}</small></div>}
+    {!opening && <div className={styles.bottomLine}><span>{config.title}</span>{hasMusic ? <span><Music2 size={10} />MUSIQA BILAN OCHILADI</span> : <ArrowDown size={12} />}</div>}
   </div>;
 }

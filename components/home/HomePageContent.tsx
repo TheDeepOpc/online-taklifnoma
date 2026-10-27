@@ -95,7 +95,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
 
     <section ref={heroRef} className={styles.hero}>
       <div className={styles.heroCopy}>
-        <h1 className={styles.eyebrow}><i />Onlayn to‘y taklifnomasi</h1>
+        <h1 className={styles.eyebrow}><i />Onlayn to‘y taklifnomasi · O‘zbekiston</h1>
         <p className={styles.heroBadge}>{hero.badge}</p>
         <p className={styles.heroTitle}><span>{hero.title1}</span><em>{hero.title2}</em><span>{hero.title3}</span></p>
         <p className={styles.heroDescription}>{hero.description}</p>
@@ -124,7 +124,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
 
     <section id="designs" className={styles.designs}>
       <motion.div {...reveal} className={styles.sectionIntro}>
-        <div><span className={styles.eyebrow}>THE INVITATION ATELIER</span><h2>{designs.title}<br /><em>{designs.accent}</em></h2></div>
+        <div><h2 className={styles.eyebrow}>O‘zbekistondagi eng nafis onlayn taklifnomalar</h2><div className={styles.displayHeading}>{designs.title}<br /><em>{designs.accent}</em></div></div>
         <div><p>{designs.subtitle}</p><a href="#designs" onClick={() => setFilter("all")} className={styles.textLink}>Barcha {THEME_PRESETS.length} ta dizayn<ArrowUpRight size={16} /></a></div>
       </motion.div>
       <div className={styles.filterBar} role="group" aria-label="Dizayn uslubi">{FILTERS.map(item => <button type="button" key={item.id} aria-pressed={filter === item.id} onClick={() => setFilter(item.id)} className={filter === item.id ? styles.activeFilter : undefined}>{item.label}</button>)}</div>
@@ -149,24 +149,24 @@ export function HomePageContent({ content }: { content: SiteContent }) {
         <span className={styles.storyNote}>Kichik tafsilotlar.<br /><em>Katta hislar.</em></span>
       </motion.div>
       <motion.div {...reveal} className={styles.storyCopy}>
-        <span className={styles.eyebrow}>{features.script}</span><h2>{features.title}<br /><em>{features.accent}</em></h2>
+        <h2 className={styles.eyebrow}>Elektron taklifnoma imkoniyatlari</h2><div className={styles.displayHeading}>{features.title}<br /><em>{features.accent}</em></div>
         <div className={styles.featureGrid}>{features.items.map(item => { const Icon = ICONS[item.icon] || Heart; return <div key={item.title}><Icon size={21} strokeWidth={1.3} /><h3>{item.title}</h3><p>{item.body}</p></div>; })}</div>
       </motion.div>
     </section>
 
     <section className={styles.editorial} aria-labelledby="editorial-title">
-      <motion.div {...reveal} className={styles.editorialIntro}><span className={styles.eyebrow}>THE ART OF CELEBRATING LOVE</span><h2 id="editorial-title">Bir kun.<br /><em>Ming go‘zal tuyg‘u.</em></h2><p>Milliy latofat, sokin romantika yoki hashamatli tantana — taklifnomangiz sizning hikoyangizdan boshlanadi.</p></motion.div>
+      <motion.div {...reveal} className={styles.editorialIntro}><h2 id="editorial-title" className={styles.eyebrow}>Milliy va zamonaviy taklifnoma uslublari</h2><div className={styles.displayHeading}>Bir kun.<br /><em>Ming go‘zal tuyg‘u.</em></div><p>Milliy latofat, sokin romantika yoki hashamatli tantana — taklifnomangiz sizning hikoyangizdan boshlanadi.</p></motion.div>
       <div className={styles.editorialGrid}>{EDITORIAL.map((item, index) => <EditorialPhoto item={item} index={index} key={item.id} />)}</div>
       <p className={styles.editorialEnd}>Eng go‘zal xotiralar <em>bir taklifdan boshlanadi.</em></p>
     </section>
 
     <section id="how" className={styles.how}>
-      <motion.div {...reveal} className={styles.centerIntro}><span className={styles.eyebrow}>{how.script}</span><h2>{how.title} <em>{how.accent}</em></h2><p>{how.subtitle}</p></motion.div>
+      <motion.div {...reveal} className={styles.centerIntro}><h2 className={styles.eyebrow}>To‘yga taklifnoma qanday qilinadi?</h2><div className={styles.displayHeading}>{how.title} <em>{how.accent}</em></div><p>{how.subtitle}</p></motion.div>
       <div className={styles.steps}>{how.steps.map(step => <motion.article {...reveal} key={step.n}><span key="number">{step.n}</span><div key="copy"><h3>{step.title}</h3><p>{step.body}</p></div><ArrowRight key="arrow" size={18} strokeWidth={1} /></motion.article>)}</div>
     </section>
 
     <section id="pricing" className={styles.pricing}>
-      <motion.div {...reveal} className={styles.sectionIntro}><div><span className={styles.eyebrow}>GO‘ZALLIK — TAFSILOTLARDA</span><h2>{pricing.title}<br /><em>sizga mos tanlov</em></h2></div><p>{pricing.subtitle}</p></motion.div>
+      <motion.div {...reveal} className={styles.sectionIntro}><div><h2 className={styles.eyebrow}>Onlayn to‘y taklifnomasi narxlari</h2><div className={styles.displayHeading}>{pricing.title}<br /><em>sizga mos tanlov</em></div></div><p>{pricing.subtitle}</p></motion.div>
       <div className={styles.priceGrid}>{(["150000", "200000", "250000"] as PriceTier[]).map((tier, index) => <motion.article {...reveal} key={tier} className={index === 2 ? styles.fullCollection : undefined}>
         <div key="header" className={styles.priceTop}><span>0{index + 1} / {index === 0 ? "ESSENTIAL" : index === 1 ? "ELEGANCE" : "SIGNATURE"}</span>{index === 2 && <span className={styles.priceBadge}>To‘liq kolleksiya</span>}</div>
         <h3 key="price">{PRICE_TIER_LABELS[tier].replace(" so'm", "")}<small>so‘m</small></h3><p key="access">{pricing.accessNote.replace("{count}", String(getUnlockedThemes(tier).length))}</p>
@@ -178,12 +178,12 @@ export function HomePageContent({ content }: { content: SiteContent }) {
     </section>
 
     <section className={styles.faq}>
-      <motion.div {...reveal}><span className={styles.eyebrow}>HAMMASI OSON</span><h2>Ko‘nglingizdagi<br /><em>savollarga javob</em></h2><p>Tafsilotlarni birga kelishamiz.<br />Bizga yozishingiz kifoya.</p><a className={styles.textLink} href={contact.telegramHref} target="_blank" rel="noopener noreferrer">Telegramda so‘rash<ArrowUpRight size={15} /></a></motion.div>
+      <motion.div {...reveal}><h2 className={styles.eyebrow}>Onlayn taklifnoma bo‘yicha savollar</h2><div className={styles.displayHeading}>Ko‘nglingizdagi<br /><em>savollarga javob</em></div><p>Tafsilotlarni birga kelishamiz.<br />Bizga yozishingiz kifoya.</p><a className={styles.textLink} href={contact.telegramHref} target="_blank" rel="noopener noreferrer">Telegramda so‘rash<ArrowUpRight size={15} /></a></motion.div>
       <div>{HOME_FAQ.map(([question, answer], index) => <div key={question} className={styles.faqItem}><h3><button type="button" aria-expanded={openFaq === index} aria-controls={`faq-${index}`} onClick={() => setOpenFaq(openFaq === index ? null : index)}>{question}<ChevronDown size={17} style={openFaq === index ? { transform: "rotate(180deg)" } : undefined} /></button></h3><div id={`faq-${index}`} hidden={openFaq !== index}><p>{answer}</p></div></div>)}</div>
     </section>
 
     <section id="contact" className={styles.contact}>
-      <motion.div {...reveal}><span className={styles.eyebrow}>{contact.script}</span><h2>{contact.title}<br /><em>{contact.accent}</em></h2><p>{contact.subtitle}</p><div className={styles.contactSignature}>Sizning hikoyangizni<br /><span>birga boshlaymiz.</span></div></motion.div>
+      <motion.div {...reveal}><h2 className={styles.eyebrow}>Toshkent va viloyatlar bo‘ylab to‘yga elektron taklifnoma</h2><div className={styles.displayHeading}>{contact.title}<br /><em>{contact.accent}</em></div><p>{contact.subtitle}</p><div className={styles.contactSignature}>Sizning hikoyangizni<br /><span>birga boshlaymiz.</span></div></motion.div>
       <motion.div {...reveal} className={styles.contactCard}><span className={styles.eyebrow}>SIZDAN BIR XABAR — BIZDAN GO‘ZAL TAKLIFNOMA</span><a href={contact.phoneHref} className={styles.bigPhone}>{contact.phone}<ArrowUpRight size={22} /></a><a href={contact.telegramHref} target="_blank" rel="noopener noreferrer" className={styles.telegram}><Send size={18} />{contact.telegramLabel} orqali yozish<ArrowUpRight size={17} /></a><a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className={styles.whatsapp}><MessageCircle size={16} />{contact.whatsappLabel}</a><p><ShieldCheck size={14} />Ma’lumotlaringizni yuboring, qolganini biz tayyorlaymiz.</p></motion.div>
     </section>
 

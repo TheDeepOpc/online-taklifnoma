@@ -1,0 +1,8 @@
+import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
+import { createDemoInvitation } from "@/lib/demoInvitation";
+export default async function Review({searchParams}:{searchParams:Promise<Record<string,string>>}) {
+  const p=await searchParams;
+  const invitation={...createDemoInvitation(),template_id:p.theme||'atelier-cristal-celeste',...(p.long?{groom_name:'Muhammadabdulloh Abdurahmonov',bride_name:'Shahrizodabegim Abdullayeva',guest_name:'Muhammadazizbek Abdurahmonov va oila a’zolari',venue_name:'Samarqand muhtasham tantanalar saroyi',venue_address:'Toshkent shahri, Mirzo Ulug‘bek tumani, Mustaqillik shoh ko‘chasi, 128-uy, ikkinchi qavat'}:{}),text_size:p.compact?'compact' as const:'normal' as const,schedule_items:[{time:'18:00',label:'Mehmonlar tashrifi va tantanali kutib olish marosimi'},{time:'19:00',label:'Kelin-kuyov kirishi, nikoh oqshomi va tabriklar'},{time:'20:00',label:'Bayram dasturxoni va musiqiy dastur'}],cover_photo_url:p.photos?'/home-art/love-story.webp':null,gallery_photo_urls:p.photos?['/invitation-art/atelier-scenes/jardin-de-verre.webp','/invitation-art/atelier-scenes/royal-correspondence.webp']:[]};
+  const wav=Buffer.alloc(44+8000*2*8);wav.write('RIFF');wav.writeUInt32LE(wav.length-8,4);wav.write('WAVEfmt ',8);wav.writeUInt32LE(16,16);wav.writeUInt16LE(1,20);wav.writeUInt16LE(1,22);wav.writeUInt32LE(8000,24);wav.writeUInt32LE(16000,28);wav.writeUInt16LE(2,32);wav.writeUInt16LE(16,34);wav.write('data',36);wav.writeUInt32LE(wav.length-44,40);
+  return <TemplateRenderer invitation={invitation} frame={false} musicTrack={{id:'review',title:'Review',file_url:'data:audio/wav;base64,'+wav.toString('base64'),storage_path:null,min_price_tier:'250000'}} />;
+}

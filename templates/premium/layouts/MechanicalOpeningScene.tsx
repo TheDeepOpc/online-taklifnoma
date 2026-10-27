@@ -21,8 +21,8 @@ export function MechanicalOpeningScene({ scene, opening, onComplete }: { scene: 
   const door=(id:string,mode:'swing'|'slide'|'crystal')=><div className={`${styles.doorFrame} ${styles[mode]}`}>
     {[0,1].map(side=><motion.img key={side} src={part(id)} alt="" draggable={false} className={`${styles.part} ${side?styles.right:styles.left}`} style={{transformOrigin:side?'100% 50%':'0% 50%'}} initial={false} animate={opening?(mode==='slide'?{x:side?'55%':'-55%'}:{rotateY:side?102:-102,filter:mode==='crystal'?'brightness(1.3)':'brightness(.85)'}):{}} transition={{duration:2.8,ease:[.45,0,.18,1]}} data-moving-part={side?'right-door':'left-door'}/>) }
   </div>;
-  return <div className={`${styles.scene} ${styles[scene] ?? ""}`} aria-hidden="true" data-parts-ready={partsReady}>
-    <motion.img src={`/invitation-art/atelier-scenes/${plate}.webp`} className={styles.backdrop} alt="" fetchPriority="high" initial={false} animate={opening?{opacity:0}:{opacity:1}} transition={{duration:.55,delay:opening?2.6:0}} onAnimationComplete={opening&&scene!=='mirror'?onComplete:undefined}/>
+  return <motion.div className={`${styles.scene} ${styles[scene] ?? ""}`} aria-hidden="true" data-parts-ready={partsReady} initial={false} animate={{opacity:opening?0:1}} transition={{duration:.4,delay:opening?2.85:0}} onAnimationComplete={opening&&scene!=='mirror'?onComplete:undefined}>
+    <motion.img src={`/invitation-art/atelier-scenes/${plate}.webp`} className={styles.backdrop} alt="" fetchPriority="high" initial={false} animate={{opacity:opening?0:1}} transition={{duration:1.3,delay:opening?.3:0}} />
     {!partsReady&&scene!=='mirror'&&<img src={`/invitation-art/gates/atelier/${plate}.webp`} className={styles.preloadCover} alt=""/>}
     {scene==='mirror'&&<FabricCurtain opening={opening} onComplete={onComplete}/>}
     {scene==='suzani'&&door('palace-doors','swing')}
@@ -35,5 +35,5 @@ export function MechanicalOpeningScene({ scene, opening, onComplete }: { scene: 
     </div>}
     {scene==='autumn'&&<motion.div className={styles.bookCover} style={{transformOrigin:'0% 50%'}} initial={false} animate={opening?{rotateY:-164}:{}} transition={{duration:2.9,ease:[.48,0,.17,1]}} data-moving-part="book-cover"><img src={part('heirloom-cover')} alt="" className={styles.front}/><div className={styles.bookInside}/></motion.div>}
     {scene==='eternity'&&<motion.div className={styles.casketLid} style={{transformOrigin:'50% 0%'}} initial={false} animate={opening?{rotateX:114,y:'-8%'}:{}} transition={{duration:2.8,ease:[.48,0,.17,1]}} data-moving-part="casket-lid"><img src={part('treasury-lid')} alt="" className={styles.front}/><div className={styles.casketInside}/></motion.div>}
-  </div>;
+  </motion.div>;
 }
