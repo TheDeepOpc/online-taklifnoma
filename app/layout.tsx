@@ -16,6 +16,7 @@ import {
   Ovo,
   Newsreader,
 } from "next/font/google";
+import { HOME_DESCRIPTION, HOME_TITLE, KEYWORDS, SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -123,20 +124,28 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  ...(process.env.NEXT_PUBLIC_SITE_URL ? { metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL) } : {}),
-  title: "Oila-Uchun — nafis onlayn to‘y taklifnomalari",
-  description: "Muhabbatingizga mos onlayn taklifnoma: alohida dizaynlar, sevimli musiqa, suratlar va har bir mehmonga shaxsiy havola. To‘yingiz uchun nafis boshlanish.",
+  metadataBase: new URL(SITE_URL),
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+  keywords: KEYWORDS,
+  applicationName: SITE_NAME,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  verification: { google: "9fMVWftAjOTTY7gfAi4Y8Yuki75UsEGyoMvEKgjDQkM" },
   openGraph: {
-    title: "Oila-Uchun — bir havola, bir umrga xotira",
-    description: "To‘yingizga mos nafis dizayn, musiqa va shaxsiy murojaat. Taklifnomalar kolleksiyasini jonli ko‘ring.",
-    siteName: "Oila-Uchun",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    siteName: SITE_NAME,
     locale: "uz_UZ",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oila-Uchun — nafis onlayn taklifnomalar",
-    description: "Bir havola. Bir umrga xotira. To‘yingizga mos taklifnomani tanlang.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
   },
 };
 

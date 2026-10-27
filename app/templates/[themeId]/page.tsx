@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
+import { SITE_NAME, SITE_SHARE_IMAGE } from "@/lib/seo";
 import { THEME_PRESETS, resolveThemeId } from "@/lib/themes";
 import { createDemoInvitation } from "@/lib/demoInvitation";
 import { COPYRIGHT_MARKER } from "@/components/CopyrightNotice";
@@ -13,6 +15,26 @@ export const revalidate = 86400;
 
 export function generateStaticParams() {
   return THEME_PRESETS.map((theme) => ({ themeId: theme.id }));
+}
+
+/** Har bir dizayn — Google uchun alohida sahifa: o'z sarlavhasi, tavsifi va kanonik manzili. */
+export async function generateMetadata({ params }: { params: Promise<{ themeId: string }> }): Promise<Metadata> {
+  const themeId = resolveThemeId((await params).themeId);
+  const theme = THEME_PRESETS.find((t) => t.id === themeId);
+  if (!theme) return {};
+
+  const title = `${theme.name} — onlayn to‘y taklifnomasi dizayni | ${SITE_NAME}`;
+  const description =
+    theme.description ??
+    `«${theme.name}» — jonli elektron to‘y taklifnomasi namunasi: musiqa, sanoq taymeri, xarita va suratlar. Dizaynni tanlang, havolani mehmonlarga yuboring.`;
+  const url = `/templates/${theme.id}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: "website", siteName: SITE_NAME, locale: "uz_UZ", url, title, description, images: [SITE_SHARE_IMAGE] },
+    twitter: { card: "summary_large_image", title, description, images: [SITE_SHARE_IMAGE] },
+  };
 }
 
 export default async function TemplateDemoPage({

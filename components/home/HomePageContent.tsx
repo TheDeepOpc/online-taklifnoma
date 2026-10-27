@@ -13,6 +13,7 @@ import { useDeviceCapability } from "@/components/motion/useDeviceCapability";
 import { THEME_PRESETS, getTheme, getUnlockedThemes } from "@/lib/themes";
 import type { SiteContent, FeatureIconKey } from "@/lib/siteContent";
 import { PRICE_TIER_LABELS, type PriceTier } from "@/lib/types";
+import { HOME_FAQ } from "@/lib/seo";
 import styles from "./HomePageContent.module.css";
 
 const ICONS = { music: Music, timer: Timer, images: Images, map: MapPin, heart: Heart, globe: Globe, users: Users, gift: Gift, phone: Phone, sparkles: Sparkles } satisfies Record<FeatureIconKey, typeof Music>;
@@ -51,12 +52,6 @@ function EditorialPhoto({ item, index }: { item: typeof EDITORIAL[number]; index
     <figcaption><span>{item.label}</span><h3><Link href={item.href}>{item.title}</Link></h3></figcaption>
   </figure>;
 }
-const FAQ = [
-  ["Mehmonlar ilova o‘rnatishi kerakmi?", "Yo‘q. Havola telefon yoki kompyuter brauzerida ochiladi. Taklifnomani Telegram va WhatsApp orqali yuborishingiz mumkin."],
-  ["Taklifnomani tayyorlash uchun nimalar kerak?", "Ismlar, to‘y sanasi, vaqti va manzilini yuborasiz. Istasangiz, sevimli rasmlaringiz, musiqa va alohida tilaklaringizni ham qo‘shamiz."],
-  ["Har bir mehmon uchun alohida murojaat bo‘ladimi?", "Ha. Bitta taklifnomani har bir mehmoningizning ismi yozilgan shaxsiy havola bilan yuborish mumkin."],
-  ["Musiqa qachon boshlanadi?", "Mehmon «Taklifnomani ochish» tugmasini bosganda siz tanlagan musiqa boshlanadi. Uni to‘xtatish va qayta yoqish tugmasi ham bor."],
-];
 
 export function HomePageContent({ content }: { content: SiteContent }) {
   const { hero, designs, how, features, gift, pricing, contact, footer, modal } = content;
@@ -100,9 +95,9 @@ export function HomePageContent({ content }: { content: SiteContent }) {
 
     <section ref={heroRef} className={styles.hero}>
       <div className={styles.heroCopy}>
-        <span className={styles.eyebrow}><i />PREMIUM ONLAYN TAKLIFNOMALAR</span>
+        <h1 className={styles.eyebrow}><i />Onlayn to‘y taklifnomasi</h1>
         <p className={styles.heroBadge}>{hero.badge}</p>
-        <h1><span>{hero.title1}</span><em>{hero.title2}</em><span>{hero.title3}</span></h1>
+        <p className={styles.heroTitle}><span>{hero.title1}</span><em>{hero.title2}</em><span>{hero.title3}</span></p>
         <p className={styles.heroDescription}>{hero.description}</p>
         <div className={styles.actions}>
           <Link href={hero.ctaPrimaryHref || "#designs"} className={styles.primary}>{hero.ctaPrimary}<ArrowUpRight size={17} /></Link>
@@ -184,7 +179,7 @@ export function HomePageContent({ content }: { content: SiteContent }) {
 
     <section className={styles.faq}>
       <motion.div {...reveal}><span className={styles.eyebrow}>HAMMASI OSON</span><h2>Ko‘nglingizdagi<br /><em>savollarga javob</em></h2><p>Tafsilotlarni birga kelishamiz.<br />Bizga yozishingiz kifoya.</p><a className={styles.textLink} href={contact.telegramHref} target="_blank" rel="noopener noreferrer">Telegramda so‘rash<ArrowUpRight size={15} /></a></motion.div>
-      <div>{FAQ.map(([question, answer], index) => <div key={question} className={styles.faqItem}><h3><button type="button" aria-expanded={openFaq === index} aria-controls={`faq-${index}`} onClick={() => setOpenFaq(openFaq === index ? null : index)}>{question}<ChevronDown size={17} style={openFaq === index ? { transform: "rotate(180deg)" } : undefined} /></button></h3><div id={`faq-${index}`} hidden={openFaq !== index}><p>{answer}</p></div></div>)}</div>
+      <div>{HOME_FAQ.map(([question, answer], index) => <div key={question} className={styles.faqItem}><h3><button type="button" aria-expanded={openFaq === index} aria-controls={`faq-${index}`} onClick={() => setOpenFaq(openFaq === index ? null : index)}>{question}<ChevronDown size={17} style={openFaq === index ? { transform: "rotate(180deg)" } : undefined} /></button></h3><div id={`faq-${index}`} hidden={openFaq !== index}><p>{answer}</p></div></div>)}</div>
     </section>
 
     <section id="contact" className={styles.contact}>

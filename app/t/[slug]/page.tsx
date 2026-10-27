@@ -10,17 +10,22 @@ type PageProps = {
   searchParams: Promise<{ bare?: string; [GUEST_PARAM]?: string | string[] }>;
 };
 
-/** Havola ulashilganda: kelin-kuyov ismlari, sana va ularning surati bilan katta rasm. */
+/**
+ * Havola ulashilganda: kelin-kuyov ismlari, sana va ularning surati bilan katta rasm.
+ * Google'ga esa kirmaydi (`noindex`): sahifada manzil, sana va karta raqami bor.
+ */
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  const robots = { index: false, follow: false };
   const { slug } = await params;
   const published = await getPublishedInvitation(slug);
-  if (!published) return {};
+  if (!published) return { robots };
 
   const guest = sanitizeGuestName((await searchParams)[GUEST_PARAM]);
   const { title, description, image } = invitationShareMeta(published.invitation, guest);
   return {
     title,
     description,
+    robots,
     openGraph: { type: "website", siteName: "Oila-Uchun", locale: "uz_UZ", title, description, images: [image] },
     twitter: { card: "summary_large_image", title, description, images: [image] },
   };
