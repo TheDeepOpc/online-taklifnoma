@@ -262,7 +262,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     phone: "+998 99 917 99 27",
     phoneHref: "tel:+998999179927",
     telegramLabel: "Telegram",
-    telegramHref: "https://t.me/+998999179927",
+    telegramHref: "https://telegram.me/+998999179927",
     whatsappLabel: "WhatsApp",
     whatsappHref: "https://wa.me/998999179927",
   },
@@ -335,6 +335,9 @@ export function normalizeSiteContent(value: unknown): SiteContent {
     ) {
       if (/^\/\d{5,15}\/?$/.test(url.pathname)) {
         url.pathname = `/+${url.pathname.slice(1)}`;
+      }
+      if (/^\/\+998999179927\/?$/.test(url.pathname)) {
+        url.hostname = "telegram.me";
       }
       url.protocol = "https:";
       content.contact = { ...content.contact, telegramHref: url.href };

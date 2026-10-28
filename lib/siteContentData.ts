@@ -32,7 +32,7 @@ export const getSiteContentFromDb = unstable_cache(
 
     return normalizeSiteContent(data?.value);
   },
-  ["site-content-home", "telegram-phone-links-v2"],
+  ["site-content-home", "telegram-phone-links-v3"],
   { tags: [SITE_CONTENT_TAG], revalidate: 3600 },
 );
 
