@@ -262,7 +262,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     phone: "+998 99 917 99 27",
     phoneHref: "tel:+998999179927",
     telegramLabel: "Telegram",
-    telegramHref: "https://t.me/998999179927",
+    telegramHref: "https://t.me/+998999179927",
     whatsappLabel: "WhatsApp",
     whatsappHref: "https://wa.me/998999179927",
   },
@@ -316,4 +316,32 @@ export function mergeSiteContent<T>(value: unknown, base: T): T {
   });
 
   return out as T;
+}
+
+// Eski saqlangan telefon havolalarida '+' yo'q edi: Telegram ularni
+// foydalanuvchi nomi deb qabul qiladi. Username va guruh havolalari saqlanadi.
+export function normalizeSiteContent(value: unknown): SiteContent {
+  const content = { ...mergeSiteContent(value, DEFAULT_SITE_CONTENT) };
+  const raw = content.contact.telegramHref.trim();
+  const href = /^(?:www\.)?(?:t\.me|telegram\.me|telegram\.dog)\//i.test(raw)
+    ? `https://${raw}`
+    : raw;
+
+  try {
+    const url = new URL(href);
+    if (
+      (url.protocol === "https:" || url.protocol === "http:") &&
+      /^(?:www\.)?(?:t\.me|telegram\.me|telegram\.dog)$/i.test(url.hostname)
+    ) {
+      if (/^\/\d{5,15}\/?$/.test(url.pathname)) {
+        url.pathname = `/+${url.pathname.slice(1)}`;
+      }
+      url.protocol = "https:";
+      content.contact = { ...content.contact, telegramHref: url.href };
+    }
+  } catch {
+    // Boshqa kiritilgan qiymatni admin tahrirlashi uchun o'z holida qoldiramiz.
+  }
+
+  return content;
 }

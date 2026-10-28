@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import {
   DEFAULT_SITE_CONTENT,
   mergeSiteContent,
+  normalizeSiteContent,
   SITE_CONTENT_KEY,
   type SiteContent,
 } from "@/lib/siteContent";
@@ -29,9 +30,9 @@ export const getSiteContentFromDb = unstable_cache(
       .eq("key", SITE_CONTENT_KEY)
       .maybeSingle();
 
-    return mergeSiteContent(data?.value ?? undefined, DEFAULT_SITE_CONTENT);
+    return normalizeSiteContent(data?.value);
   },
-  ["site-content-home"],
+  ["site-content-home", "telegram-phone-links-v2"],
   { tags: [SITE_CONTENT_TAG], revalidate: 3600 },
 );
 
